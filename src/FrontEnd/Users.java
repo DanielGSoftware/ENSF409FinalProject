@@ -1,5 +1,5 @@
 package FrontEnd;
 
-public abstract class Users {
+abstract class Users {
 	
 }
