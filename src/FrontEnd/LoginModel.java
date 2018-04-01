@@ -1,6 +1,6 @@
 package FrontEnd;
 
-public class LoginModel extends MessageHandler
+public class LoginModel extends MainModel
 {
 	
 }

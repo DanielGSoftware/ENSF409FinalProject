@@ -24,6 +24,13 @@ public class Client {
 		
 	}
 	
+	private void makeProfessorGUI() 
+	{
+		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
+		ProfessorView proffview=new ProfessorView("Professor Learning Platform");
+		user=new ProfessorControl(proffmodel, proffview);
+	}
+	
 	public static void main(String[] args)
 	{
 		try {
