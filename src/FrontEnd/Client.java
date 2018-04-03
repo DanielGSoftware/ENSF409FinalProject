@@ -24,11 +24,11 @@ public class Client {
 		
 	}
 	
-	private void makeProfessorGUI() 
+	private void makeProfessorGUI(String proffname, int proffid) 
 	{
 		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
-		ProfessorView proffview=new ProfessorView("Professor Learning Platform");
-		user=new ProfessorControl(proffmodel, proffview);
+		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, proffname);
+		//user=new ProfessorControl(proffmodel, proffview);
 	}
 	
 	public static void main(String[] args)

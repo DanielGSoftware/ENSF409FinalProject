@@ -9,4 +9,9 @@ public class ProfessorModel extends MainModel {
 	{
 		super(readObject, sendObject);
 	}
+	
+	public void createCourse(String[] string) 
+	{
+		
+	}
 }
