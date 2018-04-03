@@ -3,10 +3,11 @@ package SharedObjects;
 import java.io.Serializable;
 
 public abstract class InfoExchange implements Serializable {
+	protected String opcode;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	public InfoExchange(String opcode)
+	{
+		this.opcode=opcode;
+	}
+	
 }

@@ -10,7 +10,6 @@ public class Client {
 	private Socket socket;
 	private ObjectOutputStream sendObject;
 	private ObjectInputStream readObject;
-	private Users user;
 	
 	public Client(String host, int portnumber) throws UnknownHostException, IOException
 	{
@@ -24,18 +23,19 @@ public class Client {
 		
 	}
 	
-	private void makeProfessorGUI(String proffname, int proffid) 
+	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) 
 	{
 		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
-		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, proffname);
-		//user=new ProfessorControl(proffmodel, proffview);
+		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, profffirstname, profflastname);
+		ProfessorControl proffcontrol=new ProfessorControl(proffmodel, proffview);
 	}
 	
 	public static void main(String[] args)
 	{
 		try {
 			Client client=new Client("localhost", 9090);
-			client.makeLoginGUI();
+			//client.makeLoginGUI();
+			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
 		}
 		catch (IOException e) {
 			e.printStackTrace();

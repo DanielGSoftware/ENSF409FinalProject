@@ -62,17 +62,54 @@ public class DataBaseBuilder
 						" VALUES ( ?, ?, ?, ?, ?, ?);";
 				try{
 					statement = jdbc_connection.prepareStatement(sql);
-					statement.setInt(1, id++);
-					statement.setString(2, tool.getName());
-					statement.setInt(3, tool.getQuantity());
-					statement.setDouble(4, tool.getPrice());
-					statement.setInt(5,  tool.getSupplierID());
+					statement.setInt(1, id);
+					statement.setString(2, string[0]);
+					statement.setString(3, string[1]);
+					statement.setString(4, string[2]);
+					statement.setString(5, string[3]);
+					statement.setString(6, string[4]);
 					statement.executeUpdate();
 				}
 				catch(SQLException e)
 				{
 					e.printStackTrace();
 				}
+				id+=10;
+			}
+			sc.close();
+		}
+		catch(FileNotFoundException e)
+		{
+			System.err.println("File " + filename + " Not Found!");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void fillCourseTable(String filename)
+	{
+		try{
+			Scanner sc = new Scanner(new FileReader(filename));
+			while(sc.hasNext())
+			{
+				String string[] = sc.nextLine().split(";");
+				String sql = "INSERT INTO COURSES" +
+						" VALUES ( ?, ?, ?, ?)";
+				try{
+					statement = jdbc_connection.prepareStatement(sql);
+					statement.setInt(1, id);
+					statement.setInt(2, 1030);
+					statement.setString(3, string[0]);
+					statement.setString(4, string[1]);
+					statement.executeUpdate();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				id+=10;
 			}
 			sc.close();
 		}
@@ -109,6 +146,7 @@ public class DataBaseBuilder
 		DataBaseBuilder dataBaseBuilder=new DataBaseBuilder();
 		dataBaseBuilder.createUserTable("Users");
 		dataBaseBuilder.createCourseTable("Courses");
-		DataBaseBuilder.fillUserTable("Users.txt");
+		dataBaseBuilder.fillUserTable("Users.txt");
+		dataBaseBuilder.fillCourseTable("Courses.txt");
 	}
 }

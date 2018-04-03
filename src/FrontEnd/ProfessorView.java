@@ -21,7 +21,8 @@ import SharedObjects.Course;
 
 
 public class ProfessorView extends JFrame {
-	private String proffname;
+	private String profffirstname;
+	private String profflastname;
 	private int proffid;
 	private JButton createcourses;
 	private JButton browsecourses;
@@ -37,11 +38,12 @@ public class ProfessorView extends JFrame {
 	private JTextPane displayarea;
 	private Container container;
 	
-	public ProfessorView(String s, int proffid, String proffname)
+	public ProfessorView(String s, int proffid, String profffirstname, String profflastname)
 	{
 		super(s);
 		this.proffid=proffid;
-		this.proffname=proffname;
+		this.profffirstname=profffirstname;
+		this.profflastname=profflastname;
 		container=this.getContentPane();
 		this.setLayout(new BorderLayout());
 		this.setSize(700, 500);
@@ -50,6 +52,11 @@ public class ProfessorView extends JFrame {
 		createCenterDisplay();
 		createBottomDisplayPanel();
 		makeWindowListener();
+	}
+	
+	public int getProffID()
+	{
+		return proffid;
 	}
 	
 	private void createBanner(JPanel[][] temp)
@@ -121,7 +128,7 @@ public class ProfessorView extends JFrame {
 //		displaylist.setVisibleRowCount(15);
 //		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
 		displayarea=new JTextPane();
-		displayarea.setText("Welcome Professor "+proffname+" ("+proffid+")\nYou are currently in no course or student page");
+		displayarea.setText("Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")\nYou are currently in no course or student page");
 		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
 		displayarea.setEditable(false);
 		searchresults=new JScrollPane(displayarea);
