@@ -1,14 +1,20 @@
 package BackEnd;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
+
+import com.mysql.jdbc.Buffer;
 import com.mysql.jdbc.PreparedStatement;
 
+import SharedObjects.Course;
 import SharedObjects.InfoExchange;
 
 public class DataBaseManager implements Runnable {
@@ -16,10 +22,11 @@ public class DataBaseManager implements Runnable {
 	private ObjectInputStream readobject;
 	private PreparedStatement statement;
 	private Connection jdbc_connection;
-	public static String DATABASENAME="project";
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 			  LOGIN          = "root",
 			  PASSWORD       = "huzaifa147";
+	public static String COURSETABLE = "Courses";
+	public static String USERTABLE = "Users";
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
@@ -30,10 +37,35 @@ public class DataBaseManager implements Runnable {
 	
 	@Override
 	public void run() {
-		try {
-			InfoExchange object=(InfoExchange) readobject.readObject();
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+		while (true) {
+			try {
+				InfoExchange infoExchange=(InfoExchange) readobject.readObject();
+				System.out.println("Recieved object of infoexchange");
+				String string=infoExchange.getOpcode();
+				//checkOperation(infoExchange.getOpcode());
+				System.out.println("Now in checkOperation");
+				if (string.equals("Browse Courses Proff")){
+					Course course=(Course)readobject.readObject();
+					System.out.println("course object read");
+					InfoExchange infoExchange2=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+					writeobject.writeObject(infoExchange2);
+				}
+			} 
+			catch (ClassNotFoundException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void checkOperation(String string) throws ClassNotFoundException, IOException
+	{
+		System.out.println("Now in checkOperation");
+		if (string.equals("Browse Course Proff"))
+		{
+			Course course=(Course)readobject.readObject();
+			System.out.println("course object read");
+			InfoExchange infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+			writeobject.writeObject(infoExchange);
 		}
 	}
 	

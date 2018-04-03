@@ -31,6 +31,7 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String[] courselist=pModel.browseCourse(pView.getProffID());
+			  pView.updateDisplay(courselist);
 		}
 		
 	}

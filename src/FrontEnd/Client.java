@@ -1,8 +1,11 @@
 package FrontEnd;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -23,8 +26,9 @@ public class Client {
 		
 	}
 	
-	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) 
+	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) throws IOException 
 	{
+
 		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
 		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, profffirstname, profflastname);
 		ProfessorControl proffcontrol=new ProfessorControl(proffmodel, proffview);

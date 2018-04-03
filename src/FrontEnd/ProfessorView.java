@@ -35,7 +35,6 @@ public class ProfessorView extends JFrame {
 	private JScrollPane searchresults;
 	private DefaultListModel<String> listmodel;
 	private JList<String> displaylist;
-	private JTextPane displayarea;
 	private Container container;
 	
 	public ProfessorView(String s, int proffid, String profffirstname, String profflastname)
@@ -83,7 +82,7 @@ public class ProfessorView extends JFrame {
 		JPanel northpanel=new JPanel();
 		createcourses=new JButton("Create Course");
 		browsecourses=new JButton("Browse Courses");
-		setactive=new JButton("Set Course Active");
+		setactive=new JButton("Set Course Active Status");
 		searchstudents=new JButton("Search Students");
 		northpanel.add(createcourses);
 		northpanel.add(browsecourses);
@@ -119,19 +118,19 @@ public class ProfessorView extends JFrame {
 			}
 		}
 		
-//		String[] argument= {"Welcome Professor "+proffname+" ("+proffid+")", "You are currently in no course or student page"};
-//		listmodel=new DefaultListModel<String>();
-//		listmodel.addElement(argument[0]);
-//		listmodel.addElement(argument[1]);
-//		displaylist=new JList<String>(listmodel);
-//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		displaylist.setVisibleRowCount(15);
-//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
-		displayarea=new JTextPane();
-		displayarea.setText("Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")\nYou are currently in no course or student page");
-		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
-		displayarea.setEditable(false);
-		searchresults=new JScrollPane(displayarea);
+		String[] argument= {"Welcome Professor "+profffirstname+""+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
+		listmodel=new DefaultListModel<String>();
+		listmodel.addElement(argument[0]);
+		listmodel.addElement(argument[1]);
+		displaylist=new JList<String>(listmodel);
+		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		displaylist.setVisibleRowCount(15);
+		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+//		JTextPane displayarea=new JTextPane();
+//		displayarea.setText("Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")\nYou are currently in no course or student page");
+//		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
+//		displayarea.setEditable(false);
+		searchresults=new JScrollPane(displaylist);
 		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		searchresults.setPreferredSize(new Dimension(600,325));
 		temp[0][0].add(searchresults);
@@ -158,11 +157,6 @@ public class ProfessorView extends JFrame {
 	public void addCreateCourseListener(ActionListener a)
 	{
 		createcourses.addActionListener(a);
-	}
-	
-	public void addBrowseCourseListener(ActionListener a)
-	{
-		browsecourses.addActionListener(a);
 	}
 	
 	public String[] createCourse()
@@ -193,6 +187,31 @@ public class ProfessorView extends JFrame {
 			JOptionPane.getRootFrame().dispose();
 		}
 		return null;
+	}
+	
+	public void addBrowseCourseListener(ActionListener a)
+	{
+		browsecourses.addActionListener(a);
+	}
+	
+	
+	public void updateDisplay(String[] list)
+	{
+		System.out.println("updating display");
+		listmodel.removeAllElements();
+		
+		for (int i=0; i<list.length; i++) {
+			listmodel.addElement(list[i]);
+		}
+		
+		displaylist=new JList<String>(listmodel);
+		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		displaylist.setVisibleRowCount(15);
+		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+		
+		searchresults=new JScrollPane(displaylist);
+		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		searchresults.setPreferredSize(new Dimension(600,325));
 	}
 	
 	
