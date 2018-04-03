@@ -11,10 +11,11 @@ public class ProfessorControl extends Users{
 		//pModel=model; Add in the model parameter latter; taken out for testing
 		pView=view;
 		pView.addCreateCourseListener(new CreateCourseListener());
+		pView.addBrowseCourseListener(new BrowseCourseListener());
 		pView.setVisible(true);
 	}
 	
-	class  CreateCourseListener implements ActionListener
+	class CreateCourseListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -23,6 +24,15 @@ public class ProfessorControl extends Users{
 				pModel.createCourse(strings);
 			}
 		}
+	}
+	
+	class BrowseCourseListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+		
 	}
 	
 	public static void main(String[] args)

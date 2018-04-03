@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Label;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,6 +34,7 @@ public class ProfessorView extends JFrame {
 	private JScrollPane searchresults;
 	private DefaultListModel<String> listmodel;
 	private JList<String> displaylist;
+	private JTextPane displayarea;
 	private Container container;
 	
 	public ProfessorView(String s, int proffid, String proffname)
@@ -46,6 +49,7 @@ public class ProfessorView extends JFrame {
 		createTopDisplayPanel();
 		createCenterDisplay();
 		createBottomDisplayPanel();
+		makeWindowListener();
 	}
 	
 	private void createBanner(JPanel[][] temp)
@@ -108,25 +112,49 @@ public class ProfessorView extends JFrame {
 			}
 		}
 		
-		String[] argument= {"Welcome Professor "+proffname+" ("+proffid+")", "You are currently in no course or student page"};
-		listmodel=new DefaultListModel<String>();
-		listmodel.addElement(argument[0]);
-		listmodel.addElement(argument[1]);
-		displaylist=new JList<String>(listmodel);
-		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		displaylist.setVisibleRowCount(15);
-		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
-		searchresults=new JScrollPane(displaylist);
+//		String[] argument= {"Welcome Professor "+proffname+" ("+proffid+")", "You are currently in no course or student page"};
+//		listmodel=new DefaultListModel<String>();
+//		listmodel.addElement(argument[0]);
+//		listmodel.addElement(argument[1]);
+//		displaylist=new JList<String>(listmodel);
+//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		displaylist.setVisibleRowCount(15);
+//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+		displayarea=new JTextPane();
+		displayarea.setText("Welcome Professor "+proffname+" ("+proffid+")\nYou are currently in no course or student page");
+		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
+		searchresults=new JScrollPane(displayarea);
 		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		searchresults.setPreferredSize(new Dimension(600,325));
 		temp[0][0].add(searchresults);
 		container.add(centerpanel, BorderLayout.CENTER);
 	}
 	
+	private void makeWindowListener()
+	{
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				int result = JOptionPane.showConfirmDialog((JFrame) e.getSource(), "Are you sure you want to exit the application?",
+						"Exit Application", JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION) {
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				}
+				if (result==JOptionPane.NO_OPTION)
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			}
+			
+		});
+	}
+	
 	
 	public void addCreateCourseListener(ActionListener a)
 	{
 		createcourses.addActionListener(a);
+	}
+	
+	public void addBrowseCourseListener(ActionListener a)
+	{
+		browsecourses.addActionListener(a);
 	}
 	
 	public String[] createCourse()
