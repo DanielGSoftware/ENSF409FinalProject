@@ -123,6 +123,7 @@ public class ProfessorView extends JFrame {
 		displayarea=new JTextPane();
 		displayarea.setText("Welcome Professor "+proffname+" ("+proffid+")\nYou are currently in no course or student page");
 		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
+		displayarea.setEditable(false);
 		searchresults=new JScrollPane(displayarea);
 		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		searchresults.setPreferredSize(new Dimension(600,325));
