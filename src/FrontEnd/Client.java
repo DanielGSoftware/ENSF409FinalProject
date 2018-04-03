@@ -30,7 +30,7 @@ public class Client {
 	{
 
 		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
-		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, profffirstname, profflastname);
+		ProfessorView proffview=new ProfessorView("Professor Learning Platform",proffid, proff firstname, profflastname);
 		ProfessorControl proffcontrol=new ProfessorControl(proffmodel, proffview);
 	}
 	

@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.IllegalFormatCodePointException;
 import java.sql.Connection;
 
 import com.mysql.jdbc.Buffer;
@@ -28,12 +29,14 @@ public class DataBaseManager implements Runnable {
 			  PASSWORD       = "huzaifa147";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
+	private String id;
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
 		readobject=new ObjectInputStream(socket.getInputStream());
 		Class.forName("com.mysql.jdbc.Driver");
 		jdbc_connection = DriverManager.getConnection(CONNECTIONINFO, LOGIN, PASSWORD);
+		id="2000";
 	}
 	
 	@Override
@@ -43,13 +46,17 @@ public class DataBaseManager implements Runnable {
 				InfoExchange infoExchange=(InfoExchange) readobject.readObject();
 				System.out.println("Recieved object of infoexchange");
 				String string=infoExchange.getOpcode();
-				//checkOperation(infoExchange.getOpcode());
 				System.out.println("Now in checkOperation");
 				if (string.equals("Browse Courses Proff")){
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
 					infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
 					writeobject.writeObject(infoExchange);
+				}
+				else if (string.equals("Create Course Proff"))
+				{
+					Course course=(Course)readobject.readObject();
+					course.createCourse(COURSETABLE, jdbc_connection, statement, id);
 				}
 			} 
 			catch (ClassNotFoundException | IOException e) {
@@ -68,6 +75,11 @@ public class DataBaseManager implements Runnable {
 //			System.out.println("course object read");
 //			InfoExchange infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
 //			writeobject.writeObject(infoExchange);
+//		}
+//		if (string.equals("Create Course Proff"))
+//		{
+//			Course course=(Course)readobject.readObject();
+//			course.createCourse(COURSETABLE, jdbc_connection, statement, id);
 //		}
 //	}
 	

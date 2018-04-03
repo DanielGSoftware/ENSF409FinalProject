@@ -40,4 +40,20 @@ public class ProfessorModel extends MainModel {
 		}
 		return courselist;
 	}
+	
+	public void createCourse(int proffid, String[] strings)
+	{
+		Course course=new Course(proffid, strings[0], Integer.parseInt(strings[1]));
+		InfoExchange infoExchange=new InfoExchange("Create Course Proff");
+		try {
+			sendObject.writeObject(infoExchange);
+			sendObject.flush();
+			sendObject.reset();
+			sendObject.writeObject(course);
+			sendObject.flush();
+			sendObject.reset();
+		} catch (IOException e) {
+			System.out.print("Error: broswe course in proff model wont work");
+		}
+	}
 }

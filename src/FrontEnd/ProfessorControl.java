@@ -21,7 +21,7 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] strings=pView.createCourse();
 			if (strings!=null) {
-				pModel.createCourse(strings);
+				pModel.createCourse(pView.getProffID(), strings);
 			}
 		}
 	}
