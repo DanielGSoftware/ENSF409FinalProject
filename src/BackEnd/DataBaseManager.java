@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -47,26 +48,27 @@ public class DataBaseManager implements Runnable {
 				if (string.equals("Browse Courses Proff")){
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
-					InfoExchange infoExchange2=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
-					writeobject.writeObject(infoExchange2);
+					infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+					writeobject.writeObject(infoExchange);
 				}
 			} 
 			catch (ClassNotFoundException | IOException e) {
-				e.printStackTrace();
+				System.out.println("Client has left");
+				break;
 			}
 		}
 	}
 	
-	public void checkOperation(String string) throws ClassNotFoundException, IOException
-	{
-		System.out.println("Now in checkOperation");
-		if (string.equals("Browse Course Proff"))
-		{
-			Course course=(Course)readobject.readObject();
-			System.out.println("course object read");
-			InfoExchange infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
-			writeobject.writeObject(infoExchange);
-		}
-	}
+//	public void checkOperation(String string) throws ClassNotFoundException, IOException
+//	{
+//		System.out.println("Now in checkOperation");
+//		if (string.equals("Browse Course Proff"))
+//		{
+//			Course course=(Course)readobject.readObject();
+//			System.out.println("course object read");
+//			InfoExchange infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+//			writeobject.writeObject(infoExchange);
+//		}
+//	}
 	
 }	

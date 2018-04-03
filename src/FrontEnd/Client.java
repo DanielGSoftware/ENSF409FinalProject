@@ -36,7 +36,7 @@ public class Client {
 	
 	public static void main(String[] args)
 	{
-		try {
+		try { 
 			Client client=new Client("localhost", 9090);
 			//client.makeLoginGUI();
 			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
