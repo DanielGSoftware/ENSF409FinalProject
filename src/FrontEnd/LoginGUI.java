@@ -32,7 +32,7 @@ public class LoginGUI extends JFrame{
 	 * Create an interface of colors that are consistent and pretty, but in 
 	 * the mean time use this code for everything
 	 */
-	public Color color1 = new Color(255, 166, 207);
+	public Color myPink = new Color(255, 166, 207);
 	
 	public LoginGUI() {
 		super("Login");
@@ -52,7 +52,7 @@ public class LoginGUI extends JFrame{
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
 		banner.setForeground(Color.white);
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(color1);
+		bannerPanel.setBackground(myPink);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
@@ -64,12 +64,12 @@ public class LoginGUI extends JFrame{
 		//fieldPanel.setLayout(new GridLayout(2, 1));
 		
 		JPanel userPanel = new JPanel();
-		JLabel userL = new JLabel("ID");
+		JLabel userL = new JLabel("Username");
 		userT = new JTextField();
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
-		userPanel.setBackground(Color.white);
+//		userPanel.setBackground(Color.white);
 		
 		JPanel passPanel = new JPanel();
 		JLabel passL = new JLabel("Password");
