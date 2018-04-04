@@ -34,9 +34,9 @@ public class Course implements Serializable {
 			while (course.next()) {
 				String courseid= String.valueOf(course.getInt("COURSE_ID"));
 				if (course.getInt("ACTIVE")==1)
-					listofcoures.add("werwer;"+course.getString("NAME")+";Currently Active to Students"+"fgfg");
+					listofcoures.add(courseid+";"+course.getString("NAME")+";Currently Active to Students");
 				else 
-					listofcoures.add("dddd;"+course.getString("NAME")+";Currently Inactive to Students"+"ffffffffffff");
+					listofcoures.add(courseid+";"+course.getString("NAME")+";Currently Inactive to Students");
 			}
 		}
 		catch (SQLException e)

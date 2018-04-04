@@ -40,8 +40,8 @@ public class Client {
 	{
 		try { 
 			Client client=new Client("localhost", 9090);
-			client.makeLoginGUI();
-//			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
+//			client.makeLoginGUI();
+			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
