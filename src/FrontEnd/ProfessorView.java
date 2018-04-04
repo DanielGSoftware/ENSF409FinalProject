@@ -47,7 +47,7 @@ public class ProfessorView extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setSize(700, 500);
 		this.setResizable(false);
-		createTopDisplayPanel();
+		createHomeTopDisplayPanel();
 		createCenterDisplay();
 		createBottomDisplayPanel();
 		makeWindowListener();
@@ -68,30 +68,41 @@ public class ProfessorView extends JFrame {
 		temp[0][0].setBackground(Color.darkGray);
 	}
 	
-	private void createTopDisplayPanel()
+	private void createHomeTopDisplayPanel()
 	{
-		JPanel grandpanel=new JPanel(new GridLayout(2, 1,0,0));
+		JPanel grandPanel=new JPanel(new GridLayout(2, 1,0,0));
 		JPanel[][] temp=new JPanel[2][1];
 		for (int i=0; i<2; i++) {
 			for (int j=0; j<1; j++) {
 				temp[i][j]=new JPanel();
-				grandpanel.add(temp[i][j]);
+				grandPanel.add(temp[i][j]);
 			}
 		}
 		
-		JPanel northpanel=new JPanel();
+		JPanel topButtons=new JPanel();
 		createcourses=new JButton("Create Course");
 		browsecourses=new JButton("Browse Courses");
 		setactive=new JButton("Set Course Active Status");
 		searchstudents=new JButton("Search Students");
-		northpanel.add(createcourses);
-		northpanel.add(browsecourses);
-		northpanel.add(setactive);
-		northpanel.add(searchstudents);
-		temp[1][0].add(northpanel);
+		topButtons.add(createcourses);
+		topButtons.add(browsecourses);
+		topButtons.add(setactive);
+		topButtons.add(searchstudents);
+		temp[1][0].add(topButtons);
 		createBanner(temp);
-		container.add(grandpanel, BorderLayout.NORTH);
+		container.add(grandPanel, BorderLayout.NORTH);
 	}
+	
+	private void createCourseTopDisplayPanel() {
+		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
+		JPanel topButtons = new JPanel();
+		/*
+		 * buttons: set course active, upload assign, set assign active
+		 */
+		
+	}
+	
+	
 	
 	private void createBottomDisplayPanel()
 	{
