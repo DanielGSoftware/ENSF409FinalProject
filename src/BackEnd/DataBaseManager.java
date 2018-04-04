@@ -16,6 +16,7 @@ import java.sql.Connection;
 
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
+import SharedObjects.User;
 
 public class DataBaseManager implements Runnable {
 	private ObjectOutputStream writeobject;
@@ -66,6 +67,7 @@ public class DataBaseManager implements Runnable {
 					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
 				else if(string.equals("Login Attempt")) {
+					User user = (User)readobject.readObject(); 
 					
 				}
 				

@@ -1,14 +1,23 @@
 package SharedObjects;
 
-public class User extends InfoExchange {
-	
-	public User(String opcode) {
-		super(opcode);
-		// TODO Auto-generated constructor stub
-	}
+import java.io.Serializable;
 
-	/**
-	 * Supposed to be different than InfoExchange's UID?	
-	 */
-	private static final long serialVersionUID = 1L;
+public class User implements Serializable {
+	private int id;
+	private String password;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private char type;
+	
+	private static final long serialVersionUID = 7;
+	
+	public User(int id, String password, String email, String firstName, 
+			String lastName) {
+		this.id = id;
+		this.password = password;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 }

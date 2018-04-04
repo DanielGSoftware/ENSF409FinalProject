@@ -10,7 +10,7 @@ public class Course implements Serializable {
 	private String name;
 	private int active;
 	private int courseid;
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 2;
 	private int id=3000;
 
 	public Course(int proffid, String name, int active, int courseid)
