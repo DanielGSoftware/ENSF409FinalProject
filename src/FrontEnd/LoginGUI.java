@@ -28,6 +28,12 @@ public class LoginGUI extends JFrame{
 	private JButton signInB;
 	private Container container;
 	
+	/*
+	 * Create an interface of colors that are consistent and pretty, but in 
+	 * the mean time use this code for everything
+	 */
+	public Color color1 = new Color(255, 166, 207);
+	
 	public LoginGUI() {
 		super("Login");
 		container = getContentPane();
@@ -38,7 +44,6 @@ public class LoginGUI extends JFrame{
 		createLoginBanner();
 		createMainPanel();
 		makeWindowListener();
-		
 	}
 	
 	private void createLoginBanner() {
@@ -47,7 +52,7 @@ public class LoginGUI extends JFrame{
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
 		banner.setForeground(Color.white);
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(Color.darkGray);
+		bannerPanel.setBackground(color1);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
@@ -64,6 +69,7 @@ public class LoginGUI extends JFrame{
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
+		userPanel.setBackground(Color.white);
 		
 		JPanel passPanel = new JPanel();
 		JLabel passL = new JLabel("Password");
@@ -71,6 +77,7 @@ public class LoginGUI extends JFrame{
 		passT.setColumns(15);
 		passPanel.add(passL);
 		passPanel.add(passT);
+//		passPanel.setBackground(Color.WHITE);
 		
 		signInB = new JButton("Sign In");
 		signInB.addActionListener(new ActionListener() {
