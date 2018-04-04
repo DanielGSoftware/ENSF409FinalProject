@@ -36,7 +36,7 @@ public class DataBaseManager implements Runnable {
 		readobject=new ObjectInputStream(socket.getInputStream());
 		Class.forName("com.mysql.jdbc.Driver");
 		jdbc_connection = DriverManager.getConnection(CONNECTIONINFO, LOGIN, PASSWORD);
-		id="2000";
+		id="5000";
 	}
 	
 	@Override

@@ -38,7 +38,7 @@ public class LoginGUI extends JFrame{
 		super("Login");
 		container = getContentPane();
 		setLayout(new BorderLayout());
-		setSize(500, 500);
+		setSize(500, 200);
 		setResizable(false);
 		
 		createLoginBanner();
@@ -60,8 +60,8 @@ public class LoginGUI extends JFrame{
 	private void createMainPanel() {
 		JPanel grandPanel = new JPanel();
 		grandPanel.setLayout(new BorderLayout());
-		JPanel fieldPanel = new JPanel();
-		fieldPanel.setLayout(new GridLayout(2, 1));
+		JPanel fieldPanel = new JPanel(new BorderLayout());
+		//fieldPanel.setLayout(new GridLayout(2, 1));
 		
 		JPanel userPanel = new JPanel();
 		JLabel userL = new JLabel("Username");
@@ -88,8 +88,8 @@ public class LoginGUI extends JFrame{
 			}
 		});
 		
-		fieldPanel.add(userPanel);
-		fieldPanel.add(passPanel);
+		fieldPanel.add(userPanel, BorderLayout.NORTH);
+		fieldPanel.add(passPanel, BorderLayout.CENTER);
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
 		grandPanel.add(signInB, BorderLayout.SOUTH);
 		
