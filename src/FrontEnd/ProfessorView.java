@@ -214,5 +214,4 @@ public class ProfessorView extends JFrame {
 		searchresults.setPreferredSize(new Dimension(600,325));
 	}
 	
-	
 }
