@@ -9,12 +9,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.IllegalFormatCodePointException;
 import java.sql.Connection;
-
-import com.mysql.jdbc.Buffer;
-import com.mysql.jdbc.PreparedStatement;
 
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
