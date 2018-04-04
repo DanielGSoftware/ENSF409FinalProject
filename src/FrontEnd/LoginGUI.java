@@ -91,9 +91,8 @@ public class LoginGUI extends JFrame{
 		
 		fieldPanel.add(userPanel, BorderLayout.NORTH);
 		fieldPanel.add(passPanel, BorderLayout.CENTER);
-//		JPanel temp=new JPanel();
-//		temp.add(signInB);
-//		temp.add(comp, constraints);
+		JPanel temp=new JPanel();
+		temp.add(signInB);
 		fieldPanel.add(signInB, BorderLayout.SOUTH);
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
 		//grandPanel.add(signInB, BorderLayout.SOUTH);
