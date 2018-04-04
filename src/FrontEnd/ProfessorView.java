@@ -37,16 +37,16 @@ public class ProfessorView extends JFrame {
 	private JList<String> displaylist;
 	private Container container;
 	
-	public ProfessorView(String s, int proffid, String profffirstname, String profflastname)
+	public ProfessorView(int proffid, String profffirstname, String profflastname)
 	{
-		super(s);
+		super("Professor Learning Platform");
 		this.proffid=proffid;
 		this.profffirstname=profffirstname;
 		this.profflastname=profflastname;
-		container=this.getContentPane();
-		this.setLayout(new BorderLayout());
-		this.setSize(700, 500);
-		this.setResizable(false);
+		container=getContentPane();
+		setLayout(new BorderLayout());
+		setSize(700, 500);
+		setResizable(false);
 		createHomeTopDisplayPanel();
 		createCenterDisplay();
 		createBottomDisplayPanel();
