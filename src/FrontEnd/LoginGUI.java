@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,13 +22,13 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 public class LoginGUI extends JFrame{
+	private boolean validLogin;
 	
-	private LoginModel loginmodel;
+	private LoginModel theModel;
 	
 	private JTextField userT;
 	private JTextField passT;
 	private JButton signInB;
-	private JButton clear;
 	private Container container;
 	
 	/*
@@ -37,8 +39,9 @@ public class LoginGUI extends JFrame{
 	public Color myPeach = new Color(255, 209, 175);
 	public Color myOrange = new Color(255, 192, 78);
 	
-	public LoginGUI() {
+	public LoginGUI(ObjectInputStream readObject, ObjectOutputStream sendObject) {
 		super("Login");
+		theModel = new LoginModel(readObject, sendObject);
 		container = getContentPane();
 		setLayout(new BorderLayout());
 		setSize(500, 160);
@@ -91,6 +94,17 @@ public class LoginGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("STUFF SHOULD SEND");
+				System.out.println(userT.getText());
+				System.out.println(passT.getText());
+				validLogin = theModel.loginAttempt(userT.getText(), passT.getText());
+				if(validLogin) {
+					// make a student or proff?
+					System.out.println("CLOSING");
+					close();
+				}
+				else {
+					sendError("Check user info and try again please");
+				}
 			}
 		});
 		
@@ -120,9 +134,18 @@ public class LoginGUI extends JFrame{
 		});
 	}
 	
-	public static void main(String[] args) {
-		LoginGUI gui = new LoginGUI();
-		gui.setVisible(true);
+	private void close() {
+		System.exit(1);
 	}
+	
+	private void sendError(String s) {
+		JOptionPane.showMessageDialog(null, s,
+				"Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+//	public static void main(String[] args) {
+//		LoginGUI gui = new LoginGUI();
+//		gui.setVisible(true);
+//	}
 	
 }

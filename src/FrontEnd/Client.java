@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
+	private LoginGUI login;
 	private Socket socket;
 	private ObjectOutputStream sendObject;
 	private ObjectInputStream readObject;
@@ -23,7 +24,8 @@ public class Client {
 	
 	public void makeLoginGUI()
 	{
-		
+		login = new LoginGUI(readObject, sendObject);
+		login.setVisible(true);
 	}
 	
 	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) throws IOException 
@@ -38,8 +40,8 @@ public class Client {
 	{
 		try { 
 			Client client=new Client("localhost", 9090);
-			//client.makeLoginGUI();
-			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
+			client.makeLoginGUI();
+//			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
 		}
 		catch (IOException e) {
 			e.printStackTrace();

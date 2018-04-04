@@ -12,9 +12,9 @@ abstract class MainModel  {
 	protected ObjectInputStream readObject;
 	
 	
-	public MainModel(ObjectInputStream a, ObjectOutputStream b) {
-		readObject=a;
-		sendObject=b;
+	public MainModel(ObjectInputStream readObject, ObjectOutputStream sendObject) {
+		this.readObject= readObject;
+		this.sendObject=sendObject;
 	}
 	
 }
