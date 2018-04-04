@@ -118,7 +118,7 @@ public class ProfessorView extends JFrame {
 			}
 		}
 		
-		String[] argument= {"Welcome Professor "+profffirstname+""+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
+		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
 		listmodel=new DefaultListModel<String>();
 		listmodel.addElement(argument[0]);
 		listmodel.addElement(argument[1]);
