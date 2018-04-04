@@ -26,6 +26,7 @@ public class LoginGUI extends JFrame{
 	private JTextField userT;
 	private JTextField passT;
 	private JButton signInB;
+	private JButton clear;
 	private Container container;
 	
 	/*
@@ -90,8 +91,12 @@ public class LoginGUI extends JFrame{
 		
 		fieldPanel.add(userPanel, BorderLayout.NORTH);
 		fieldPanel.add(passPanel, BorderLayout.CENTER);
+//		JPanel temp=new JPanel();
+//		temp.add(signInB);
+//		temp.add(comp, constraints);
+		fieldPanel.add(signInB, BorderLayout.SOUTH);
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
-		grandPanel.add(signInB, BorderLayout.SOUTH);
+		//grandPanel.add(signInB, BorderLayout.SOUTH);
 		
 		container.add(grandPanel, BorderLayout.CENTER);
 	}
