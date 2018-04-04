@@ -20,4 +20,6 @@ public class User implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	
+	
 }
