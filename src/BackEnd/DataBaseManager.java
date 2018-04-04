@@ -26,7 +26,7 @@ public class DataBaseManager implements Runnable {
 	private Connection jdbc_connection;
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 			  LOGIN          = "root",
-			  PASSWORD       = "huzaifa147";
+			  PASSWORD       = "Thisisaserver";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	private String id;
