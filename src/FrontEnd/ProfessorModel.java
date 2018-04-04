@@ -24,14 +24,12 @@ public class ProfessorModel extends MainModel {
 		try {
 			System.out.println("writing info exchange to database");
 			sendObject.writeObject(infoExchange);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 			System.out.println("writing  coursse to database");
 			sendObject.writeObject(course);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 			infoExchange=(InfoExchange) readObject.readObject();
-			System.out.println("object of infoexhcnade recieved");
+			System.out.println("object of infoExchange recieved");
 			courselist=infoExchange.getInfo();
 		} catch (IOException e) {
 			System.out.println("Error: gdgdfgdfgdfgbroswe course in proff model wont work");
@@ -47,11 +45,9 @@ public class ProfessorModel extends MainModel {
 		InfoExchange infoExchange=new InfoExchange("Create Course Proff");
 		try {
 			sendObject.writeObject(infoExchange);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 			sendObject.writeObject(course);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 		} catch (IOException e) {
 			System.out.print("Error: broswe course in proff model wont work");
 		}
@@ -73,15 +69,17 @@ public class ProfessorModel extends MainModel {
 		InfoExchange infoExchange=new InfoExchange("Course Activation Status");
 		try {
 			sendObject.writeObject(infoExchange);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 			sendObject.writeObject(c);
-			sendObject.flush();
-			sendObject.reset();
+			flushAndReset(sendObject);
 		}
 		catch (IOException e) {
-			System.out.print("Error: course activation status wont work");
-
+			System.out.print("Error: Course Activation Status wont work");
 		}
+	}
+	
+	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
+		sendObject.flush();
+		sendObject.reset();
 	}
 }
