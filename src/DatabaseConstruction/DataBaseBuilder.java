@@ -34,13 +34,13 @@ public class DataBaseBuilder
 	public void createUserTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
-			     "ID INT(8) NOT NULL, " +
+			     "USER_ID INT(8) NOT NULL, " +
 			     "PASSWORD VARCHAR(20) NOT NULL, " + 
 			     "EMAIL VARCHAR(50) NOT NULL, " + 
 			     "FIRSTNAME VARCHAR(30) NOT NULL, " + 
 			     "LASTNAME VARCHAR(30) NOT NULL, " + 
 			     "TYPE CHAR(1) NOT NULL,"+
-			     "PRIMARY KEY ( id ))";
+			     "PRIMARY KEY ( user_id ))";
 		try {
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.executeUpdate();
@@ -92,11 +92,11 @@ public class DataBaseBuilder
 	public void createCourseTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
-			     "ID INT(8) NOT NULL, " +
+			     "COURSE_ID INT(8) NOT NULL, " +
 			     "PROFF_ID INT(8) NOT NULL, " + 
 			     "NAME VARCHAR(50) NOT NULL, " + 
 			     "ACTIVE INT(1) NOT NULL,"+
-			     "PRIMARY KEY ( id ))";
+			     "PRIMARY KEY ( course_id ))";
 		try {
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.executeUpdate();
@@ -143,12 +143,12 @@ public class DataBaseBuilder
 	}
 	
 	public void createStudentEnrollmentTable(String tablename)
-	{
+	{		
 		String sql = "CREATE TABLE " + tablename + "(" +
-			     "ID INT(8) NOT NULL, " +
-			     "STUDENT_ID INT(8) NOT NULL, " + 
-			     "COURSE_ID INT(8) NOT NULL, " + 
-			     "PRIMARY KEY ( id ))";
+			     "ENROLLMENT_ID INT(8) NOT NULL, " +
+			     "STUDENT_ID INT(8) NOT NULL, " +  
+			     "COURSE_ID INT(8) NOT NULL,"+
+			     "PRIMARY KEY ( enrollment_id ))";
 		try {
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.executeUpdate();
@@ -166,7 +166,7 @@ public class DataBaseBuilder
 //			while(sc.hasNext())
 //			{
 //				String string[] = sc.nextLine().split(";");
-				String sql = "INSERT INTO COURSES" +
+				String sql = "INSERT INTO Student_Enrollment" +
 						" VALUES ( ?, ?, ?)";
 				try{
 					statement = jdbc_connection.prepareStatement(sql);
@@ -198,7 +198,7 @@ public class DataBaseBuilder
 		DataBaseBuilder dataBaseBuilder=new DataBaseBuilder();
 		dataBaseBuilder.createUserTable("Users");
 		dataBaseBuilder.createCourseTable("Courses");
-		dataBaseBuilder.createStudentEnrollmentTable("Student Enrollment");
+		dataBaseBuilder.createStudentEnrollmentTable("Student_Enrollment");
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("Student Enrollment.txt");

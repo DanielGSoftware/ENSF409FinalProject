@@ -29,9 +29,9 @@ public class Course implements Serializable {
 			course=statement.executeQuery();
 			while (course.next()) {
 				if (course.getInt("ACTIVE")==1)
-					listofcoures.add(course.getString("NAME")+", Currently Active to Students");
+					listofcoures.add(course.getString("NAME")+";Currently Active to Students");
 				else 
-					listofcoures.add(course.getString("NAME")+", Currently Inactive to Students");
+					listofcoures.add(course.getString("NAME")+";Currently Inactive to Students");
 			}
 		}
 		catch (SQLException e)
@@ -49,7 +49,8 @@ public class Course implements Serializable {
 	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement, String id)
 	{
 		String sql = "INSERT INTO " + coursetable +
-				" VALUES ( ?, ?, ?, ?)";
+				" VALUES (?,?,?,?);";
+		
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.setInt(1, Integer.parseInt(id));
@@ -58,6 +59,22 @@ public class Course implements Serializable {
 			statement.setInt(4, active);
 			statement.executeUpdate();
 			id=Integer.toString(Integer.parseInt(id)+10);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}	
+	}
+	
+	public void courseActivationStatus(String coursetable, Connection jdbc_connection, PreparedStatement statement)
+	{
+		System.out.println("CHanging course active status");
+		String sql = "UPDATE "+coursetable+ " SET ACTIVE = ? WHERE NAME = ?";
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, active);
+			statement.setString(2, name);
+			statement.executeUpdate();
 		}
 		catch(SQLException e)
 		{

@@ -58,6 +58,11 @@ public class ProfessorView extends JFrame {
 		return proffid;
 	}
 	
+	public DefaultListModel<String> getListModel()
+	{
+		return listmodel;
+	}
+	 
 	private void createBanner(JPanel[][] temp)
 	{
 		JLabel banner=new JLabel("Professor Learning Platforms");
@@ -225,4 +230,22 @@ public class ProfessorView extends JFrame {
 		searchresults.setPreferredSize(new Dimension(600,325));
 	}
 	
+	public void addCourseActiveListener(ActionListener a)
+	{
+		setassignmentactive.addActionListener(a);
+	}
+	
+	public String[] getSelectedList()
+	{
+		int index=displaylist.getSelectedIndex();
+			String line = (String) listmodel.get(index);
+			String[] strings=line.split(";");
+			return strings;
+	}
+	
+	public void displayCourseActiveUpdateMessage()
+	{
+		JOptionPane.showMessageDialog(null, "Course Activation Status Sucessfully Changed. Please hit browse courses to "
+				+ "see changes","Success",JOptionPane.PLAIN_MESSAGE);
+	}
 }

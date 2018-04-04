@@ -26,7 +26,7 @@ public class DataBaseManager implements Runnable {
 	private Connection jdbc_connection;
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 			  LOGIN          = "root",
-			  PASSWORD       = "Thisisaserver";
+			  PASSWORD       = "huzaifa147";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	private String id;
@@ -57,6 +57,11 @@ public class DataBaseManager implements Runnable {
 				{
 					Course course=(Course)readobject.readObject();
 					course.createCourse(COURSETABLE, jdbc_connection, statement, id);
+				}
+				else if (string.equals("Course Activation Status"))
+				{
+					Course course=(Course)readobject.readObject();
+					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
 			} 
 			catch (ClassNotFoundException | IOException e) {

@@ -3,6 +3,11 @@ package FrontEnd;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import SharedObjects.Course;
+
 public class ProfessorControl {
 	private ProfessorModel pModel;
 	private ProfessorView pView;
@@ -12,6 +17,7 @@ public class ProfessorControl {
 		pView=view;
 		pView.addCreateCourseListener(new CreateCourseListener());
 		pView.addBrowseCourseListener(new BrowseCourseListener());
+		pView.addCourseActiveListener(new CourseActiveStatus());
 		pView.setVisible(true);
 	}
 	
@@ -35,6 +41,25 @@ public class ProfessorControl {
 		}
 		
 	}
+	
+	class CourseActiveStatus implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String[] course=pView.getSelectedList();
+			pModel.courseActive(course);
+			pView.displayCourseActiveUpdateMessage();
+		}
+	}
+	
+//	class ListListener implements ListSelectionListener
+//	{
+//		@Override
+//		public void valueChanged(ListSelectionEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//	}
 	
 //	public static void main(String[] args)
 //	{

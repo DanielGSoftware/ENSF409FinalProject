@@ -34,9 +34,9 @@ public class ProfessorModel extends MainModel {
 			System.out.println("object of infoexhcnade recieved");
 			courselist=infoExchange.getInfo();
 		} catch (IOException e) {
-			System.out.print("Error: broswe course in proff model wont work");
+			System.out.println("Error: gdgdfgdfgdfgbroswe course in proff model wont work");
 		} catch (ClassNotFoundException e) {
-			System.out.print("Error: broswe course in proff model wont work");
+			System.out.println("Error: broswe course in proff model wont work");
 		}
 		return courselist;
 	}
@@ -54,6 +54,33 @@ public class ProfessorModel extends MainModel {
 			sendObject.reset();
 		} catch (IOException e) {
 			System.out.print("Error: broswe course in proff model wont work");
+		}
+	}
+	
+	public void courseActive(String[] course) 
+	{
+		//Course course=new Course (0, coursename[], -1);
+		String coursename=course[0];
+		String active=course[1];
+		Course c=null;
+		if (active.equals("Currently Active to Students")) {
+			c=new Course(0, coursename, 0);
+		}
+		else {
+			c=new Course(0, coursename, 1);
+		}
+		InfoExchange infoExchange=new InfoExchange("Course Activation Status");
+		try {
+			sendObject.writeObject(infoExchange);
+			sendObject.flush();
+			sendObject.reset();
+			sendObject.writeObject(c);
+			sendObject.flush();
+			sendObject.reset();
+		}
+		catch (IOException e) {
+			System.out.print("Error: course activation status wont work");
+
 		}
 	}
 }
