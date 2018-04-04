@@ -39,7 +39,7 @@ public class LoginGUI extends JFrame{
 		super("Login");
 		container = getContentPane();
 		setLayout(new BorderLayout());
-		setSize(500, 200);
+		setSize(500, 160);
 		setResizable(false);
 		
 		createLoginBanner();
@@ -59,10 +59,8 @@ public class LoginGUI extends JFrame{
 	}
 	
 	private void createMainPanel() {
-		JPanel grandPanel = new JPanel();
-		grandPanel.setLayout(new BorderLayout());
+		JPanel grandPanel = new JPanel(new BorderLayout());
 		JPanel fieldPanel = new JPanel(new BorderLayout());
-		//fieldPanel.setLayout(new GridLayout(2, 1));
 		
 		JPanel userPanel = new JPanel();
 		JLabel userL = new JLabel("Username");
@@ -70,7 +68,7 @@ public class LoginGUI extends JFrame{
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
-//		userPanel.setBackground(Color.white);
+		userPanel.setBackground(Color.white);
 		
 		JPanel passPanel = new JPanel();
 		JLabel passL = new JLabel("Password");
@@ -78,9 +76,12 @@ public class LoginGUI extends JFrame{
 		passT.setColumns(15);
 		passPanel.add(passL);
 		passPanel.add(passT);
-//		passPanel.setBackground(Color.WHITE);
+		passPanel.setBackground(Color.white);
 		
+		JPanel signInPanel = new JPanel();
 		signInB = new JButton("Sign In");
+		signInPanel.add(signInB);
+		signInPanel.setBackground(Color.white);
 		signInB.addActionListener(new ActionListener() {
 			
 			@Override
@@ -89,19 +90,12 @@ public class LoginGUI extends JFrame{
 			}
 		});
 		
+		
 		fieldPanel.add(userPanel, BorderLayout.NORTH);
 		fieldPanel.add(passPanel, BorderLayout.CENTER);
-
-		JPanel temp=new JPanel();
-		temp.add(signInB);
-		fieldPanel.add(signInB, BorderLayout.SOUTH);
+		fieldPanel.add(signInPanel, BorderLayout.SOUTH);
 		
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
-		
-		JPanel signInPanel = new JPanel();
-		signInPanel.add(signInB);
-		
-		grandPanel.add(signInPanel, BorderLayout.SOUTH);
 		
 		container.add(grandPanel, BorderLayout.CENTER);
 	}
