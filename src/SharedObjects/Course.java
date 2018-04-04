@@ -9,17 +9,21 @@ public class Course implements Serializable {
 	private int proffid;
 	private String name;
 	private int active;
+	private int courseid;
 	private static final long serialVersionUID = 1;
+	private int id=3000;
 
-	public Course(int proffid, String name, int active)
+	public Course(int proffid, String name, int active, int courseid)
 	{
 		this.proffid=proffid;
 		this.name=name;
 		this.active=active;
+		this.courseid=courseid;
 	}
 	
 	public String[] browseCourses(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
+		System.out.println("in browse courses");
 		String sql= "SELECT * FROM " +coursetable+ " WHERE PROFF_ID=?";
 		ArrayList<String> listofcoures=new ArrayList<String>();
 		ResultSet course;
@@ -28,10 +32,11 @@ public class Course implements Serializable {
 			statement.setInt(1, proffid);
 			course=statement.executeQuery();
 			while (course.next()) {
+				String courseid= String.valueOf(course.getInt("COURSE_ID"));
 				if (course.getInt("ACTIVE")==1)
-					listofcoures.add(course.getString("NAME")+";Currently Active to Students");
+					listofcoures.add("werwer;"+course.getString("NAME")+";Currently Active to Students"+"fgfg");
 				else 
-					listofcoures.add(course.getString("NAME")+";Currently Inactive to Students");
+					listofcoures.add("dddd;"+course.getString("NAME")+";Currently Inactive to Students"+"ffffffffffff");
 			}
 		}
 		catch (SQLException e)
@@ -43,22 +48,27 @@ public class Course implements Serializable {
 		for (int i=0; i<listofcoures.size(); i++) {
 			temp[i]=listofcoures.get(i);
 		}
+		
+		for (int i=0; i<listofcoures.size(); i++) {
+			System.out.println(listofcoures.get(i));
+		}
+		
 		return temp;
 	}
 	
-	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement, String id)
+	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql = "INSERT INTO " + coursetable +
 				" VALUES (?,?,?,?);";
 		
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, Integer.parseInt(id));
+			statement.setInt(1, id);
 			statement.setInt(2, proffid);
 			statement.setString(3, name);
 			statement.setInt(4, active);
 			statement.executeUpdate();
-			id=Integer.toString(Integer.parseInt(id)+10);
+			id+=10;
 		}
 		catch(SQLException e)
 		{
@@ -69,11 +79,11 @@ public class Course implements Serializable {
 	public void courseActivationStatus(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("CHanging course active status");
-		String sql = "UPDATE "+coursetable+ " SET ACTIVE = ? WHERE NAME = ?";
+		String sql = "UPDATE "+coursetable+ " SET ACTIVE = ? WHERE COURSE_ID = ?";
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, active);
-			statement.setString(2, name);
+			statement.setInt(1, 1);
+			statement.setInt(2, 1130);
 			statement.executeUpdate();
 		}
 		catch(SQLException e)

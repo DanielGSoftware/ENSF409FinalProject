@@ -232,15 +232,17 @@ public class ProfessorView extends JFrame {
 	
 	public void addCourseActiveListener(ActionListener a)
 	{
-		setassignmentactive.addActionListener(a);
+		setactive.addActionListener(a);
 	}
 	
 	public String[] getSelectedList()
 	{
-		int index=displaylist.getSelectedIndex();
-			String line = (String) listmodel.get(index);
-			String[] strings=line.split(";");
-			return strings;
+		System.out.println("In selected list method");
+		//int index=displaylist.getSelectedIndex();
+		int index=1;
+		String line = (String) listmodel.get(index);
+		String[] strings=line.split(";");
+		return strings;
 	}
 	
 	public void displayCourseActiveUpdateMessage()

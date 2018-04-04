@@ -46,6 +46,7 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("courseactivestatus button hit in control class");
 			String[] course=pView.getSelectedList();
 			pModel.courseActive(course);
 			pView.displayCourseActiveUpdateMessage();

@@ -47,22 +47,27 @@ public class DataBaseManager implements Runnable {
 				System.out.println("Recieved object of infoexchange");
 				String string=infoExchange.getOpcode();
 				System.out.println("Now in checkOperation");
+				
 				if (string.equals("Browse Courses Proff")){
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
-					infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+					//infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
+					infoExchange.setInfo(course.browseCourses(COURSETABLE, jdbc_connection, statement));
 					writeobject.writeObject(infoExchange);
 				}
+				
 				else if (string.equals("Create Course Proff"))
 				{
 					Course course=(Course)readobject.readObject();
-					course.createCourse(COURSETABLE, jdbc_connection, statement, id);
+					course.createCourse(COURSETABLE, jdbc_connection, statement);
 				}
+				
 				else if (string.equals("Course Activation Status"))
 				{
 					Course course=(Course)readobject.readObject();
 					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
+				
 			} 
 			catch (ClassNotFoundException | IOException e) {
 				System.out.println("Client has left");
