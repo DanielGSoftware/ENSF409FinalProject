@@ -88,6 +88,25 @@ public class DataBaseBuilder
 		}
 	}
 	
+		
+	public void createCourseTable(String tablename)
+	{
+		String sql = "CREATE TABLE " + tablename + "(" +
+			     "ID INT(8) NOT NULL, " +
+			     "PROFF_ID INT(8) NOT NULL, " + 
+			     "NAME VARCHAR(50) NOT NULL, " + 
+			     "ACTIVE INT(1) NOT NULL,"+
+			     "PRIMARY KEY ( id ))";
+		try {
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.executeUpdate();
+			System.out.println("Created Table " + tablename);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void fillCourseTable(String filename)
 	{
 		try{
@@ -122,14 +141,13 @@ public class DataBaseBuilder
 			e.printStackTrace();
 		}
 	}
-		
-	public void createCourseTable(String tablename)
+	
+	public void createStudentEnrollmentTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
 			     "ID INT(8) NOT NULL, " +
-			     "PROFF_ID INT(8) NOT NULL, " + 
-			     "NAME VARCHAR(50) NOT NULL, " + 
-			     "ACTIVE INT(1) NOT NULL,"+
+			     "STUDENT_ID INT(8) NOT NULL, " + 
+			     "COURSE_ID INT(8) NOT NULL, " + 
 			     "PRIMARY KEY ( id ))";
 		try {
 			statement = jdbc_connection.prepareStatement(sql);
@@ -141,12 +159,48 @@ public class DataBaseBuilder
 		}
 	}
 	
+	public void fillStudentEnrollmentTable(String filename)
+	{
+		try{
+//			Scanner sc = new Scanner(new FileReader(filename));
+//			while(sc.hasNext())
+//			{
+//				String string[] = sc.nextLine().split(";");
+				String sql = "INSERT INTO COURSES" +
+						" VALUES ( ?, ?, ?)";
+				try{
+					statement = jdbc_connection.prepareStatement(sql);
+					statement.setInt(1, id);
+					statement.setInt(2, 1000);
+					statement.setInt(3, 1080);
+					statement.executeUpdate();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				id+=10;
+			//}
+			//sc.close();
+		}
+//		catch(FileNotFoundException e)
+//		{
+//			System.err.println("File " + filename + " Not Found!");
+//		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) throws SQLException
 	{
 		DataBaseBuilder dataBaseBuilder=new DataBaseBuilder();
 		dataBaseBuilder.createUserTable("Users");
 		dataBaseBuilder.createCourseTable("Courses");
+		dataBaseBuilder.createStudentEnrollmentTable("Student Enrollment");
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
+		dataBaseBuilder.fillStudentEnrollmentTable("Student Enrollment.txt");
 	}
 }
