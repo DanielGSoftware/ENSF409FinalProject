@@ -67,6 +67,9 @@ public class DataBaseManager implements Runnable {
 					Course course=(Course)readobject.readObject();
 					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
+				else if(string.equals("Login Attempt")) {
+					
+				}
 				
 			} 
 			catch (ClassNotFoundException | IOException e) {
