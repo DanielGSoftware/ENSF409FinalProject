@@ -2,11 +2,36 @@ package SharedObjects;
 
 import java.io.Serializable;
 
-public abstract class InfoExchange implements Serializable {
+public class InfoExchange implements Serializable {
+	private String opcode;
+	private String[] info;
+	private static final long serialVersionUID = 2;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	public InfoExchange(String opcode)
+	{
+		this.opcode=opcode;
+		info=null;
+	}
+	
+	public InfoExchange(String[] info)
+	{
+		this.info=info;
+		opcode=null;
+	}
+	
+	public String getOpcode()
+	{
+		return opcode;
+	}
+	
+	public void setInfo(String[] a)
+	{
+		info=a;
+	}
+	
+	public String[] getInfo()
+	{
+		return info;
+	}
+	
 }
