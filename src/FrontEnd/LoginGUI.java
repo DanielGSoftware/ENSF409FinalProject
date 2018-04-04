@@ -34,6 +34,8 @@ public class LoginGUI extends JFrame{
 	 * the mean time use this code for everything
 	 */
 	public Color myPink = new Color(255, 166, 207);
+	public Color myPeach = new Color(255, 209, 175);
+	public Color myOrange = new Color(255, 192, 78);
 	
 	public LoginGUI() {
 		super("Login");
@@ -51,9 +53,9 @@ public class LoginGUI extends JFrame{
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(Color.white);
+		banner.setForeground(new Color(80, 86, 87));
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(myPink);
+		bannerPanel.setBackground(myPeach);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
@@ -68,6 +70,7 @@ public class LoginGUI extends JFrame{
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
+//		userPanel.setBackground(new Color(198, 199, 255));
 		userPanel.setBackground(Color.white);
 		
 		JPanel passPanel = new JPanel();
@@ -76,6 +79,7 @@ public class LoginGUI extends JFrame{
 		passT.setColumns(15);
 		passPanel.add(passL);
 		passPanel.add(passT);
+//		passPanel.setBackground(new Color(198, 199, 255));
 		passPanel.setBackground(Color.white);
 		
 		JPanel signInPanel = new JPanel();
