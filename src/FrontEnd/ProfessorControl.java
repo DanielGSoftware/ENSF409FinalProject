@@ -58,7 +58,7 @@ public class ProfessorControl {
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			
+			System.out.println("LISTENER TEST");
 			pView.setCoursePage();
 		}
 	}

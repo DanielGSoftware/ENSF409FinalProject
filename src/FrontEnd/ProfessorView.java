@@ -245,6 +245,7 @@ public class ProfessorView extends JFrame {
 	
 	public void setCoursePage()
 	{
+		System.out.println("SET COURSE PAGE TEST");
 		String[] strings=getSelectedList();
 		updateDisplay(strings);
 	}
