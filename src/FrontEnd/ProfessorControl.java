@@ -37,7 +37,8 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String[] courselist=pModel.browseCourse(pView.getProffID());
-			  pView.updateDisplay(courselist);
+			pView.updateDisplay(courselist);
+			pView.addListListener(new ListListener());
 		}
 		
 	}
@@ -53,14 +54,14 @@ public class ProfessorControl {
 		}
 	}
 	
-//	class ListListener implements ListSelectionListener
-//	{
-//		@Override
-//		public void valueChanged(ListSelectionEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//	}
+	class ListListener implements ListSelectionListener
+	{
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			
+			pView.setCoursePage();
+		}
+	}
 	
 //	public static void main(String[] args)
 //	{

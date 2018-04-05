@@ -82,8 +82,8 @@ public class Course implements Serializable {
 		String sql = "UPDATE "+coursetable+ " SET ACTIVE = ? WHERE COURSE_ID = ?";
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, 1);
-			statement.setInt(2, 1130);
+			statement.setInt(1, active);
+			statement.setInt(2, courseid);
 			statement.executeUpdate();
 		}
 		catch(SQLException e)

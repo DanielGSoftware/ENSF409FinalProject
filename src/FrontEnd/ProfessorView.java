@@ -16,6 +16,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionListener;
 
 import SharedObjects.Course;
 
@@ -220,14 +221,16 @@ public class ProfessorView extends JFrame {
 			listmodel.addElement(list[i]);
 		}
 		
-		displaylist=new JList<String>(listmodel);
-		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		displaylist.setVisibleRowCount(15);
-		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
-		
-		searchresults=new JScrollPane(displaylist);
-		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		searchresults.setPreferredSize(new Dimension(600,325));
+//		//displaylist=new JList<String>(listmodel);
+//		((DefaultListModel<String>)displaylist.getModel()).clear();
+//		displaylist.setModel(listmodel);
+//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		displaylist.setVisibleRowCount(15);
+//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+//		
+//		searchresults=new JScrollPane(displaylist);
+//		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		searchresults.setPreferredSize(new Dimension(600,325));
 	}
 	
 	public void addCourseActiveListener(ActionListener a)
@@ -235,13 +238,24 @@ public class ProfessorView extends JFrame {
 		setactive.addActionListener(a);
 	}
 	
+	public void addListListener(ListSelectionListener a)
+	{
+		displaylist.addListSelectionListener(a);
+	}
+	
+	public void setCoursePage()
+	{
+		String[] strings=getSelectedList();
+		updateDisplay(strings);
+	}
+	
 	public String[] getSelectedList()
 	{
 		System.out.println("In selected list method");
-		//int index=displaylist.getSelectedIndex();
-		int index=1;
-		String line = (String) listmodel.get(index);
-		String[] strings=line.split(";");
+		System.out.println(displaylist.getSelectedValue());
+		String string=displaylist.getSelectedValue();
+		System.out.println(displaylist==null);
+		String[] strings=string.split(";");
 		return strings;
 	}
 	
