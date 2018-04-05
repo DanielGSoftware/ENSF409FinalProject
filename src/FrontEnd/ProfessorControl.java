@@ -18,6 +18,7 @@ public class ProfessorControl {
 		pView.addCreateCourseListener(new CreateCourseListener());
 		pView.addBrowseCourseListener(new BrowseCourseListener());
 		pView.addCourseActiveListener(new CourseActiveStatus());
+		pView.addListListener(new ListListener());
 		pView.setVisible(true);
 	}
 	
@@ -38,7 +39,6 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] courselist=pModel.browseCourse(pView.getProffID());
 			pView.updateDisplay(courselist);
-			pView.addListListener(new ListListener());
 		}
 		
 	}
@@ -58,7 +58,6 @@ public class ProfessorControl {
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			
 			pView.setCoursePage();
 		}
 	}

@@ -252,7 +252,6 @@ public class ProfessorView extends JFrame {
 	public String[] getSelectedList()
 	{
 		System.out.println("In selected list method");
-		System.out.println(displaylist.getSelectedValue());
 		String string=displaylist.getSelectedValue();
 		System.out.println(displaylist==null);
 		String[] strings=string.split(";");
