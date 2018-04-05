@@ -58,6 +58,7 @@ public class ProfessorControl {
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
+			System.out.println("in list acton listener");
 			pView.setCoursePage();
 		}
 	}

@@ -139,7 +139,9 @@ public class ProfessorView extends JFrame {
 		listmodel=new DefaultListModel<String>();
 		listmodel.addElement(argument[0]);
 		listmodel.addElement(argument[1]);
-		displaylist=new JList<String>(listmodel);
+		displaylist=new JList<String>();
+		displaylist.setModel(listmodel);
+		System.out.println("In constructor: " + displaylist.getModel().getSize());
 		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		displaylist.setVisibleRowCount(15);
 		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
@@ -215,11 +217,16 @@ public class ProfessorView extends JFrame {
 	public void updateDisplay(String[] list)
 	{
 		System.out.println("updating display");
-		listmodel.removeAllElements();
+		while (!listmodel.isEmpty())
+		{
+			listmodel.removeElementAt(0);
+		}
 		
 		for (int i=0; i<list.length; i++) {
 			listmodel.addElement(list[i]);
 		}
+		
+	//	displaylist.setModel(listmodel);
 		
 //		//displaylist=new JList<String>(listmodel);
 //		((DefaultListModel<String>)displaylist.getModel()).clear();
@@ -245,15 +252,21 @@ public class ProfessorView extends JFrame {
 	
 	public void setCoursePage()
 	{
+		System.out.println("SET COURSE PAGE TEST");
 		String[] strings=getSelectedList();
+		System.out.println("LMAO");
 		updateDisplay(strings);
 	}
 	
 	public String[] getSelectedList()
 	{
-		System.out.println("In selected list method");
+		System.o ut.println("In selected list method");
+		System.out.println(displaylist.getSelectedValue());
+		System.out.println(displaylist.getModel().getElementAt(0));
+		//String string=displaylist.getSelectedValue();
+//		int index=0;
 		String string=displaylist.getSelectedValue();
-		System.out.println(displaylist==null);
+		System.out.println(string);
 		String[] strings=string.split(";");
 		return strings;
 	}

@@ -2,7 +2,8 @@ package FrontEnd;
 
 
 import java.net.Socket;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,7 +15,8 @@ import java.net.UnknownHostException;
 
 
 public class Client {
-	private LoginGUI login;
+	private LoginGUI loginView;
+//	private LoginModel loginModel;
 	private Socket socket;
 	private ObjectOutputStream sendObject;
 	private ObjectInputStream readObject;
@@ -28,8 +30,8 @@ public class Client {
 	
 	public void makeLoginGUI()
 	{
-		login = new LoginGUI(readObject, sendObject);
-		login.setVisible(true);
+		loginView = new LoginGUI(readObject, sendObject);
+		loginView.setVisible(true);
 	}
 	
 	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) throws IOException 
@@ -49,6 +51,15 @@ public class Client {
 		}
 		catch (IOException e) {
 			e.printStackTrace();
+		}
+		
+	}
+	
+	public class SignInListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			loginView
 		}
 		
 	}

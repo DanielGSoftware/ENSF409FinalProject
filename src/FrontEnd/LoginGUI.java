@@ -52,6 +52,14 @@ public class LoginGUI extends JFrame{
 		makeWindowListener();
 	}
 	
+	public String getUser() {
+		return userT.getText();
+	}
+	
+	public String getPass() {
+		return passT.getText();
+	}
+	
 	private void createLoginBanner() {
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
@@ -116,6 +124,10 @@ public class LoginGUI extends JFrame{
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
 		
 		container.add(grandPanel, BorderLayout.CENTER);
+	}
+	
+	public void addSignInActionListener(ActionListener aListener) {
+		signInB.addActionListener(aListener);
 	}
 	
 	private void makeWindowListener()
