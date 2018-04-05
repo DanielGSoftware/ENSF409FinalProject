@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class InfoExchange implements Serializable {
 	private String opcode;
 	private String[] info;
-	private static final long serialVersionUID = 2;
+	private static final long serialVersionUID = 4;
 
 	public InfoExchange(String opcode)
 	{
