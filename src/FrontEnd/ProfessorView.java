@@ -121,7 +121,7 @@ public class ProfessorView extends JFrame {
 		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
 		
 		JPanel bannerPanel = new JPanel();
-		createBanner(bannerPanel, "Professor Learning Platforms");
+		createBanner(bannerPanel, "Professor Learning Platform");
 		
 		JPanel buttonPanel=new JPanel();
 		createCourses=new JButton("CREATE A COURSE");
