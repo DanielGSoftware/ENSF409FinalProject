@@ -11,7 +11,6 @@ abstract class MainModel  {
 	protected ObjectOutputStream sendObject;
 	protected ObjectInputStream readObject;
 	
-	
 	public MainModel(ObjectInputStream readObject, ObjectOutputStream sendObject) {
 		this.readObject= readObject;
 		this.sendObject=sendObject;

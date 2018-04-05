@@ -1,14 +1,64 @@
 package SharedObjects;
 
-public class StudentEnrollment extends InfoExchange{
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-	public StudentEnrollment(String opcode) {
-		super(opcode);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Supposed to be different than InfoExchange's UID?	
-	 */
+public class StudentEnrollment implements Serializable{
+	private int studentid;
+	private int courseid;
+	private int enrollmentid;
 	private static final long serialVersionUID = 5;
+
+	public StudentEnrollment(int enrollmentid, int studentid, int courseid) {
+		this.enrollmentid=enrollmentid;
+		this.studentid=studentid;
+		this.courseid=courseid;
+	}
+	
+	public int getStudentId()
+	{
+		return studentid;
+	}
+	
+	public boolean browseStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		System.out.println("in browse enrolled stuendts");
+		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID=?";
+		ResultSet object;
+		try {
+			statement=jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, studentid);
+			object=statement.executeQuery();
+			while (object.next()) {
+				if (object.getInt("STUDENT_ID")==studentid)
+					return true;
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public void deleteEnrollment(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql = "DELETE FROM " +table + " WHERE STUDENT_ID=? AND COURSE_ID=?";
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, studentid);
+			statement.setInt(2, courseid);
+			statement.executeUpdate();
+			System.out.println("enrollment removed");
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 
 public class Client {
 	private LoginGUI loginView;
-//	private LoginModel loginModel;
+	private LoginModel loginModel;
 	private Socket socket;
 	private ObjectOutputStream sendObject;
 	private ObjectInputStream readObject;
@@ -31,7 +31,9 @@ public class Client {
 	public void makeLoginGUI()
 	{
 		loginView = new LoginGUI(readObject, sendObject);
-		loginView.setVisible(true);
+		loginView.addSignInActionListener(new SignInListener());
+		loginModel=new LoginModel(readObject, sendObject);
+		loginView.setVisible(true); 
 	}
 	
 	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) throws IOException 
@@ -46,8 +48,8 @@ public class Client {
 	{
 		try { 
 			Client client=new Client("localhost", 9090);
-//			client.makeLoginGUI();
-			client.makeProfessorGUI("Winston", "DaGorilla", 1030);
+			client.makeLoginGUI();
+			//client.makeProfessorGUI("Winston", "DaGorilla", 1030);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -59,7 +61,21 @@ public class Client {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			loginView
+			System.out.println("send buytton presed");
+			String[] string=loginModel.loginAttempt(loginView.getUser(), loginView.getPass());
+			System.out.println(string);
+			if (string!=null) {
+				loginView.setVisible(false);
+				try {
+					makeProfessorGUI(string[0], string[1], Integer.parseInt(string[2]));
+				} catch (NumberFormatException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				loginView.sendError("Proff does not exist");
+			}
 		}
 		
 	}

@@ -5,13 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
 
-public class Course implements Serializable {
+public class Course implements Serializable{
 	private int proffid;
 	private String name;
 	private int active;
 	private int courseid;
 	private static final long serialVersionUID = 2;
-	private int id=3000;
 
 	public Course(int proffid, String name, int active, int courseid)
 	{
@@ -56,7 +55,7 @@ public class Course implements Serializable {
 		return temp;
 	}
 	
-	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement)
+	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement, int id)
 	{
 		String sql = "INSERT INTO " + coursetable +
 				" VALUES (?,?,?,?);";
@@ -68,7 +67,6 @@ public class Course implements Serializable {
 			statement.setString(3, name);
 			statement.setInt(4, active);
 			statement.executeUpdate();
-			id+=10;
 		}
 		catch(SQLException e)
 		{

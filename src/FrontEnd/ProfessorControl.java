@@ -12,6 +12,7 @@ public class ProfessorControl {
 	private ProfessorModel pModel;
 	private ProfessorView pView;
 	
+	
 	public ProfessorControl(ProfessorModel model, ProfessorView view) {
 		pModel=model; 
 		pView=view;
@@ -61,6 +62,29 @@ public class ProfessorControl {
 			System.out.println("in list acton listener");
 			pView.setCoursePage();
 		}
+	}
+	
+	class SearchStudentsListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//add to search students button
+			//some JOptionPane gives  student id and courseid
+			String[] strings=pModel.SearchStudents(1000, 1070);
+			//display information in gui 
+		}
+	}
+	
+	class StudentEnrollmentListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//picks up what student is hit
+			pModel.StudentEnrollment(1060,1110);
+			
+		}
+		
 	}
 	
 //	public static void main(String[] args)

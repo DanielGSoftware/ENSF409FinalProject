@@ -16,6 +16,7 @@ import java.sql.Connection;
 
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
+import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
 
 public class DataBaseManager implements Runnable {
@@ -28,14 +29,15 @@ public class DataBaseManager implements Runnable {
 			  PASSWORD       = "huzaifa147";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
-	private String id;
+	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
+	private int id;
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
 		readobject=new ObjectInputStream(socket.getInputStream());
 		Class.forName("com.mysql.jdbc.Driver");
 		jdbc_connection = DriverManager.getConnection(CONNECTIONINFO, LOGIN, PASSWORD);
-		id="5000";
+		id=3000;
 	}
 	
 	@Override
@@ -47,7 +49,15 @@ public class DataBaseManager implements Runnable {
 				String string=infoExchange.getOpcode();
 				System.out.println("Now in checkOperation");
 				
-				if (string.equals("Browse Courses Proff")){
+				if (string.equals("Login Attempt"))
+				{
+					User object= (User) readobject.readObject();
+					String[] strings=object.findUser(USERTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(strings);
+					writeobject.writeObject(infoExchange);
+				}
+				
+				else if (string.equals("Browse Courses Proff")){
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
 					//infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
@@ -58,7 +68,8 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Create Course Proff"))
 				{
 					Course course=(Course)readobject.readObject();
-					course.createCourse(COURSETABLE, jdbc_connection, statement);
+					course.createCourse(COURSETABLE, jdbc_connection, statement, id);
+					id+=10;
 				}
 				
 				else if (string.equals("Course Activation Status"))
@@ -66,9 +77,29 @@ public class DataBaseManager implements Runnable {
 					Course course=(Course)readobject.readObject();
 					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
+				
 				else if(string.equals("Login Attempt")) {
 					User user = (User)readobject.readObject(); 
-					
+				}
+				
+				else if (string.equals("Search Students Proff"))
+				{
+					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
+					if (object.browseStudentsEnrolled(USERTABLE, jdbc_connection, statement)) {
+						User user=new User(object.getStudentId(), null, null, null, null, "S");
+						String[] strings=user.findUser(USERTABLE, jdbc_connection, statement);
+						infoExchange.setInfo(strings);
+						writeobject.writeObject(infoExchange);
+					}
+					else {
+						System.out.println("student in course not found");
+					}	
+				}
+				
+				else if (string.equals("Student Enrollment Proff"))
+				{
+					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
+					object.deleteEnrollment(USERTABLE, jdbc_connection, statement);
 				}
 				
 			} 

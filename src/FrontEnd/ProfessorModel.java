@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
+import SharedObjects.StudentEnrollment;
 
 public class ProfessorModel extends MainModel {
 	
@@ -75,6 +76,39 @@ public class ProfessorModel extends MainModel {
 		catch (IOException e) {
 			System.out.print("Error: Course Activation Status wont work");
 		}
+	}
+	
+	public String[] SearchStudents(int studentid, int courseid)
+	{
+		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
+		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(se);
+			flushAndReset(sendObject);
+			infoExchange= (InfoExchange) readObject.readObject();
+		} catch (IOException e) {
+			System.out.print("Error: search enn in proff model wont work");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return infoExchange.getInfo();
+	}
+	
+	public void StudentEnrollment(int studentid, int courseid)
+	{
+		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
+		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(se);
+			flushAndReset(sendObject);
+		} catch (IOException e) {
+			System.out.print("Error: search enn in proff model wont work");
+		} 
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {

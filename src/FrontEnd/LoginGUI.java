@@ -97,24 +97,24 @@ public class LoginGUI extends JFrame{
 		signInB = new JButton("Sign In");
 		signInPanel.add(signInB);
 		signInPanel.setBackground(Color.white);
-		signInB.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("STUFF SHOULD SEND");
-				System.out.println(userT.getText());
-				System.out.println(passT.getText());
-				validLogin = theModel.loginAttempt(userT.getText(), passT.getText());
-				if(validLogin) {
-					// make a student or proff?
-					System.out.println("CLOSING");
-					close();
-				}
-				else {
-					sendError("Check user info and try again please");
-				}
-			}
-		});
+//		signInB.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println("STUFF SHOULD SEND");
+//				System.out.println(userT.getText());
+//				System.out.println(passT.getText());
+//				validLogin = theModel.loginAttempt(userT.getText(), passT.getText());
+//				if(validLogin) {
+//					// make a student or proff?
+//					System.out.println("CLOSING");
+//					close();
+//				}
+//				else {
+//					sendError("Check user info and try again please");
+//				}
+//			}
+//		});
 		
 		
 		fieldPanel.add(userPanel, BorderLayout.NORTH);
@@ -150,14 +150,8 @@ public class LoginGUI extends JFrame{
 		System.exit(1);
 	}
 	
-	private void sendError(String s) {
+	public void sendError(String s) {
 		JOptionPane.showMessageDialog(null, s,
 				"Error", JOptionPane.ERROR_MESSAGE);
 	}
-	
-//	public static void main(String[] args) {
-//		LoginGUI gui = new LoginGUI();
-//		gui.setVisible(true);
-//	}
-	
 }

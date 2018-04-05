@@ -17,7 +17,7 @@ public class DataBaseBuilder
 	private String connectionInfo = "jdbc:mysql://localhost:3306/project",  
 				  login          = "root",
 				  password       = "huzaifa147";
-	public static int id=1000;
+	public int id=1000;
 	
 	public DataBaseBuilder()
 	{
@@ -162,17 +162,17 @@ public class DataBaseBuilder
 	public void fillStudentEnrollmentTable(String filename)
 	{
 		try{
-//			Scanner sc = new Scanner(new FileReader(filename));
-//			while(sc.hasNext())
-//			{
-//				String string[] = sc.nextLine().split(";");
+			Scanner sc = new Scanner(new FileReader(filename));
+			while(sc.hasNext())
+			{
+				String string[] = sc.nextLine().split(";");
 				String sql = "INSERT INTO Student_Enrollment" +
 						" VALUES ( ?, ?, ?)";
 				try{
 					statement = jdbc_connection.prepareStatement(sql);
 					statement.setInt(1, id);
-					statement.setInt(2, 1000);
-					statement.setInt(3, 1080);
+					statement.setInt(2, Integer.parseInt(string[0]));
+					statement.setInt(3, Integer.parseInt(string[1]));
 					statement.executeUpdate();
 				}
 				catch(SQLException e)
@@ -180,15 +180,76 @@ public class DataBaseBuilder
 					e.printStackTrace();
 				}
 				id+=10;
-			//}
-			//sc.close();
+			}
+			sc.close();
 		}
-//		catch(FileNotFoundException e)
-//		{
-//			System.err.println("File " + filename + " Not Found!");
-//		}
+		catch(FileNotFoundException e)
+		{
+			System.err.println("File " + filename + " Not Found!");
+		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void createAssignmentTable(String tablename)
+	{
+		String sql = "CREATE TABLE " + tablename + "(" +
+			     "ASSIGNMENT_ID INT(8) NOT NULL, " +
+			     "COURSE_ID INT(8) NOT NULL, " +  
+			     "TITLE VARCHAR(50) NOT NULL, "+
+			     "PATH VARCHAR(100) NOT NULL, "+
+			     "ACTIVE INT(1) NOT NULL, "+
+			     "DUE_DATE CHAR(16) NOT NULL,"+
+			     "PRIMARY KEY ( assignment_id ))";
+		try {
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.executeUpdate();
+			System.out.println("Created Table " + tablename);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createSubmissionTable(String tablename)
+	{
+		String sql = "CREATE TABLE " + tablename + "(" +
+			     "SUBMISSION_ID INT(8) NOT NULL, " +
+			     "ASSIGNMENT_ID INT(8) NOT NULL, " +  
+			     "STUDENT_ID INT(8) NOT NULL, "+
+			     "PATH VARCHAR(100) NOT NULL, "+
+			     "TITLE VARCHAR(50) NOT NULL, "+
+			     "SUBMISSION_GRADE INT(3) NOT NULL, "+
+			     "COMMENTS VARCHAR(140) NOT NULL, "+
+			     "TIMESTAMP CHAR(16) NOT NULL,"+
+			     "PRIMARY KEY ( submission_id ))";
+		try {
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.executeUpdate();
+			System.out.println("Created Table " + tablename);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createGradeTable(String tablename)
+	{
+		String sql = "CREATE TABLE " + tablename + "(" +
+			     "GRADE_ID INT(8) NOT NULL, " +
+			     "ASSIGNMENT_ID INT(8) NOT NULL, " +  
+			     "STUDENT_ID INT(8) NOT NULL, "+
+			     "COURSE_ID INT(8) NOT NULL, "+
+			     "ASSIGNMENT_GRADE INT(3) NOT NULL,"+
+			     "PRIMARY KEY ( grade_id ))";
+		try {
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.executeUpdate();
+			System.out.println("Created Table " + tablename);
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -199,8 +260,11 @@ public class DataBaseBuilder
 		dataBaseBuilder.createUserTable("Users");
 		dataBaseBuilder.createCourseTable("Courses");
 		dataBaseBuilder.createStudentEnrollmentTable("Student_Enrollment");
+		dataBaseBuilder.createAssignmentTable("Assignment_Table");
+		dataBaseBuilder.createSubmissionTable("Submission_Table");
+		dataBaseBuilder.createGradeTable("Grade_Table");
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
-		dataBaseBuilder.fillStudentEnrollmentTable("Student Enrollment.txt");
+		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
 	}
 }

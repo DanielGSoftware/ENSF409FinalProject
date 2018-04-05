@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import SharedObjects.InfoExchange;
+import SharedObjects.User;
 
 public class LoginModel extends MainModel
 {
@@ -13,14 +14,19 @@ public class LoginModel extends MainModel
 		super(readObject, sendObject);
 	}
 	
-	public boolean loginAttempt(String user, String pass) {
+	public String[] loginAttempt(String user, String pass) {
 		boolean validLogin = true;
 		InfoExchange infoExchange = new InfoExchange("Login Attempt");
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
 			infoExchange = (InfoExchange) readObject.readObject();
-			
+			String[] userinfo=user.split(" ");
+			System.out.println(userinfo);
+			User object=new User(0, pass, null, userinfo[0], userinfo[1], "P");
+			sendObject.writeObject(object);
+			flushAndReset(sendObject);
+			infoExchange=(InfoExchange) readObject.readObject();
 		}
 		catch (IOException e) {
 			System.out.println("Error: Login Attempt couldn't send to server");
@@ -31,7 +37,7 @@ public class LoginModel extends MainModel
 			e.printStackTrace();
 		}
 		
-		return validLogin;
+		return infoExchange.getInfo();
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException{

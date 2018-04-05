@@ -13,6 +13,7 @@ import java.awt.Label;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -232,19 +233,6 @@ public class ProfessorView extends JFrame {
 		for (int i=0; i<list.length; i++) {
 			listmodel.addElement(list[i]);
 		}
-		
-	//	displaylist.setModel(listmodel);
-		
-//		//displaylist=new JList<String>(listmodel);
-//		((DefaultListModel<String>)displaylist.getModel()).clear();
-//		displaylist.setModel(listmodel);
-//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		displaylist.setVisibleRowCount(15);
-//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
-//		
-//		searchresults=new JScrollPane(displaylist);
-//		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//		searchresults.setPreferredSize(new Dimension(600,325));
 	}
 	
 	public void addCourseActiveListener(ActionListener a)
@@ -260,21 +248,23 @@ public class ProfessorView extends JFrame {
 	public void setCoursePage()
 	{
 		System.out.println("SET COURSE PAGE TEST");
-		String[] strings=getSelectedList();
+		ArrayList<String> strings=getSelectedList();
 		System.out.println("LMAO");
 		updateDisplay(strings);
 	}
 	
-	public String[] getSelectedList()
+	public ArrayList<String> getSelectedList()
 	{
-		System.o ut.println("In selected list method");
+		System.out.println("In selected list method");
 		System.out.println(displaylist.getSelectedValue());
 		System.out.println(displaylist.getModel().getElementAt(0));
 		//String string=displaylist.getSelectedValue();
 //		int index=0;
-		String string=displaylist.getSelectedValue();
+		String string=new String(displaylist.getSelectedValue());
 		System.out.println(string);
-		String[] strings=string.split(";");
+		//String[] strings=string.split(";");
+		ArrayList<String> strings=new ArrayList<String>();
+		strings.add(string);
 		return strings;
 	}
 	
