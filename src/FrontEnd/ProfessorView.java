@@ -25,10 +25,8 @@ public class ProfessorView extends JFrame {
 	private String profffirstname;
 	private String profflastname;
 	private int proffid;
-	private JButton createcourses;
-	private JButton browsecourses;
-	private JButton setactive;
-	private JButton searchstudents;
+	
+	
 	private JButton enrollment;
 	private JButton uploadassignment;
 	private JButton setassignmentactive;
@@ -37,6 +35,16 @@ public class ProfessorView extends JFrame {
 	private DefaultListModel<String> listmodel;
 	private JList<String> displaylist;
 	private Container container;
+	
+	private JPanel homePanel;
+	private JButton createcourses;
+	private JButton browsecourses;
+	
+	private JPanel coursePanel;
+	private JButton setCourseactive;
+	private JButton searchStudents;
+	private JButton massEmail;
+	
 	
 	public ProfessorView(int proffid, String profffirstname, String profflastname)
 	{
@@ -84,16 +92,15 @@ public class ProfessorView extends JFrame {
 				grandPanel.add(temp[i][j]);
 			}
 		}
-		
 		JPanel topButtons=new JPanel();
 		createcourses=new JButton("Create Course");
 		browsecourses=new JButton("Browse Courses");
-		setactive=new JButton("Set Course Active Status");
-		searchstudents=new JButton("Search Students");
+		setCourseactive=new JButton("Set Course Active Status");
+		searchStudents=new JButton("Search Students");
 		topButtons.add(createcourses);
 		topButtons.add(browsecourses);
-		topButtons.add(setactive);
-		topButtons.add(searchstudents);
+		topButtons.add(setCourseactive);
+		topButtons.add(searchStudents);
 		temp[1][0].add(topButtons);
 		createBanner(temp);
 		container.add(grandPanel, BorderLayout.NORTH);
@@ -242,7 +249,7 @@ public class ProfessorView extends JFrame {
 	
 	public void addCourseActiveListener(ActionListener a)
 	{
-		setactive.addActionListener(a);
+		setCourseactive.addActionListener(a);
 	}
 	
 	public void addListListener(ListSelectionListener a)
@@ -269,6 +276,10 @@ public class ProfessorView extends JFrame {
 		System.out.println(string);
 		String[] strings=string.split(";");
 		return strings;
+	}
+	
+	public void setPage(JPanel panel) {
+		container.add(panel);
 	}
 	
 	public void displayCourseActiveUpdateMessage()
