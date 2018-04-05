@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -10,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -33,17 +35,20 @@ public class ProfessorView extends JFrame {
 	private JButton setassignmentactive;
 	private JButton viewgrades;
 	private JScrollPane searchresults;
-	private DefaultListModel<String> listmodel;
-	private JList<String> displaylist;
+	private DefaultListModel<String> listmodel = new DefaultListModel<String>();
+	private JList<String> displaylist = new JList<String>();
 	private Container container;
 	
+	private JButton returnHome;
+	
 	private JPanel homePanel;
-	private JButton createcourses;
-	private JButton browsecourses;
+	private JButton createCourses;
+	private JButton browseCourses;
 	
 	private JPanel coursePanel;
 	private JButton setCourseactive;
 	private JButton searchStudents;
+	private JButton searchAssigns;
 	private JButton massEmail;
 	
 	
@@ -54,12 +59,18 @@ public class ProfessorView extends JFrame {
 		this.profffirstname=profffirstname;
 		this.profflastname=profflastname;
 		container=getContentPane();
-		setLayout(new BorderLayout());
+		container.setLayout(new BorderLayout());
 		setSize(700, 500);
-		setResizable(false);
-		createHomeTopDisplayPanel();
-		createCenterDisplay();
-		createBottomDisplayPanel();
+//		setResizable(false);
+		
+		createHomeDisplay();
+		createCourseDisplay();
+		container.add(homePanel);
+//		setPage(homePanel);
+		
+//		createHomeTopDisplayPanel();
+//		createHomeCenterDisplay();
+//		createBottomDisplayPanel();
 		makeWindowListener();
 	}
 	
@@ -72,97 +83,170 @@ public class ProfessorView extends JFrame {
 	{
 		return listmodel;
 	}
+	
+	public void setPage(JPanel newPanel, JPanel oldPanel) {
+		newPanel.setVisible(true);
+		container.add(newPanel);
+		oldPanel.setVisible(false);
+		
+	}
 	 
-	private void createBanner(JPanel[][] temp)
+	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
-		JLabel banner=new JLabel("Professor Learning Platforms");
+		JLabel banner=new JLabel(topMessage);
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
 		banner.setForeground(Color.white);
-		temp[0][0].setOpaque(true);
-		temp[0][0].add(banner, JLabel.CENTER);
-		temp[0][0].setBackground(Color.darkGray);
+		bannerPanel.setOpaque(true);
+		bannerPanel.add(banner, JLabel.CENTER);
+		bannerPanel.setBackground(new Color(255, 209, 175));
 	}
 	
-	private void createHomeTopDisplayPanel()
-	{
-		JPanel grandPanel=new JPanel(new GridLayout(2, 1,0,0));
-		JPanel[][] temp=new JPanel[2][1];
-		for (int i=0; i<2; i++) {
-			for (int j=0; j<1; j++) {
-				temp[i][j]=new JPanel();
-				grandPanel.add(temp[i][j]);
+	public void createHomeDisplay() {
+		homePanel = new JPanel(new BorderLayout());
+		createHomeTopPanel();
+		createHomeCenterPanel();
+		createReturnHomeButton();
+//		container.add(homePanel);
+	}
+	
+	private void createReturnHomeButton() {
+		returnHome = new JButton("Return Home");
+		returnHome.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPage(homePanel, coursePanel);
 			}
-		}
-		JPanel topButtons=new JPanel();
-		createcourses=new JButton("Create Course");
-		browsecourses=new JButton("Browse Courses");
-		setCourseactive=new JButton("Set Course Active Status");
-		searchStudents=new JButton("Search Students");
-		topButtons.add(createcourses);
-		topButtons.add(browsecourses);
-		topButtons.add(setCourseactive);
-		topButtons.add(searchStudents);
-		temp[1][0].add(topButtons);
-		createBanner(temp);
-		container.add(grandPanel, BorderLayout.NORTH);
+		});
 	}
 	
-	private void createCourseTopDisplayPanel() {
-		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
-		JPanel topButtons = new JPanel();
-		/*
-		 * buttons: set course active, upload assign, set assign active
-		 */
+	private void createHomeTopPanel()
+	{	
+		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
 		
-	}
-	
-	
-	
-	private void createBottomDisplayPanel()
-	{
-		JPanel southpanel=new JPanel();
-		enrollment=new JButton("Enroll Student");
-		uploadassignment=new JButton("Upload Assignment");
-		setassignmentactive=new JButton("Set Assignment Active");
-		viewgrades=new JButton("View Grades");
-		southpanel.add(enrollment);
-		southpanel.add(uploadassignment);
-		southpanel.add(setassignmentactive);
-		southpanel.add(viewgrades);
-		container.add(southpanel, BorderLayout.SOUTH);
-	}
-	
-	private void createCenterDisplay()
-	{
-		JPanel centerpanel=new JPanel(new GridLayout(1, 1,0,0));
-		JPanel[][] temp=new JPanel[1][1];
-		for (int i=0; i<1; i++) {
-			for (int j=0; j<1; j++) {
-				temp[i][j]=new JPanel();
-				centerpanel.add(temp[i][j]);
-			}
-		}
+		JPanel bannerPanel = new JPanel();
+		createBanner(bannerPanel, "Professor Learning Platforms");
 		
-		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
-		listmodel=new DefaultListModel<String>();
-		listmodel.addElement(argument[0]);
-		listmodel.addElement(argument[1]);
-		displaylist=new JList<String>();
-		displaylist.setModel(listmodel);
-		System.out.println("In constructor: " + displaylist.getModel().getSize());
-		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		displaylist.setVisibleRowCount(15);
-		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+		JPanel buttonPanel=new JPanel();
+		createCourses=new JButton("Create Course");
+		browseCourses=new JButton("Browse Courses");
+		
+		browseCourses.addActionListener(new ActionListener() {			// TEST CODE
+			@Override													//
+			public void actionPerformed(ActionEvent e) {				//
+				setPage(coursePanel, homePanel);									//
+				System.out.println("SWITCHING TO COURSE PAGE");			//
+			}															//
+		});																//
+		
+		
+//		setCourseactive=new JButton("Set Course Active Status");
+//		searchStudents=new JButton("Search Students");
+		buttonPanel.add(createCourses);
+		buttonPanel.add(browseCourses);
+//		buttonPanel.add(setCourseactive);
+//		buttonPanel.add(searchStudents);
+//		temp[1][0].add(buttonPanel);
+		
+		grandPanel.add(bannerPanel);
+		grandPanel.add(buttonPanel);
+		homePanel.add(grandPanel, BorderLayout.NORTH);
+	}
+	
+	
+//	private void createBottomDisplayPanel()
+//	{
+//		JPanel southpanel=new JPanel();
+//		enrollment=new JButton("Enroll Student");
+//		uploadassignment=new JButton("Upload Assignment");
+//		setassignmentactive=new JButton("Set Assignment Active");
+//		viewgrades=new JButton("View Grades");
+//		southpanel.add(enrollment);
+//		southpanel.add(uploadassignment);
+//		southpanel.add(setassignmentactive);
+//		southpanel.add(viewgrades);
+//		container.add(southpanel, BorderLayout.SOUTH);
+//	}
+	
+	private void createHomeCenterPanel()
+	{
+		JPanel grandPanel = new JPanel();
+		
+		String welcome = "Welcome to your home page, Professor " +
+						 profffirstname + " ("+proffid+")" + "\n"
+						 + "What would you like to do?";
+		
+//		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
+//		listmodel=new DefaultListModel<String>();
+//		listmodel.addElement(argument[0]);
+//		listmodel.addElement(argument[1]);
+//		displaylist=new JList<String>();
+//		displaylist.setModel(listmodel);
+		JTextArea welcomePane = new JTextArea(welcome);
+		welcomePane.setFont(new Font("Courier New", Font.PLAIN, 14));
+//		welcomePane.setColumns(30);
+		welcomePane.setRows(20);
+		
+		
+//		System.out.println("In constructor: " + displaylist.getModel().getSize());
+//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		displaylist.setVisibleRowCount(15);
+//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
 //		JTextPane displayarea=new JTextPane();
 //		displayarea.setText("Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")\nYou are currently in no course or student page");
 //		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
 //		displayarea.setEditable(false);
-		searchresults=new JScrollPane(displaylist);
-		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		searchresults.setPreferredSize(new Dimension(600,325));
-		temp[0][0].add(searchresults);
-		container.add(centerpanel, BorderLayout.CENTER);
+//		searchresults=new JScrollPane(displaylist);
+//		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		searchresults.setPreferredSize(new Dimension(600,325));
+//		temp[0][0].add(searchresults);
+		grandPanel.add(welcomePane);
+		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
+	
+//	public void switchToHomePage() {
+//		container.add(homePanel);
+//	}
+	
+	public void createCourseDisplay() {
+		coursePanel = new JPanel(new BorderLayout());
+		createCourseTopPanel();
+		createCourseCenterPanel();
+	}
+	
+	private void createCourseTopPanel() {
+		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
+		
+		JPanel bannerPanel = new JPanel();
+		createBanner(bannerPanel, "COURSE NAME - NOT COMPLETE");
+		
+		JPanel topButtons = new JPanel();
+		setCourseactive = new JButton("Change Active Status");
+		searchStudents = new JButton("Students");
+		searchAssigns = new JButton("Assigns");
+		topButtons.add(setCourseactive);
+		topButtons.add(searchStudents);
+		topButtons.add(searchAssigns);
+		topButtons.add(returnHome);
+		
+		grandPanel.add(bannerPanel);
+		grandPanel.add(topButtons);
+		coursePanel.add(grandPanel, BorderLayout.NORTH);
+	}
+	
+	private void createCourseCenterPanel() {
+		JPanel grandPanel = new JPanel();
+		
+	}
+	
+//	public void switchToCoursePage() {
+//		container.remove(homePanel);
+//		container.add(coursePanel);
+//	}
+	
+	
+	
+	
+	
 	
 	private void makeWindowListener()
 	{
@@ -183,7 +267,7 @@ public class ProfessorView extends JFrame {
 	
 	public void addCreateCourseListener(ActionListener a)
 	{
-		createcourses.addActionListener(a);
+		createCourses.addActionListener(a);
 	}
 	
 	public String[] createCourse()
@@ -218,7 +302,7 @@ public class ProfessorView extends JFrame {
 	
 	public void addBrowseCourseListener(ActionListener a)
 	{
-		browsecourses.addActionListener(a);
+		browseCourses.addActionListener(a);
 	}
 	
 	
@@ -245,13 +329,13 @@ public class ProfessorView extends JFrame {
 		displaylist.addListSelectionListener(a);
 	}
 	
-	public void setCoursePage()
-	{
-		System.out.println("SET COURSE PAGE TEST");
-		ArrayList<String> strings=getSelectedList();
-		System.out.println("LMAO");
-		updateDisplay(strings);
-	}
+//	public void setCoursePage()
+//	{
+//		System.out.println("SET COURSE PAGE TEST");
+//		ArrayList<String> strings=getSelectedList();
+//		System.out.println("LMAO");
+//		updateDisplay(strings);
+//	}
 	
 	public ArrayList<String> getSelectedList()
 	{
@@ -268,13 +352,14 @@ public class ProfessorView extends JFrame {
 		return strings;
 	}
 	
-	public void setPage(JPanel panel) {
-		container.add(panel);
-	}
-	
 	public void displayCourseActiveUpdateMessage()
 	{
 		JOptionPane.showMessageDialog(null, "Course Activation Status Sucessfully Changed. Please hit browse courses to "
 				+ "see changes","Success",JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public static void main(String[] args) {
+		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
+		pView.setVisible(true);
 	}
 }

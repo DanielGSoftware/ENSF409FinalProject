@@ -49,9 +49,9 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("courseactivestatus button hit in control class");
-			String[] course=pView.getSelectedList();
-			pModel.courseActive(course);
-			pView.displayCourseActiveUpdateMessage();
+//			String[] course=pView.getSelectedList();
+//			pModel.courseActive(course);
+//			pView.displayCourseActiveUpdateMessage();
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class ProfessorControl {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			System.out.println("in list acton listener");
-			pView.setCoursePage();
+//			pView.setCoursePage();
 		}
 	}
 	
