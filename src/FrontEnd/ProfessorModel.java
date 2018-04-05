@@ -41,7 +41,7 @@ public class ProfessorModel extends MainModel {
 	
 	public void createCourse(int proffid, String[] strings)
 	{
-		Course course=new Course(proffid, strings[1], Integer.parseInt(strings[2]), Integer.parseInt(strings[0]));
+		Course course=new Course(proffid, strings[0], Integer.parseInt(strings[1]), -1);
 		InfoExchange infoExchange=new InfoExchange("Create Course Proff");
 		try {
 			sendObject.writeObject(infoExchange);
@@ -55,16 +55,15 @@ public class ProfessorModel extends MainModel {
 	
 	public void courseActive(String[] course) 
 	{
-		//Course course=new Course (0, coursename[], -1);
-		String coursename=course[0];
-		String active=course[1];
-		//String courseid=course[0];
+		String coursename=course[1];
+		String active=course[2];
+		String courseid=course[0];
 		Course c=null;
 		if (active.equals("Currently Active to Students")) {
-			c=new Course(0, coursename, 0, 1130);
+			c=new Course(0, coursename, 0, Integer.parseInt(courseid));
 		}
 		else {
-			c=new Course(0, coursename, 1, 1130);
+			c=new Course(0, coursename, 1, Integer.parseInt(courseid));
 		}
 		InfoExchange infoExchange=new InfoExchange("Course Activation Status");
 		try {
