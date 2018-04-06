@@ -108,7 +108,8 @@ public class ProfessorView extends JFrame {
 		viewCourses.addActionListener(new ActionListener() {			
 			@Override													
 			public void actionPerformed(ActionEvent e) {				
-				mainCards.show(container, "Courses");					
+//				mainCards.show(container, "Courses");	
+				seeCourses();
 			}															
 		});																
 		
@@ -165,7 +166,6 @@ public class ProfessorView extends JFrame {
 		container.add(coursePanel, "Courses");
 		createCourseTopPanel();
 		createCourseInnerPanel();
-		createCourseBottomPanel();
 	}
 	
 	private void createCourseTopPanel() {
@@ -179,7 +179,8 @@ public class ProfessorView extends JFrame {
 		viewStudents.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				courseInnerCards.show(courseInnerPanel, "Students");
+//				courseInnerCards.show(courseInnerPanel, "Students");
+				seeStudents();
 			}
 		});
 		
@@ -187,7 +188,8 @@ public class ProfessorView extends JFrame {
 		viewAssigns.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				courseInnerCards.show(courseInnerPanel, "Assignments");
+//				courseInnerCards.show(courseInnerPanel, "Assignments");
+				seeAssigns();
 			}
 		});
 		
@@ -195,7 +197,8 @@ public class ProfessorView extends JFrame {
 		returnHome.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainCards.show(container, "Home");
+//				mainCards.show(container, "Home");
+				seeHome();
 			}
 		});
 		
@@ -234,10 +237,6 @@ public class ProfessorView extends JFrame {
 		coursePanel.add(courseInnerPanel, BorderLayout.CENTER);
 	}
 	
-	private void createCourseBottomPanel() {
-
-	}
-	
 	private void addStudentButtons(JPanel buttonsPanel) {
 		enrollment =  new JButton("ENROLL/UNENROLL");
 		emailStudents = new JButton("EMAIL STUDENTS");
@@ -258,12 +257,22 @@ public class ProfessorView extends JFrame {
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
 	}
-
 	
+	public void seeStudents() {
+		courseInnerCards.show(courseInnerPanel, "Students");
+	}
 	
+	public void seeAssigns() {
+		courseInnerCards.show(courseInnerPanel, "Assignments");
+	}
 	
+	public void seeHome() {
+		mainCards.show(container, "Home");
+	}
 	
-	
+	public void seeCourses() {
+		mainCards.show(container, "Courses");	
+	}
 	
 	
 	
