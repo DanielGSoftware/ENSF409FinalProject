@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -20,11 +21,9 @@ public class ProfessorView extends JFrame {
 	private String profflastname;
 	private int proffid;
 	
-	
+	private CardLayout mainCards =  new CardLayout();
 	private JScrollPane searchresults;
 	private Container container;
-	
-	private JButton returnHome;
 	
 	private JPanel homePanel;
 	private JButton createCourses;
@@ -34,8 +33,15 @@ public class ProfessorView extends JFrame {
 	private JButton setCourseactive;
 	private JButton viewAssigns;
 	private JButton viewStudents;
+	private JButton returnHome;
+	private JPanel courseCenterPanel;
+	private JPanel courseCenterCards;
+	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
+	private JList<String> studentJList = new JList<String>();
 	private DefaultListModel<String> courseListModel = new DefaultListModel<String>();
 	private JList<String> courseJList = new JList<String>();
+	private JPanel courseBottomPanel;
+	private CardLayout courseBottomCards;
 	private JPanel studentButtonsPanel;
 	private JButton emailStudents;
 	private JButton searchStudents;
@@ -46,26 +52,22 @@ public class ProfessorView extends JFrame {
 	private JButton setAssignActive;
 	private JButton viewSubmissions;
 	
-	private JPanel studentsPanel;
-	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
-	private JList<String> studentJList = new JList<String>();
 	
 	
 	
-	public ProfessorView(int proffid, String profffirstname, String profflastname)
-	{
+	public ProfessorView(int proffid, String profffirstname, String profflastname) {
 		super("Professor Learning Platform");
 		this.proffid=proffid;
 		this.profffirstname=profffirstname;
 		this.profflastname=profflastname;
 		container=getContentPane();
-		container.setLayout(new BorderLayout());
+		container.setLayout(mainCards);
+		
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
 		createCourseDisplay();
-		container.add(homePanel);
 	}
 	
 	public int getProffID()
@@ -76,12 +78,6 @@ public class ProfessorView extends JFrame {
 	public DefaultListModel<String> getListModel()
 	{
 		return studentListModel;
-	}
-	
-	public void setPage( JPanel oldPanel, JPanel newPanel) {
-		oldPanel.setVisible(false);
-		container.add(newPanel);
-		newPanel.setVisible(true);
 	}
 	 
 	private void createBanner(JPanel bannerPanel, String topMessage)
@@ -96,25 +92,11 @@ public class ProfessorView extends JFrame {
 	
 	public void createHomeDisplay() {
 		homePanel = new JPanel(new BorderLayout());
+		container.add(homePanel, "Home");
 		createHomeTopPanel();
 		createHomeCenterPanel();
-		createReturnHomeButton();
-//		container.add(homePanel);
 	}
-	
-	private void createReturnHomeButton() {
-		returnHome = new JButton("HOME");
-		returnHome.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(coursePanel.isVisible()) {setPage(coursePanel, homePanel);}
-				/*
-				 * add ifs for the other possible panels
-				 * 
-				 */
-			}
-		});
-	}
+
 	
 	private void createHomeTopPanel()
 	{	
@@ -127,42 +109,20 @@ public class ProfessorView extends JFrame {
 		createCourses=new JButton("CREATE A COURSE");
 		viewCourses=new JButton("VIEW COURSES");
 		
-		viewCourses.addActionListener(new ActionListener() {			// TEST CODE
-			@Override													//
-			public void actionPerformed(ActionEvent e) {				//
-				setPage(homePanel, coursePanel);						//
-//				System.out.println("SWITCHING TO COURSE PAGE");			//
-			}															//
-		});																//
+		viewCourses.addActionListener(new ActionListener() {			
+			@Override													
+			public void actionPerformed(ActionEvent e) {				
+				mainCards.show(container, "Courses");					
+			}															
+		});																
 		
-		
-//		setCourseactive=new JButton("Set Course Active Status");
-//		searchStudents=new JButton("Search Students");
 		buttonPanel.add(createCourses);
 		buttonPanel.add(viewCourses);
-//		buttonPanel.add(setCourseactive);
-//		buttonPanel.add(searchStudents);
-//		temp[1][0].add(buttonPanel);
-		
 		grandPanel.add(bannerPanel);
 		grandPanel.add(buttonPanel);
 		homePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
-	
-//	private void createBottomDisplayPanel()
-//	{
-//		JPanel southpanel=new JPanel();
-//		enrollment=new JButton("Enroll Student");
-//		uploadassignment=new JButton("Upload Assignment");
-//		setassignmentactive=new JButton("Set Assignment Active");
-//		viewgrades=new JButton("View Grades");
-//		southpanel.add(enrollment);
-//		southpanel.add(uploadassignment);
-//		southpanel.add(setassignmentactive);
-//		southpanel.add(viewgrades);
-//		container.add(southpanel, BorderLayout.SOUTH);
-//	}
 	
 	private void createHomeCenterPanel()
 	{
@@ -206,21 +166,18 @@ public class ProfessorView extends JFrame {
 	
 	public void createCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
+		container.add(coursePanel, "Courses");
 		createCourseTopPanel();
 		createCourseCenterPanel();
-		
-		//INITIALIZING THE COURSE PANEL TO DISPLAY THE STUDENTS
-//		studentButtonsPanel = new JPanel();
-//		coursePanel.add(studentButtonsPanel, BorderLayout.SOUTH);
-//		container.add(coursePanel);
+		createCourseBottomPanel();
+		addStudentButtons();
+		addAssignButtons();
 	}
 	
 	private void createCourseTopPanel() {
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
-		
 		JPanel bannerPanel = new JPanel();
 		createBanner(bannerPanel, "COURSE NAME - NOT COMPLETE");
-		
 		JPanel topButtons = new JPanel();
 		setCourseactive = new JButton("CHANGE ACTIVE STATUS");
 		
@@ -228,7 +185,7 @@ public class ProfessorView extends JFrame {
 		viewStudents.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addStudentButtons();
+				courseBottomCards.show(courseBottomPanel, "Student Buttons");
 			}
 		});
 		
@@ -236,7 +193,15 @@ public class ProfessorView extends JFrame {
 		viewAssigns.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addAssignButtons();
+				courseBottomCards.show(courseBottomPanel, "Assignment Buttons");
+			}
+		});
+		
+		returnHome = new JButton("HOME");
+		returnHome.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainCards.show(container, "Home");
 			}
 		});
 		
@@ -250,57 +215,47 @@ public class ProfessorView extends JFrame {
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
+	
+	private void createCourseCenterPanel() {
+		courseBottomCards = new CardLayout();
+		courseCenterPanel = new JPanel(courseBottomCards);
+		/*
+		 * ADD JLIST STUFF FOR RESULTS
+		 */
+	}
+	
+	private void createCourseBottomPanel() {
+		courseBottomCards = new CardLayout();
+		courseBottomPanel = new JPanel(courseBottomCards);
+		
+		studentButtonsPanel = new JPanel();
+		assignButtonsPanel = new JPanel();
+		
+		courseBottomPanel.add(studentButtonsPanel, "Student Buttons");
+		courseBottomPanel.add(assignButtonsPanel, "Assignment Buttons");
+		coursePanel.add(courseBottomPanel, BorderLayout.SOUTH);
+	}
+	
 	private void addStudentButtons() {
-		if(studentButtonsPanel == null) {
-			studentButtonsPanel = new JPanel();
-			
-			enrollment =  new JButton("ENROLL/UNENROLL");
-			emailStudents = new JButton("EMAIL STUDENTS");
-			searchStudents = new JButton("SEARCH A STUDENT");
-			findStudents = new JTextField();
-			findStudents.setColumns(15);
-			studentButtonsPanel.add(enrollment);
-			studentButtonsPanel.add(emailStudents);
-			studentButtonsPanel.add(searchStudents);
-			studentButtonsPanel.add(findStudents);
-		}
-		
-		if(assignButtonsPanel != null) {
-			coursePanel.remove(assignButtonsPanel);	
-			assignButtonsPanel = null;
-		}
-		
-		coursePanel.add(studentButtonsPanel, BorderLayout.SOUTH);
-		setPage(coursePanel, coursePanel);
+		enrollment =  new JButton("ENROLL/UNENROLL");
+		emailStudents = new JButton("EMAIL STUDENTS");
+		searchStudents = new JButton("SEARCH A STUDENT");
+		findStudents = new JTextField();
+		findStudents.setColumns(15);
+		studentButtonsPanel.add(enrollment);
+		studentButtonsPanel.add(emailStudents);
+		studentButtonsPanel.add(searchStudents);
+		studentButtonsPanel.add(findStudents);
 	}
 	
 	private void addAssignButtons() {
-		if(assignButtonsPanel == null) {
-			assignButtonsPanel = new JPanel();
-			
-			setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-			uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-			viewSubmissions = new JButton("VIEW SUBMISSIONS");
-			assignButtonsPanel.add(setAssignActive);
-			assignButtonsPanel.add(uploadAssign);
-			assignButtonsPanel.add(viewSubmissions);
-		}
-		
-		if (studentButtonsPanel != null){
-			coursePanel.remove(studentButtonsPanel);
-			studentButtonsPanel = null;
-		}
-		
-		coursePanel.add(assignButtonsPanel, BorderLayout.SOUTH);
-		setPage(coursePanel, coursePanel);
-		
+		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+		assignButtonsPanel.add(setAssignActive);
+		assignButtonsPanel.add(uploadAssign);
+		assignButtonsPanel.add(viewSubmissions);
 	}
-	
-	private void createCourseCenterPanel() {
-		JPanel grandPanel = new JPanel();
-		
-	}
-	
 
 	
 	
@@ -404,15 +359,7 @@ public class ProfessorView extends JFrame {
 	{
 		studentJList.addListSelectionListener(a);
 	}
-	
-//	public void setCoursePage()
-//	{
-//		System.out.println("SET COURSE PAGE TEST");
-//		ArrayList<String> strings=getSelectedList();
-//		System.out.println("LMAO");
-//		updateDisplay(strings);
-//	}
-	
+
 	public ArrayList<String> getSelectedList()
 	{
 		System.out.println("In selected list method");
