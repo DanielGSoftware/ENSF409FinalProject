@@ -64,7 +64,27 @@ public class ProfessorControl {
 //			System.out.println("in list acton listener");
 //			pView.setCoursePage();
 //		}
-//	}
+
+	class CourseActiveStatus implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("courseactivestatus button hit in control class");
+//			String[] course=pView.getSelectedList();
+//			pModel.courseActive(course);
+//			pView.displayCourseActiveUpdateMessage();
+		}
+	}
+	
+	class ListListener implements ListSelectionListener
+	{
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			System.out.println("in list acton listener");
+//			pView.setCoursePage();
+		}
+	}
+
 	
 	class SearchStudentsListener implements ActionListener
 	{

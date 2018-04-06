@@ -1,15 +1,12 @@
 package FrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Label;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,48 +16,54 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import SharedObjects.Course;
-
-
 public class ProfessorView extends JFrame {
 	private String profffirstname;
 	private String profflastname;
 	private int proffid;
 	
-	
-	private JButton enrollment;
-	private JButton uploadassignment;
-	private JButton setassignmentactive;
-	private JButton viewgrades;
+	private CardLayout mainCards =  new CardLayout();
 	private JScrollPane searchresults;
-	private DefaultListModel<String> listmodel;
-	private JList<String> displaylist;
 	private Container container;
 	
 	private JPanel homePanel;
-	private JButton createcourses;
-	private JButton browsecourses;
+	private JButton createCourses;
+	private JButton viewCourses;
 	
 	private JPanel coursePanel;
 	private JButton setCourseactive;
+	private JButton viewAssigns;
+	private JButton viewStudents;
+	private JButton returnHome;
+	private JPanel courseInnerPanel;
+	private CardLayout courseInnerCards;
+	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
+	private JList<String> studentJList = new JList<String>();
+	private DefaultListModel<String> courseListModel = new DefaultListModel<String>();
+	private JList<String> courseJList = new JList<String>();
+	private JButton emailStudents;
 	private JButton searchStudents;
-	private JButton massEmail;
+	private JButton enrollment;
+	private JTextField findStudents;
+	private JButton uploadAssign;
+	private JButton setAssignActive;
+	private JButton viewSubmissions;
 	
 	
-	public ProfessorView(int proffid, String profffirstname, String profflastname)
-	{
+	
+	
+	public ProfessorView(int proffid, String profffirstname, String profflastname) {
 		super("Professor Learning Platform");
 		this.proffid=proffid;
 		this.profffirstname=profffirstname;
 		this.profflastname=profflastname;
 		container=getContentPane();
-		setLayout(new BorderLayout());
+		container.setLayout(mainCards);
+		
 		setSize(700, 500);
 		setResizable(false);
-		createHomeTopDisplayPanel();
-		createCenterDisplay();
-		createBottomDisplayPanel();
 		makeWindowListener();
+		createHomeDisplay();
+		createCourseDisplay();
 	}
 	
 	public int getProffID()
@@ -70,99 +73,213 @@ public class ProfessorView extends JFrame {
 	
 	public DefaultListModel<String> getListModel()
 	{
-		return listmodel;
+		return studentListModel;
 	}
 	 
-	private void createBanner(JPanel[][] temp)
+	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
-		JLabel banner=new JLabel("Professor Learning Platforms");
+		JLabel banner=new JLabel(topMessage);
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
 		banner.setForeground(Color.white);
-		temp[0][0].setOpaque(true);
-		temp[0][0].add(banner, JLabel.CENTER);
-		temp[0][0].setBackground(Color.darkGray);
+		bannerPanel.setOpaque(true);
+		bannerPanel.add(banner, JLabel.CENTER);
+		bannerPanel.setBackground(new Color(255, 209, 175));
 	}
 	
-	private void createHomeTopDisplayPanel()
-	{
-		JPanel grandPanel=new JPanel(new GridLayout(2, 1,0,0));
-		JPanel[][] temp=new JPanel[2][1];
-		for (int i=0; i<2; i++) {
-			for (int j=0; j<1; j++) {
-				temp[i][j]=new JPanel();
-				grandPanel.add(temp[i][j]);
-			}
-		}
-		JPanel topButtons=new JPanel();
-		createcourses=new JButton("Create Course");
-		browsecourses=new JButton("Browse Courses");
-		setCourseactive=new JButton("Set Course Active Status");
-		searchStudents=new JButton("Search Students");
-		topButtons.add(createcourses);
-		topButtons.add(browsecourses);
-		topButtons.add(setCourseactive);
-		topButtons.add(searchStudents);
-		temp[1][0].add(topButtons);
-		createBanner(temp);
-		container.add(grandPanel, BorderLayout.NORTH);
+	public void createHomeDisplay() {
+		homePanel = new JPanel(new BorderLayout());
+		container.add(homePanel, "Home");
+		createHomeTopPanel();
+		createHomeCenterPanel();
 	}
+
 	
-	private void createCourseTopDisplayPanel() {
-		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
-		JPanel topButtons = new JPanel();
-		/*
-		 * buttons: set course active, upload assign, set assign active
-		 */
+	private void createHomeTopPanel()
+	{	
+		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
 		
-	}
-	
-	
-	
-	private void createBottomDisplayPanel()
-	{
-		JPanel southpanel=new JPanel();
-		enrollment=new JButton("Enroll Student");
-		uploadassignment=new JButton("Upload Assignment");
-		setassignmentactive=new JButton("Set Assignment Active");
-		viewgrades=new JButton("View Grades");
-		southpanel.add(enrollment);
-		southpanel.add(uploadassignment);
-		southpanel.add(setassignmentactive);
-		southpanel.add(viewgrades);
-		container.add(southpanel, BorderLayout.SOUTH);
-	}
-	
-	private void createCenterDisplay()
-	{
-		JPanel centerpanel=new JPanel(new GridLayout(1, 1,0,0));
-		JPanel[][] temp=new JPanel[1][1];
-		for (int i=0; i<1; i++) {
-			for (int j=0; j<1; j++) {
-				temp[i][j]=new JPanel();
-				centerpanel.add(temp[i][j]);
-			}
-		}
+		JPanel bannerPanel = new JPanel();
+		createBanner(bannerPanel, "Professor Learning Platform");
 		
-		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
-		listmodel=new DefaultListModel<String>();
-		listmodel.addElement(argument[0]);
-		listmodel.addElement(argument[1]);
-		displaylist=new JList<String>();
-		displaylist.setModel(listmodel);
-		System.out.println("In constructor: " + displaylist.getModel().getSize());
-		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		displaylist.setVisibleRowCount(15);
-		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
+		JPanel buttonPanel=new JPanel();
+		createCourses=new JButton("CREATE A COURSE");
+		viewCourses=new JButton("VIEW COURSES");
+		
+		viewCourses.addActionListener(new ActionListener() {			
+			@Override													
+			public void actionPerformed(ActionEvent e) {				
+				mainCards.show(container, "Courses");					
+			}															
+		});																
+		
+		buttonPanel.add(createCourses);
+		buttonPanel.add(viewCourses);
+		grandPanel.add(bannerPanel);
+		grandPanel.add(buttonPanel);
+		homePanel.add(grandPanel, BorderLayout.NORTH);
+	}
+	
+	
+	private void createHomeCenterPanel()
+	{
+		JPanel grandPanel = new JPanel();
+		
+		String welcome = "Welcome to your home page, Professor " +
+						 profffirstname + " " + profflastname + " ("+proffid+")" + 
+						 "\n" + "What would you like to do?";
+		
+//		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
+//		listmodel=new DefaultListModel<String>();
+//		listmodel.addElement(argument[0]);
+//		listmodel.addElement(argument[1]);
+//		displaylist=new JList<String>();
+//		displaylist.setModel(listmodel);
+		JTextArea welcomePane = new JTextArea(welcome);
+		welcomePane.setFont(new Font("Courier New", Font.PLAIN, 14));
+//		welcomePane.setColumns(30);
+		welcomePane.setRows(20);
+		
+		
+//		System.out.println("In constructor: " + displaylist.getModel().getSize());
+//		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		displaylist.setVisibleRowCount(15);
+//		displaylist.setFont(new Font("Courier New", Font.BOLD, 11));
 //		JTextPane displayarea=new JTextPane();
 //		displayarea.setText("Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")\nYou are currently in no course or student page");
 //		displayarea.setFont(new Font("Courier New", Font.BOLD, 11) );
 //		displayarea.setEditable(false);
-		searchresults=new JScrollPane(displaylist);
-		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		searchresults.setPreferredSize(new Dimension(600,325));
-		temp[0][0].add(searchresults);
-		container.add(centerpanel, BorderLayout.CENTER);
+//		searchresults=new JScrollPane(displaylist);
+//		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		searchresults.setPreferredSize(new Dimension(600,325));
+//		temp[0][0].add(searchresults);
+		grandPanel.add(welcomePane);
+		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
+	
+//	public void switchToHomePage() {
+//		container.add(homePanel);
+//	}
+	
+	public void createCourseDisplay() {
+		coursePanel = new JPanel(new BorderLayout());
+		container.add(coursePanel, "Courses");
+		createCourseTopPanel();
+		createCourseInnerPanel();
+		createCourseBottomPanel();
+	}
+	
+	private void createCourseTopPanel() {
+		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
+		JPanel bannerPanel = new JPanel();
+		createBanner(bannerPanel, "COURSE NAME - NOT COMPLETE");
+		JPanel topButtons = new JPanel();
+		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+		
+		viewStudents = new JButton("STUDENTS");
+		viewStudents.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				courseInnerCards.show(courseInnerPanel, "Students");
+			}
+		});
+		
+		viewAssigns = new JButton("ASSIGNMENTS");
+		viewAssigns.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				courseInnerCards.show(courseInnerPanel, "Assignments");
+			}
+		});
+		
+		returnHome = new JButton("HOME");
+		returnHome.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainCards.show(container, "Home");
+			}
+		});
+		
+		topButtons.add(setCourseactive);
+		topButtons.add(viewStudents);
+		topButtons.add(viewAssigns);
+		topButtons.add(returnHome);
+		
+		grandPanel.add(bannerPanel);
+		grandPanel.add(topButtons);
+		coursePanel.add(grandPanel, BorderLayout.NORTH);
+	}
+	
+	
+	private void createCourseInnerPanel() {
+		courseInnerCards = new CardLayout();
+		courseInnerPanel = new JPanel(courseInnerCards);
+		JPanel courseStudentPanel = new JPanel(new BorderLayout());
+		JPanel courseAssignPanel = new JPanel(new BorderLayout());
+		courseInnerPanel.add(courseStudentPanel, "Students");
+		courseInnerPanel.add(courseAssignPanel, "Assignments");
+		
+		
+		/*
+		 * ADD JLIST STUFF FOR RESULTS
+		 */
+		
+		
+		JPanel studentButtonsPanel = new JPanel();
+		addStudentButtons(studentButtonsPanel);
+		JPanel assignButtonsPanel = new JPanel();
+		addAssignButtons(assignButtonsPanel);
+		courseStudentPanel.add(studentButtonsPanel, BorderLayout.SOUTH);
+		courseAssignPanel.add(assignButtonsPanel, BorderLayout.SOUTH);
+		
+		coursePanel.add(courseInnerPanel, BorderLayout.CENTER);
+	}
+	
+	private void createCourseBottomPanel() {
+
+	}
+	
+	private void addStudentButtons(JPanel buttonsPanel) {
+		enrollment =  new JButton("ENROLL/UNENROLL");
+		emailStudents = new JButton("EMAIL STUDENTS");
+		searchStudents = new JButton("SEARCH A STUDENT");
+		findStudents = new JTextField();
+		findStudents.setColumns(15);
+		buttonsPanel.add(enrollment);
+		buttonsPanel.add(emailStudents);
+		buttonsPanel.add(searchStudents);
+		buttonsPanel.add(findStudents);
+	}
+	
+	private void addAssignButtons(JPanel buttonsPanel) {
+		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+		buttonsPanel.add(setAssignActive);
+		buttonsPanel.add(uploadAssign);
+		buttonsPanel.add(viewSubmissions);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private void makeWindowListener()
 	{
@@ -183,7 +300,7 @@ public class ProfessorView extends JFrame {
 	
 	public void addCreateCourseListener(ActionListener a)
 	{
-		createcourses.addActionListener(a);
+		createCourses.addActionListener(a);
 	}
 	
 	public String[] createCourse()
@@ -218,17 +335,24 @@ public class ProfessorView extends JFrame {
 	
 	public void addBrowseCourseListener(ActionListener a)
 	{
-		browsecourses.addActionListener(a);
+		viewCourses.addActionListener(a);
 	}
 	
 	
 	public void updateDisplay(String[] list)
 	{
 		System.out.println("updating display");
+
 		listmodel.removeAllElements();
+
+		while (!studentListModel.isEmpty())
+		{
+			studentListModel.removeElementAt(0);
+		}
+
 		
 		for (int i=0; i<list.length; i++) {
-			listmodel.addElement(list[i]);
+			studentListModel.addElement(list[i]);
 		}
 		listmodel.addElement("\n\n");
 	}
@@ -240,6 +364,7 @@ public class ProfessorView extends JFrame {
 	
 	public void addListListener(ListSelectionListener a)
 	{
+
 		displaylist.addListSelectionListener(a);
 	}
 	
@@ -261,14 +386,18 @@ public class ProfessorView extends JFrame {
 //		updateDisplay(strings);
 //	}
 	
+
+		studentJList.addListSelectionListener(a);
+	}
+
 	public ArrayList<String> getSelectedList()
 	{
 		System.out.println("In selected list method");
-		System.out.println(displaylist.getSelectedValue());
-		System.out.println(displaylist.getModel().getElementAt(0));
+		System.out.println(studentJList.getSelectedValue());
+		System.out.println(studentJList.getModel().getElementAt(0));
 		//String string=displaylist.getSelectedValue();
 //		int index=0;
-		String string=new String(displaylist.getSelectedValue());
+		String string=new String(studentJList.getSelectedValue());
 		System.out.println(string);
 		//String[] strings=string.split(";");
 		ArrayList<String> strings=new ArrayList<String>();
@@ -276,13 +405,14 @@ public class ProfessorView extends JFrame {
 		return strings;
 	}
 	
-	public void setPage(JPanel panel) {
-		container.add(panel);
-	}
-	
 	public void displayCourseActiveUpdateMessage()
 	{
 		JOptionPane.showMessageDialog(null, "Course Activation Status Sucessfully Changed. Please hit browse courses to "
 				+ "see changes","Success",JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public static void main(String[] args) {
+		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
+		pView.setVisible(true);
 	}
 }
