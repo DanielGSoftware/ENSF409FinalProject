@@ -225,14 +225,12 @@ public class ProfessorView extends JFrame {
 	public void updateDisplay(String[] list)
 	{
 		System.out.println("updating display");
-		while (!listmodel.isEmpty())
-		{
-			listmodel.removeElementAt(0);
-		}
+		listmodel.removeAllElements();
 		
 		for (int i=0; i<list.length; i++) {
 			listmodel.addElement(list[i]);
 		}
+		listmodel.addElement("\n\n");
 	}
 	
 	public void addCourseActiveListener(ActionListener a)
@@ -245,13 +243,23 @@ public class ProfessorView extends JFrame {
 		displaylist.addListSelectionListener(a);
 	}
 	
-	public void setCoursePage()
+	public void addSearchStudentsListener(ActionListener a)
 	{
-		System.out.println("SET COURSE PAGE TEST");
-		ArrayList<String> strings=getSelectedList();
-		System.out.println("LMAO");
-		updateDisplay(strings);
+		searchStudents.addActionListener(a);
 	}
+	
+	public void addEnrollStudentListener (ActionListener a)
+	{
+		enrollment.addActionListener(a);
+	}
+	
+//	public void setCoursePage()
+//	{
+//		System.out.println("SET COURSE PAGE TEST");
+//		ArrayList<String> strings=getSelectedList();
+//		System.out.println("LMAO");
+//		updateDisplay(strings);
+//	}
 	
 	public ArrayList<String> getSelectedList()
 	{

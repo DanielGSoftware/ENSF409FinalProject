@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
+import SharedObjects.User;
 
 public class ProfessorModel extends MainModel {
 	
@@ -78,37 +79,63 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
-	public String[] SearchStudents(int studentid, int courseid)
+//	public String[] SearchStudents(int studentid)
+//	{
+//		StudentEnrollment se=new StudentEnrollment(0, studentid, 0);
+//		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
+//		try {
+//			sendObject.writeObject(infoExchange);
+//			flushAndReset(sendObject);
+//			sendObject.writeObject(se);
+//			flushAndReset(sendObject);
+//			infoExchange= (InfoExchange) readObject.readObject();
+//		} catch (IOException e) {
+//			System.out.print("Error: search enn in proff model wont work");
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return infoExchange.getInfo();
+//	}
+	
+	public String[] SearchStudents(String lastname, int courseid)
+	{
+		User user=new User(0, null, null, null, lastname, "S");
+		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
+		String[] result=new String[5];
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(user);
+			flushAndReset(sendObject);
+			infoExchange= (InfoExchange) readObject.readObject();
+			result=infoExchange.getInfo();
+			result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
+		}
+		catch (IOException e) {
+			System.out.print("Error: search students in proff model wont work");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String StudentEnrollment(int studentid, int courseid)
 	{
 		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
-		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
+		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");
+		String string=null;
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
 			sendObject.writeObject(se);
 			flushAndReset(sendObject);
 			infoExchange= (InfoExchange) readObject.readObject();
-		} catch (IOException e) {
-			System.out.print("Error: search enn in proff model wont work");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return infoExchange.getInfo();
-	}
-	
-	public void StudentEnrollment(int studentid, int courseid)
-	{
-		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
-		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");
-		try {
-			sendObject.writeObject(infoExchange);
-			flushAndReset(sendObject);
-			sendObject.writeObject(se);
-			flushAndReset(sendObject);
-		} catch (IOException e) {
+			string=infoExchange.getInfo()[0];
+		} catch (IOException | ClassNotFoundException e) {
 			System.out.print("Error: search enn in proff model wont work");
 		} 
+		return string;
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {

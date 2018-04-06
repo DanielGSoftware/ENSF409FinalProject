@@ -28,22 +28,22 @@ public class User implements Serializable {
 	
 	public String[] findUser(String table, Connection jdbc_connection, PreparedStatement statement)
 	{ 
-		System.out.println("in browse courses");
-		String sql= "SELECT * FROM " +table+ " WHERE FIRSTNAME = ? AND LASTNAME = ? AND TYPE = ?";
-		//ArrayList<String> list=new ArrayList<String>();
-		String[] temp=new String[3];
+		System.out.println("in browse users");
+		String sql= "SELECT * FROM " +table+ " WHERE FIRSTNAME = ? AND LASTNAME = ?";
+		String[] temp=null;
 		ResultSet object;
 		try {
 			statement=jdbc_connection.prepareStatement(sql);
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
-			statement.setString(3, type);
 			object=statement.executeQuery();
-			//list.add(courseid+";"+object.getString("NAME")+";Currently Active to Students");
-			temp[0]=object.getString("FIRSTNAME");
-			temp[1]=object.getString("LASTNAME");
-			int idfromtable=object.getInt("USER_ID");
-			temp[2]=Integer.toString(idfromtable);
+			if (object.next()) {
+				temp=new String[3];
+				temp[0]=object.getString("FIRSTNAME");
+				temp[1]=object.getString("LASTNAME");
+				int idfromtable=object.getInt("USER_ID");
+				temp[2]=Integer.toString(idfromtable);
+			}
 		}
 		catch (SQLException e)
 		{
@@ -52,4 +52,33 @@ public class User implements Serializable {
 		return temp;
 	}
 	
+	
+	public String[] searchStudents(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE LASTNAME = ? AND TYPE = ?";
+		String[] temp=null;
+		ResultSet object;
+		try {
+			statement=jdbc_connection.prepareStatement(sql);
+			statement.setString(1, lastName);
+			statement.setString(2, type);
+			object=statement.executeQuery();
+			if (object.next()) {
+				temp=new String[5];
+				int userid=object.getInt("USER_ID");
+				temp[0]="Students user id is: "+userid;
+				//temp[1]=object.getString("PASSWORD");
+				temp[1]="Students email is: "+object.getString("EMAIL");
+				temp[2]="Students name is: "+object.getString("FIRSTNAME")+" "+object.getString("LASTNAME");
+				temp[3]= "" + userid;
+				//temp[4]=object.getString("LASTNAME");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(temp[0]);
+		System.out.println(temp[1]);
+		return temp;
+	}
 }

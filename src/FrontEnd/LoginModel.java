@@ -15,15 +15,14 @@ public class LoginModel extends MainModel
 	}
 	
 	public String[] loginAttempt(String user, String pass) {
-		boolean validLogin = true;
+		//boolean validLogin = true;
 		InfoExchange infoExchange = new InfoExchange("Login Attempt");
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
-			infoExchange = (InfoExchange) readObject.readObject();
 			String[] userinfo=user.split(" ");
-			System.out.println(userinfo);
-			User object=new User(0, pass, null, userinfo[0], userinfo[1], "P");
+			//System.out.println(userinfo);
+			User object=new User(0, pass, null, userinfo[0], userinfo[1], null);
 			sendObject.writeObject(object);
 			flushAndReset(sendObject);
 			infoExchange=(InfoExchange) readObject.readObject();

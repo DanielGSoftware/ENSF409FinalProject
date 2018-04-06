@@ -38,7 +38,6 @@ public class Client {
 	
 	private void makeProfessorGUI(String profffirstname, String profflastname, int proffid) throws IOException 
 	{
-
 		ProfessorModel proffmodel=new ProfessorModel(sendObject, readObject);
 		ProfessorView proffview=new ProfessorView(proffid, profffirstname, profflastname);
 		ProfessorControl proffcontrol=new ProfessorControl(proffmodel, proffview);
@@ -63,20 +62,19 @@ public class Client {
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("send buytton presed");
 			String[] string=loginModel.loginAttempt(loginView.getUser(), loginView.getPass());
-			System.out.println(string);
 			if (string!=null) {
 				loginView.setVisible(false);
 				try {
 					makeProfessorGUI(string[0], string[1], Integer.parseInt(string[2]));
-				} catch (NumberFormatException | IOException e) {
-					// TODO Auto-generated catch block
+				} 
+				catch (NumberFormatException | IOException e) {
 					e.printStackTrace();
 				}
 			}
+				
 			else {
-				loginView.sendError("Proff does not exist");
+				loginView.sendError("Incorrect Login Information: User does not exist in database");
 			}
 		}
-		
 	}
 }

@@ -51,6 +51,7 @@ public class DataBaseManager implements Runnable {
 				
 				if (string.equals("Login Attempt"))
 				{
+					System.out.println("in login attempt databasemangaer");
 					User object= (User) readobject.readObject();
 					String[] strings=object.findUser(USERTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(strings);
@@ -69,7 +70,6 @@ public class DataBaseManager implements Runnable {
 				{
 					Course course=(Course)readobject.readObject();
 					course.createCourse(COURSETABLE, jdbc_connection, statement, id);
-					id+=10;
 				}
 				
 				else if (string.equals("Course Activation Status"))
@@ -82,26 +82,38 @@ public class DataBaseManager implements Runnable {
 					User user = (User)readobject.readObject(); 
 				}
 				
+//				else if (string.equals("Search Students Proff"))
+//				{
+//					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
+//					if (object.browseStudentsEnrolled(USERTABLE, jdbc_connection, statement)) {
+//						User user=new User(object.getStudentId(), null, null, null, null, "S");
+//						String[] strings=user.findUser(USERTABLE, jdbc_connection, statement);
+//						infoExchange.setInfo(strings);
+//						writeobject.writeObject(infoExchange);
+//					}
+//					else {
+//						System.out.println("student not found");
+//					}	
+//				}
+				
 				else if (string.equals("Search Students Proff"))
 				{
-					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
-					if (object.browseStudentsEnrolled(USERTABLE, jdbc_connection, statement)) {
-						User user=new User(object.getStudentId(), null, null, null, null, "S");
-						String[] strings=user.findUser(USERTABLE, jdbc_connection, statement);
-						infoExchange.setInfo(strings);
-						writeobject.writeObject(infoExchange);
-					}
-					else {
-						System.out.println("student in course not found");
-					}	
+					User user = (User)readobject.readObject(); 
+					String[] strings=user.searchStudents(USERTABLE, jdbc_connection, statement);
+					System.out.println(strings[0]);
+					infoExchange.setInfo(strings);
+					writeobject.writeObject(infoExchange);
 				}
 				
 				else if (string.equals("Student Enrollment Proff"))
 				{
 					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
-					object.deleteEnrollment(USERTABLE, jdbc_connection, statement);
+					String[] strings=object.browseStudentsEnrolled(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(strings);
+					writeobject.writeObject(infoExchange);
 				}
 				
+				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {
 				System.out.println("Client has left");

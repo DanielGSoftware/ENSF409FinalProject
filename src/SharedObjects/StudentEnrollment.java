@@ -24,18 +24,20 @@ public class StudentEnrollment implements Serializable{
 		return studentid;
 	}
 	
-	public boolean browseStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
+	public String[] browseStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("in browse enrolled stuendts");
 		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID=?";
 		ResultSet object;
+		String[] strings=new String[1];
+		strings[0]="Student is not enrolled in this course";
 		try {
 			statement=jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, studentid);
+			statement.setInt(1, courseid);
 			object=statement.executeQuery();
 			while (object.next()) {
 				if (object.getInt("STUDENT_ID")==studentid)
-					return true;
+					strings[0]="Student is enrolled in this course";
 			}
 		}
 		catch (SQLException e)
@@ -43,7 +45,7 @@ public class StudentEnrollment implements Serializable{
 			e.printStackTrace();
 		}
 		
-		return false;
+		return strings;
 	}
 	
 	public void deleteEnrollment(String table, Connection jdbc_connection, PreparedStatement statement)

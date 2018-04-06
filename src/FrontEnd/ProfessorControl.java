@@ -18,8 +18,10 @@ public class ProfessorControl {
 		pView=view;
 		pView.addCreateCourseListener(new CreateCourseListener());
 		pView.addBrowseCourseListener(new BrowseCourseListener());
-		pView.addCourseActiveListener(new CourseActiveStatus());
-		pView.addListListener(new ListListener());
+		//pView.addCourseActiveListener(new CourseActiveStatus());
+		//pView.addListListener(new ListListener());
+		pView.addSearchStudentsListener(new SearchStudentsListener());
+		pView.addEnrollStudentListener(new StudentEnrollmentListener());
 		pView.setVisible(true);
 	}
 	
@@ -44,52 +46,48 @@ public class ProfessorControl {
 		
 	}
 	
-	class CourseActiveStatus implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("courseactivestatus button hit in control class");
-			String[] course=pView.getSelectedList();
-			pModel.courseActive(course);
-			pView.displayCourseActiveUpdateMessage();
-		}
-	}
+//	class CourseActiveStatus implements ActionListener
+//	{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			System.out.println("courseactivestatus button hit in control class");
+//			String[] course=pView.getSelectedList();
+//			pModel.courseActive(course);
+//			pView.displayCourseActiveUpdateMessage();
+//		}
+//	}
 	
-	class ListListener implements ListSelectionListener
-	{
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			System.out.println("in list acton listener");
-			pView.setCoursePage();
-		}
-	}
+//	class ListListener implements ListSelectionListener
+//	{
+//		@Override
+//		public void valueChanged(ListSelectionEvent e) {
+//			System.out.println("in list acton listener");
+//			pView.setCoursePage();
+//		}
+//	}
 	
 	class SearchStudentsListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//add to search students button
-			//some JOptionPane gives  student id and courseid
-			String[] strings=pModel.SearchStudents(1000, 1070);
+			System.out.println("Searching for McCree");
+			//some JOptionPane gives  student id and course id
+			String[] strings=pModel.SearchStudents("Peter", 1070);
 			//display information in gui 
+			System.out.println(strings[0]);
+			pView.updateDisplay(strings);
 		}
 	}
 	
 	class StudentEnrollmentListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//picks up what student is hit
-			pModel.StudentEnrollment(1060,1110);
-			
+			String[] string=new String[1];
+			string[0]=pModel.StudentEnrollment(1000,1070);
+			pView.updateDisplay(string);
 		}
-		
 	}
-	
-//	public static void main(String[] args)
-//	{
-//		ProfessorView proffview=new ProfessorView("Professor Learning Platform", 12345678, "Moussavi");
-//		ProfessorControl user=new ProfessorControl(proffview);
-//	}
 }
