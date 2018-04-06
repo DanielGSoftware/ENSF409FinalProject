@@ -103,7 +103,7 @@ public class ProfessorModel extends MainModel {
 	
 	public String[] viewStudents(int courseid)
 	{
-		StudentEnrollment sEnrollment=new StudentEnrollment(0, 0, courseid);
+		StudentEnrollment sEnrollment=new StudentEnrollment(null, null, 0, 0, courseid);
 		InfoExchange infoExchange=new InfoExchange("View Students Proff");
 		String[] result=null;
 		try {
