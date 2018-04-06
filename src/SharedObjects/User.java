@@ -70,15 +70,46 @@ public class User implements Serializable {
 				//temp[1]=object.getString("PASSWORD");
 				temp[1]="Students email is: "+object.getString("EMAIL");
 				temp[2]="Students name is: "+object.getString("FIRSTNAME")+" "+object.getString("LASTNAME");
-				temp[3]= "" + userid;
+				temp[3]= ""+userid; 
+				temp[4]="";
 				//temp[4]=object.getString("LASTNAME");
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(temp[0]);
-		System.out.println(temp[1]);
+//		System.out.println(temp[0]);
+//		System.out.println(temp[1]);
+		return temp;
+	}
+	
+	public String[] searchStudentsUserId(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
+		String[] temp=null;
+		ResultSet object;
+		try {
+			statement=jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.setString(2, type);
+			object=statement.executeQuery();
+			if (object.next()) {
+				temp=new String[5];
+				int userid=object.getInt("USER_ID");
+				temp[0]="Students user id is: "+userid;
+				//temp[1]=object.getString("PASSWORD");
+				temp[1]="Students email is: "+object.getString("EMAIL");
+				temp[2]="Students name is: "+object.getString("FIRSTNAME")+" "+object.getString("LASTNAME");
+				temp[3]= ""+userid; 
+				temp[4]="";
+				//temp[4]=object.getString("LASTNAME");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+//		System.out.println(temp[0]);
+//		System.out.println(temp[1]);
 		return temp;
 	}
 }

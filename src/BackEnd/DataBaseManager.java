@@ -11,9 +11,14 @@ import java.net.SocketException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
+
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.sql.Connection;
 
+import SharedObjects.Assignment;
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
@@ -30,6 +35,7 @@ public class DataBaseManager implements Runnable {
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
+	public static String ASSIGNMENTTABLE = "Assignment_Table";
 	private int id;
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
@@ -99,7 +105,8 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Search Students Proff"))
 				{
 					User user = (User)readobject.readObject(); 
-					String[] strings=user.searchStudents(USERTABLE, jdbc_connection, statement);
+					String[] strings=new String[5];
+					strings=user.searchStudents(USERTABLE, jdbc_connection, statement);
 					System.out.println(strings[0]);
 					infoExchange.setInfo(strings);
 					writeobject.writeObject(infoExchange);
@@ -113,6 +120,40 @@ public class DataBaseManager implements Runnable {
 					writeobject.writeObject(infoExchange);
 				}
 				
+				else if (string.equals("View Students Proff"))
+				{
+					StudentEnrollment studentEnrollment= (StudentEnrollment) readobject.readObject();
+					int[] studentsid=studentEnrollment.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					ArrayList<String> list=new ArrayList<String>();
+					for (int i=0; i<studentsid.length; i++) {
+						User user=new User(studentsid[i], null, null, null, null, "S");
+						String[] strings=user.searchStudentsUserId(USERTABLE, jdbc_connection, statement);
+						//System.out.println(strings[2]);
+						list.add(strings[2]);
+					}
+					
+					String[] temp=new String[list.size()];
+					for (int i=0; i<list.size(); i++) {
+						temp[i]=list.get(i);
+					}
+					infoExchange.setInfo(temp);
+					writeobject.writeObject(infoExchange);
+				}
+				
+				else if (string.equals("Browse Assignment Proff"))
+				{
+					Assignment assignment= (Assignment) readobject.readObject();
+					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(result);
+					writeobject.writeObject(infoExchange);
+				}
+				
+				else if (string.equals("Upload Assignment Proff"))
+				{
+					Assignment assignment = (Assignment) readobject.readObject();
+					assignment.addAssignments(ASSIGNMENTTABLE, jdbc_connection, statement, id);
+				}
+				
 				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {
@@ -121,22 +162,4 @@ public class DataBaseManager implements Runnable {
 			}
 		}
 	}
-	
-//	public void checkOperation(String string) throws ClassNotFoundException, IOException
-//	{
-//		System.out.println("Now in checkOperation");
-//		if (string.equals("Browse Course Proff"))
-//		{
-//			Course course=(Course)readobject.readObject();
-//			System.out.println("course object read");
-//			InfoExchange infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
-//			writeobject.writeObject(infoExchange);
-//		}
-//		if (string.equals("Create Course Proff"))
-//		{
-//			Course course=(Course)readobject.readObject();
-//			course.createCourse(COURSETABLE, jdbc_connection, statement, id);
-//		}
-//	}
-	
 }	

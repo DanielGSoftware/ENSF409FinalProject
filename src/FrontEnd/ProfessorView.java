@@ -12,6 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -43,6 +48,10 @@ public class ProfessorView extends JFrame {
 	
 	private DefaultListModel<String> courseListModel;
 	private JList<String> courseJList;
+	
+	private DefaultListModel<String> assignmentJModel;
+	private JList<String> assignmentJList;
+	
 	private JButton emailStudents;
 	private JButton searchStudents;
 	private JButton enrollment;
@@ -240,9 +249,22 @@ public class ProfessorView extends JFrame {
 		studentJList.setVisibleRowCount(15);
 		studentJList.setFont(new Font("Courier New", Font.BOLD, 11));
 		
+		assignmentJModel=new DefaultListModel<String>();
+		assignmentJModel.addElement(info[0]);
+		assignmentJList=new JList<String>(studentListModel);
+		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		assignmentJList.setVisibleRowCount(15);
+		assignmentJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		
+		JScrollPane assignmentScrollPane = new JScrollPane(assignmentJList);
+		assignmentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		assignmentScrollPane.setPreferredSize(new Dimension(90,100));
+		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		studentScrollPane.setPreferredSize(new Dimension(90,100));
+		
+		courseAssignPanel.add(assignmentScrollPane, BorderLayout.CENTER);
 		
 		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
@@ -281,12 +303,18 @@ public class ProfessorView extends JFrame {
 		courseInnerCards.show(courseInnerPanel, "Students");
 	}
 	
-	public void seeAssigns() {
+	public void seeAssigns(String[] assignments) {
+		//assignmentJModel.removeAllElements();
+		for (int i=0; i<assignments.length; i++) {
+			assignmentJModel.addElement(assignments[i]);
+		}
 		courseInnerCards.show(courseInnerPanel, "Assignments");
 	}
 	
 	public void seeHome() {
 		mainCards.show(container, "Home");
+		studentJList.clearSelection();
+		courseJList.clearSelection();
 	}
 	
 	public void seeCourses() {
@@ -305,16 +333,16 @@ public class ProfessorView extends JFrame {
 	{
 		this.createCourses.addActionListener(createCourses);
 		this.viewCourses.addActionListener(viewCourses);
-//		this.setCourseactive.addActionListener(setCourseActive);
-//		this.viewStudents.addActionListener(viewStudents);
-//		this.viewAssigns.addActionListener(viewAssigns);
-//		this.returnHome.addActionListener(returnHome);
-//		this.emailStudents.addActionListener(emailStudents);
-//		this.searchStudents.addActionListener(searchStudents);
-//		this.enrollment.addActionListener(enrollment);
-//		this.uploadAssign.addActionListener(uploadAssign);
-//		this.setAssignActive.addActionListener(setAssignActive);
-//		this.viewSubmissions.addActionListener(viewSubmissions);
+		this.setCourseactive.addActionListener(setCourseActive);
+		this.viewStudents.addActionListener(viewStudents);
+		this.viewAssigns.addActionListener(viewAssigns);
+		this.returnHome.addActionListener(returnHome);
+		this.emailStudents.addActionListener(emailStudents);
+		this.searchStudents.addActionListener(searchStudents);
+		this.enrollment.addActionListener(enrollment);
+		this.uploadAssign.addActionListener(uploadAssign);
+		this.setAssignActive.addActionListener(setAssignActive);
+		this.viewSubmissions.addActionListener(viewSubmissions);
 		this.courseJList.addListSelectionListener(courseListListener);
 	}
 	
@@ -350,9 +378,31 @@ public class ProfessorView extends JFrame {
 		}
 	}
 	
+	public File chooseFile()
+	{
+		File selectedFile=null;
+		JFileChooser fileBrowser=new JFileChooser();
+		if(fileBrowser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			selectedFile = fileBrowser.getSelectedFile();
+//		long length=selectedFile.length();
+//		byte[] content=new byte [(int) length];
+//		try {
+//			FileInputStream fis = new FileInputStream(selectedFile);
+//			BufferedInputStream bos = new BufferedInputStream(fis);
+//			bos.read(content, 0, (int)length);
+//			} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//			} catch(IOException e){
+//			e.printStackTrace();
+//			}
+//		return content;
+		return selectedFile;
+	}
 	
-	
-	
+	public String[] EnrollStudentJOptionPane()
+	{
+		
+	}
 	
 	
 	

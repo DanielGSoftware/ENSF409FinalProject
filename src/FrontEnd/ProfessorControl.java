@@ -4,6 +4,11 @@ import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.Action;
 import javax.swing.event.ListSelectionEvent;
@@ -58,11 +63,22 @@ public class ProfessorControl {
 	
 	class ViewAssignmentsListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			System.out.println("Browsing all assingments in course");
+			String[] assignments=pModel.browseAssignment(pView.getCourseID());
+			pView.seeAssigns(assignments);
+		}
+	}
+	
+	class ViewStudentsListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String[] a=pView.getSelectedList();
+			int courseid=Integer.parseInt(a[0]);
+			String[] string=pModel.viewStudents(courseid);
+			pView.updateDisplay(string);
 		}
 		
 	}
@@ -72,8 +88,9 @@ public class ProfessorControl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			File file=pView.chooseFile();
+			System.out.println(file.getPath());
+			pModel.addAssignment(pView.getCourseID(), file.getName(), file.getPath());
 		}
 		
 	}
@@ -111,16 +128,7 @@ public class ProfessorControl {
 		
 	}
 	
-	class ViewStudentsListener implements ActionListener
-	{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
+	
 	
 	class ViewCourseListener implements ActionListener
 	{
@@ -208,6 +216,7 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//picks up what student is hit
+			String[] strings=pView.EnrollStudent();
 			String[] string=new String[1];
 			string[0]=pModel.StudentEnrollment(1000,1070);
 			pView.updateDisplay(string);

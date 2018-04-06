@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.mysql.jdbc.ServerPreparedStatement;
+
 public class DataBaseBuilder
 {
 	private Connection jdbc_connection;
@@ -254,6 +256,43 @@ public class DataBaseBuilder
 		}
 	}
 	
+	public void fillAssignmentTable(String filename)
+	{
+			try{
+				//Scanner sc = new Scanner(new FileReader(filename));
+				//while(sc.hasNext())
+				//{
+					//String string[] = sc.nextLine().split(";");
+					String sql = "INSERT INTO Assignment_Table" +
+							" VALUES ( ?, ?, ?, ?, ?, ?)";
+					try{
+						statement = jdbc_connection.prepareStatement(sql);
+						statement.setInt(1, ++id);
+						statement.setInt(2, 1070);
+						statement.setString(3, "Assignment1.txt");
+						statement.setString(4, "C:\\Users\\muham\\OneDrive\\Documents\\ENSF409FinalProject\\Assignment1.txt");
+						statement.setInt(5, 1);
+						statement.setString(6, "March 6, 2020");
+						statement.executeUpdate();
+					}
+					catch(SQLException e)
+					{
+						e.printStackTrace();
+					}
+					id+=10;
+				//}
+				//sc.close();
+			}
+//			catch(FileNotFoundException e)
+//			{
+//				System.err.println("File " + filename + " Not Found!");
+//			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+	}
+	
 	public static void main(String[] args) throws SQLException
 	{
 		DataBaseBuilder dataBaseBuilder=new DataBaseBuilder();
@@ -266,5 +305,6 @@ public class DataBaseBuilder
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
+		dataBaseBuilder.fillAssignmentTable("Assignment1.txt");
 	}
 }

@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
+import SharedObjects.Assignment;
 import SharedObjects.Course;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
@@ -98,6 +99,28 @@ public class ProfessorModel extends MainModel {
 //		return infoExchange.getInfo();
 //	}
 	
+	public String[] viewStudents(int courseid)
+	{
+		StudentEnrollment sEnrollment=new StudentEnrollment(0, 0, courseid);
+		InfoExchange infoExchange=new InfoExchange("View Students Proff");
+		String[] result=null;
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(sEnrollment);
+			flushAndReset(sendObject);
+			infoExchange= (InfoExchange) readObject.readObject();
+			result=infoExchange.getInfo();
+			//result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
+		}
+		catch (IOException e) {
+			System.out.print("Error: search students in proff model wont work");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public String[] SearchStudents(String lastname, int courseid)
 	{
 		User user=new User(0, null, null, null, lastname, "S");
@@ -111,6 +134,7 @@ public class ProfessorModel extends MainModel {
 			infoExchange= (InfoExchange) readObject.readObject();
 			result=infoExchange.getInfo();
 			result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
+			System.out.print("here");
 		}
 		catch (IOException e) {
 			System.out.print("Error: search students in proff model wont work");
@@ -136,6 +160,41 @@ public class ProfessorModel extends MainModel {
 			System.out.print("Error: search enn in proff model wont work");
 		} 
 		return string;
+	}
+	
+	public void addAssignment(int courseid, String filename, String path)
+	{
+		InfoExchange infoExchange=new InfoExchange("Upload Assignment Proff");
+		Assignment assignment=new Assignment(courseid, filename, path);
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String[] browseAssignment(int courseid)
+	{
+		System.out.println("In browse assignments");
+		InfoExchange infoExchange=new InfoExchange("Browse Assignment Proff");
+		Assignment assignment=new Assignment(courseid, null, null);
+		String[] strings=null;
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
+			infoExchange= (InfoExchange) readObject.readObject();
+			strings=infoExchange.getInfo();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return strings;
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {

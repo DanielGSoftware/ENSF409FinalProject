@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 public class StudentEnrollment implements Serializable{
 	private int studentid;
 	private int courseid;
@@ -62,5 +64,31 @@ public class StudentEnrollment implements Serializable{
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public int[] viewStudents(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql = "SELECT * FROM " +table + " WHERE COURSE_ID=?";
+		ResultSet object;
+		ArrayList<Integer> list=new ArrayList<Integer>();
+		try{
+				statement = jdbc_connection.prepareStatement(sql);
+				statement.setInt(1, courseid);
+				object=statement.executeQuery();
+				while (object.next()) {
+					list.add(object.getInt("STUDENT_ID"));
+				}
+				//System.out.println("enrollment removed");
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		int[] temp=new int[list.size()];
+		for (int i=0; i<list.size(); i++) {
+			temp[i]=list.get(i);
+		}
+		return temp;
 	}
 }
