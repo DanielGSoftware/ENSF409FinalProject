@@ -31,8 +31,8 @@ public class ProfessorView extends JFrame {
 	
 	private JPanel coursePanel;
 	private JButton setCourseactive;
-	private JButton viewAssigns;
 	private JButton viewStudents;
+	private JButton viewAssigns;
 	private JButton returnHome;
 	private JPanel courseInnerPanel;
 	private CardLayout courseInnerCards;
@@ -274,6 +274,23 @@ public class ProfessorView extends JFrame {
 		mainCards.show(container, "Courses");	
 	}
 	
+	public void addAllListeners(ActionListener createCourses, ActionListener viewCourses, ActionListener setCourseActive,
+								ActionListener viewStudents, ActionListener viewAssigns, ActionListener returnHome, 
+								ActionListener emailStudents, ActionListener searchStudents, ActionListener enrollment, 
+								ActionListener uploadAssign, ActionListener setAssignActive, ActionListener viewSubmissions) {
+		this.createCourses.addActionListener(createCourses);
+		this.viewCourses.addActionListener(viewCourses);
+		this.setCourseactive.addActionListener(setCourseActive);
+		this.viewStudents.addActionListener(viewStudents);
+		this.viewAssigns.addActionListener(viewAssigns);
+		this.returnHome.addActionListener(returnHome);
+		this.emailStudents.addActionListener(emailStudents);
+		this.searchStudents.addActionListener(searchStudents);
+		this.enrollment.addActionListener(enrollment);
+		this.uploadAssign.addActionListener(uploadAssign);
+		this.setAssignActive.addActionListener(setAssignActive);
+		this.viewSubmissions.addActionListener(viewSubmissions);
+	}
 	
 	
 	
