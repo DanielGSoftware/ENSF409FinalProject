@@ -15,11 +15,11 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 public class ProfessorView extends JFrame {
-	private String profffirstname;
-	private String profflastname;
-	private int proffid;
+	private String proffFirstName;
+	private String proffLastName;
+	private int proffID;
 	
-	private CardLayout mainCards =  new CardLayout();
+	private CardLayout mainCards;
 	private Container container;
 	
 	private JPanel homePanel;
@@ -63,9 +63,9 @@ public class ProfessorView extends JFrame {
 	
 	public ProfessorView(int proffid, String profffirstname, String profflastname) {
 		super("Professor Learning Platform");
-		this.proffid=proffid;
-		this.profffirstname=profffirstname;
-		this.profflastname=profflastname;
+		this.proffID=proffid;
+		this.proffFirstName=profffirstname;
+		this.proffLastName=profflastname;
 		container=getContentPane();
 		container.setLayout(mainCards);
 		String[] info=new String[3];
@@ -79,7 +79,7 @@ public class ProfessorView extends JFrame {
 	
 	public int getProffID()
 	{
-		return proffid;
+		return proffID;
 	}
 	
 	public DefaultListModel<String> getListModel()
@@ -138,7 +138,7 @@ public class ProfessorView extends JFrame {
 	{
 		JPanel grandPanel = new JPanel();
 		String[] welcomeMessage= {"Welcome to your home page, Professor " +
-								   profffirstname + " " + profflastname + " ("+proffid+")",
+								   proffFirstName + " " + proffLastName + " ("+proffID+")",
 								   "What would you like to do?"};
 		courseListModel=new DefaultListModel<String>();
 		for(int i=0; i<welcomeMessage.length; i++) {
