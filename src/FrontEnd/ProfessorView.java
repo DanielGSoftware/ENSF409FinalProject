@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -22,7 +24,6 @@ public class ProfessorView extends JFrame {
 	private int proffid;
 	
 	private CardLayout mainCards =  new CardLayout();
-	private JScrollPane searchresults;
 	private Container container;
 	
 	private JPanel homePanel;
@@ -36,10 +37,12 @@ public class ProfessorView extends JFrame {
 	private JButton returnHome;
 	private JPanel courseInnerPanel;
 	private CardLayout courseInnerCards;
+	private JScrollPane searchresults;
 	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
 	private JList<String> studentJList = new JList<String>();
-	private DefaultListModel<String> courseListModel = new DefaultListModel<String>();
-	private JList<String> courseJList = new JList<String>();
+	
+	private DefaultListModel<String> courseListModel;
+	private JList<String> courseJList;
 	private JButton emailStudents;
 	private JButton searchStudents;
 	private JButton enrollment;
@@ -48,7 +51,17 @@ public class ProfessorView extends JFrame {
 	private JButton setAssignActive;
 	private JButton viewSubmissions;
 	
+	public String getStudents()
+	{
+		return findStudents.getText();
+	}
 	
+	public int getCourseID()
+	{
+		String string=courseJList.getSelectedValue();
+		String[] strings=string.split(";");
+		return Integer.parseInt(strings[0]);
+	}
 	
 	
 	public ProfessorView(int proffid, String profffirstname, String profflastname) {
@@ -58,12 +71,13 @@ public class ProfessorView extends JFrame {
 		this.profflastname=profflastname;
 		container=getContentPane();
 		container.setLayout(mainCards);
-		
+		String[] info=new String[3];
+		info[2]="Hi";
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
-		createCourseDisplay();
+		createCourseDisplay(info);
 	}
 	
 	public int getProffID()
@@ -93,6 +107,23 @@ public class ProfessorView extends JFrame {
 		createHomeCenterPanel();
 	}
 
+	public void makeCourseJList(String[] courselist)
+	{
+		
+		courseListModel.removeAllElements();
+		for (int i=0; i<courselist.length; i++)
+		{
+			courseListModel.addElement(courselist[i]);
+		}
+		
+//		courseJList=new JList<String>(courseListModel);
+//		courseJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		courseJList.setVisibleRowCount(15);
+//		courseJList.setFont(new Font("Courier New", Font.BOLD, 11));
+//		searchresults=new JScrollPane(courseJList);
+//		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		homePanel.add(searchresults, BorderLayout.CENTER);
+	}
 	
 	private void createHomeTopPanel()
 	{	
@@ -105,13 +136,13 @@ public class ProfessorView extends JFrame {
 		createCourses=new JButton("CREATE A COURSE");
 		viewCourses=new JButton("VIEW COURSES");
 		
-		viewCourses.addActionListener(new ActionListener() {			
-			@Override													
-			public void actionPerformed(ActionEvent e) {				
-//				mainCards.show(container, "Courses");	
-				seeCourses();
-			}															
-		});																
+//		viewCourses.addActionListener(new ActionListener() {			
+//			@Override													
+//			public void actionPerformed(ActionEvent e) {				
+////				mainCards.show(container, "Courses");	
+//				seeCourses();
+//			}															
+//		});																
 		
 		buttonPanel.add(createCourses);
 		buttonPanel.add(viewCourses);
@@ -124,20 +155,19 @@ public class ProfessorView extends JFrame {
 	private void createHomeCenterPanel()
 	{
 		JPanel grandPanel = new JPanel();
+		String[] welcomeMessage= {"Welcome to your home page, Professor " +
+							profffirstname + " " + profflastname + " ("+proffid+")",
+							"What would you like to do?"};
+		courseListModel=new DefaultListModel<String>();
+		for(int i=0; i<welcomeMessage.length; i++) {
+			courseListModel.addElement(welcomeMessage[i]);
+		}
+		courseJList = new JList<String>(courseListModel);
+		searchresults=new JScrollPane(courseJList);
+		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-//		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
-//		listmodel=new DefaultListModel<String>();
-//		listmodel.addElement(argument[0]);
-//		listmodel.addElement(argument[1]);
-//		displaylist=new JList<String>();
-//		displaylist.setModel(listmodel);
-		JTextArea welcomePane = new JTextArea("Welcome to your home page, Professor " +
-				 							   profffirstname + " " + profflastname + " ("+proffid+")" + 
-				 							   "\n" + "What would you like to do?");
-		welcomePane.setFont(new Font("Courier New", Font.PLAIN, 14));
-//		welcomePane.setColumns(30);
-		welcomePane.setRows(20);
-		welcomePane.setEditable(false);
+		
+		
 		
 //		System.out.println("In constructor: " + displaylist.getModel().getSize());
 //		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -151,54 +181,29 @@ public class ProfessorView extends JFrame {
 //		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //		searchresults.setPreferredSize(new Dimension(600,325));
 //		temp[0][0].add(searchresults);
-		grandPanel.add(welcomePane);
+		grandPanel.add(searchresults);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
-//	public void switchToHomePage() {
-//		container.add(homePanel);
-//	}
-	
-	public void createCourseDisplay() {
+	public void createCourseDisplay(String [] info) {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "Courses");
-		createCourseTopPanel();
-		createCourseInnerPanel();
+		createCourseTopPanel(info);
+		createCourseInnerPanel(info);
 	}
 	
-	private void createCourseTopPanel() {
+	private void createCourseTopPanel(String[] info) {
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
 		JPanel bannerPanel = new JPanel();
-		createBanner(bannerPanel, "COURSE NAME - NOT COMPLETE");
+		createBanner(bannerPanel, info[1]);
 		JPanel topButtons = new JPanel();
+		
+		System.out.println("INSIDE CREATE COURSE TOP PANEL");
+		
 		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-		
 		viewStudents = new JButton("STUDENTS");
-		viewStudents.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				courseInnerCards.show(courseInnerPanel, "Students");
-				seeStudents();
-			}
-		});
-		
 		viewAssigns = new JButton("ASSIGNMENTS");
-		viewAssigns.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				courseInnerCards.show(courseInnerPanel, "Assignments");
-				seeAssigns();
-			}
-		});
-		
 		returnHome = new JButton("HOME");
-		returnHome.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				mainCards.show(container, "Home");
-				seeHome();
-			}
-		});
 		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
@@ -211,7 +216,8 @@ public class ProfessorView extends JFrame {
 	}
 	
 	
-	private void createCourseInnerPanel() {
+	
+	private void createCourseInnerPanel(String[] info) {
 		courseInnerCards = new CardLayout();
 		courseInnerPanel = new JPanel(courseInnerCards);
 		JPanel courseStudentPanel = new JPanel(new BorderLayout());
@@ -224,6 +230,21 @@ public class ProfessorView extends JFrame {
 		 * ADD JLIST STUFF FOR RESULTS
 		 */
 		
+//		courseListModel.removeAllElements();
+//		courseListModel.addElement(info[0]);
+		
+		studentListModel=new DefaultListModel<String>();
+		studentListModel.addElement(info[0]);
+		studentJList=new JList<String>(studentListModel);
+		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		studentJList.setVisibleRowCount(15);
+		studentJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		
+		JScrollPane studentScrollPane = new JScrollPane(studentJList);
+		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		studentScrollPane.setPreferredSize(new Dimension(90,100));
+		
+		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
 		JPanel studentButtonsPanel = new JPanel();
 		addStudentButtons(studentButtonsPanel);
@@ -269,15 +290,38 @@ public class ProfessorView extends JFrame {
 	}
 	
 	public void seeCourses() {
+		int index=courseJList.getSelectedIndex();
+		String string=courseListModel.get(index);
+		String[] info=string.split(";");
+		createCourseDisplay(info);
 		mainCards.show(container, "Courses");	
 	}
 	
-	public void addAllListeners(ActionListener createCourses, ActionListener viewCourses, ActionListener setCourseActive,
+	public void addHomeListeners(ActionListener createCourses, ActionListener viewCourses, ActionListener setCourseActive,
 								ActionListener viewStudents, ActionListener viewAssigns, ActionListener returnHome, 
 								ActionListener emailStudents, ActionListener searchStudents, ActionListener enrollment, 
-								ActionListener uploadAssign, ActionListener setAssignActive, ActionListener viewSubmissions) {
+								ActionListener uploadAssign, ActionListener setAssignActive, ActionListener viewSubmissions, 
+								ListSelectionListener courseListListener) 
+	{
 		this.createCourses.addActionListener(createCourses);
 		this.viewCourses.addActionListener(viewCourses);
+//		this.setCourseactive.addActionListener(setCourseActive);
+//		this.viewStudents.addActionListener(viewStudents);
+//		this.viewAssigns.addActionListener(viewAssigns);
+//		this.returnHome.addActionListener(returnHome);
+//		this.emailStudents.addActionListener(emailStudents);
+//		this.searchStudents.addActionListener(searchStudents);
+//		this.enrollment.addActionListener(enrollment);
+//		this.uploadAssign.addActionListener(uploadAssign);
+//		this.setAssignActive.addActionListener(setAssignActive);
+//		this.viewSubmissions.addActionListener(viewSubmissions);
+		this.courseJList.addListSelectionListener(courseListListener);
+	}
+	
+	public void addCourseListeners(ActionListener setCourseActive, ActionListener viewStudents, ActionListener viewAssigns, 
+								   ActionListener returnHome, ActionListener emailStudents, ActionListener searchStudents, 
+								   ActionListener enrollment, ActionListener uploadAssign, ActionListener setAssignActive, 
+								   ActionListener viewSubmissions) {
 		this.setCourseactive.addActionListener(setCourseActive);
 		this.viewStudents.addActionListener(viewStudents);
 		this.viewAssigns.addActionListener(viewAssigns);
@@ -290,11 +334,21 @@ public class ProfessorView extends JFrame {
 		this.viewSubmissions.addActionListener(viewSubmissions);
 	}
 	
+	public String[] getSelectedList()
+	{
+		String string=courseJList.getSelectedValue();
+		String[] strings=string.split(";");
+		System.out.println(string);
+		return strings;
+	}
 	
-	
-	
-	
-	
+	public void updateDisplay(String[] string)
+	{
+		studentListModel.removeAllElements();
+		for (int i=0; i<string.length; i++) {
+			studentListModel.addElement(string[i]);
+		}
+	}
 	
 	
 	
@@ -414,20 +468,20 @@ public class ProfessorView extends JFrame {
 		//studentJList.addListSelectionListener(a);
 
 
-	public ArrayList<String> getSelectedList()
-	{
-		System.out.println("In selected list method");
-		System.out.println(studentJList.getSelectedValue());
-		System.out.println(studentJList.getModel().getElementAt(0));
-		//String string=displaylist.getSelectedValue();
-//		int index=0;
-		String string=new String(studentJList.getSelectedValue());
-		System.out.println(string);
-		//String[] strings=string.split(";");
-		ArrayList<String> strings=new ArrayList<String>();
-		strings.add(string);
-		return strings;
-	}
+//	public ArrayList<String> getSelectedList()
+//	{
+//		System.out.println("In selected list method");
+//		System.out.println(studentJList.getSelectedValue());
+//		System.out.println(studentJList.getModel().getElementAt(0));
+//		//String string=displaylist.getSelectedValue();
+////		int index=0;
+//		String string=new String(studentJList.getSelectedValue());
+//		System.out.println(string);
+//		//String[] strings=string.split(";");
+//		ArrayList<String> strings=new ArrayList<String>();
+//		strings.add(string);
+//		return strings;
+//	}
 	
 	public void displayCourseActiveUpdateMessage()
 	{
