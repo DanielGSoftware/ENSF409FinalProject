@@ -197,7 +197,7 @@ public class ProfessorControl {
 			//some JOptionPane gives  student id and course id
 			String[] a=pView.getSelectedList();
 			int courseid=Integer.parseInt(a[0]);
-			String[] strings=pModel.searchStudents(pView.getStudents(), courseid);
+			String[] strings=pModel.searchStudents(pView.getSearchParam(), courseid);
 			//display information in gui 
 			System.out.println(strings[0]);
 			pView.updateStudentListDisplay(strings);

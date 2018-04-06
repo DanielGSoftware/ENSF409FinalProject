@@ -25,6 +25,8 @@ public class ProfessorView extends JFrame {
 	private JPanel homePanel;
 	private JButton createCourses;
 	private JButton viewCourses;
+	private DefaultListModel<String> courseListModel;
+	private JList<String> courseJList;
 	
 	private JPanel coursePanel;
 	private JButton setCourseactive;
@@ -34,8 +36,6 @@ public class ProfessorView extends JFrame {
 	private JPanel courseInnerPanel;
 	private CardLayout courseInnerCards;
 	private JScrollPane searchresults;
-	private DefaultListModel<String> courseListModel;
-	private JList<String> courseJList;
 	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
 	private JList<String> studentJList = new JList<String>();	
 	private DefaultListModel<String> assignListModel;
@@ -48,7 +48,7 @@ public class ProfessorView extends JFrame {
 	private JButton setAssignActive;
 	private JButton viewSubmissions;
 	
-	public String getStudents()
+	public String getSearchParam()
 	{
 		return findStudents.getText();
 	}
@@ -61,11 +61,11 @@ public class ProfessorView extends JFrame {
 	}
 	
 	
-	public ProfessorView(int proffid, String profffirstname, String profflastname) {
+	public ProfessorView(int proffID, String proffFirstName, String proffLastName) {
 		super("Professor Learning Platform");
-		this.proffID=proffid;
-		this.proffFirstName=profffirstname;
-		this.proffLastName=profflastname;
+		this.proffID=proffID;
+		this.proffFirstName=proffFirstName;
+		this.proffLastName=proffLastName;
 		container=getContentPane();
 		container.setLayout(mainCards);
 		String[] info=new String[3];
