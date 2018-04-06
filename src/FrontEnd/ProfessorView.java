@@ -13,8 +13,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
-
 
 public class ProfessorView extends JFrame {
 	private String profffirstname;
@@ -34,20 +34,16 @@ public class ProfessorView extends JFrame {
 	private JButton viewAssigns;
 	private JButton viewStudents;
 	private JButton returnHome;
-	private JPanel courseCenterPanel;
-	private JPanel courseCenterCards;
+	private JPanel courseInnerPanel;
+	private CardLayout courseInnerCards;
 	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
 	private JList<String> studentJList = new JList<String>();
 	private DefaultListModel<String> courseListModel = new DefaultListModel<String>();
 	private JList<String> courseJList = new JList<String>();
-	private JPanel courseBottomPanel;
-	private CardLayout courseBottomCards;
-	private JPanel studentButtonsPanel;
 	private JButton emailStudents;
 	private JButton searchStudents;
 	private JButton enrollment;
 	private JTextField findStudents;
-	private JPanel assignButtonsPanel;
 	private JButton uploadAssign;
 	private JButton setAssignActive;
 	private JButton viewSubmissions;
@@ -168,10 +164,8 @@ public class ProfessorView extends JFrame {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "Courses");
 		createCourseTopPanel();
-		createCourseCenterPanel();
+		createCourseInnerPanel();
 		createCourseBottomPanel();
-		addStudentButtons();
-		addAssignButtons();
 	}
 	
 	private void createCourseTopPanel() {
@@ -179,13 +173,13 @@ public class ProfessorView extends JFrame {
 		JPanel bannerPanel = new JPanel();
 		createBanner(bannerPanel, "COURSE NAME - NOT COMPLETE");
 		JPanel topButtons = new JPanel();
-		setCourseactive = new JButton("CHANGE ACTIVE STATUS");
+		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
 		
 		viewStudents = new JButton("STUDENTS");
 		viewStudents.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				courseBottomCards.show(courseBottomPanel, "Student Buttons");
+				courseInnerCards.show(courseInnerPanel, "Students");
 			}
 		});
 		
@@ -193,7 +187,7 @@ public class ProfessorView extends JFrame {
 		viewAssigns.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				courseBottomCards.show(courseBottomPanel, "Assignment Buttons");
+				courseInnerCards.show(courseInnerPanel, "Assignments");
 			}
 		});
 		
@@ -216,45 +210,53 @@ public class ProfessorView extends JFrame {
 	}
 	
 	
-	private void createCourseCenterPanel() {
-		courseBottomCards = new CardLayout();
-		courseCenterPanel = new JPanel(courseBottomCards);
+	private void createCourseInnerPanel() {
+		courseInnerCards = new CardLayout();
+		courseInnerPanel = new JPanel(courseInnerCards);
+		JPanel courseStudentPanel = new JPanel(new BorderLayout());
+		JPanel courseAssignPanel = new JPanel(new BorderLayout());
+		courseInnerPanel.add(courseStudentPanel, "Students");
+		courseInnerPanel.add(courseAssignPanel, "Assignments");
+		
+		
 		/*
 		 * ADD JLIST STUFF FOR RESULTS
 		 */
+		
+		
+		JPanel studentButtonsPanel = new JPanel();
+		addStudentButtons(studentButtonsPanel);
+		JPanel assignButtonsPanel = new JPanel();
+		addAssignButtons(assignButtonsPanel);
+		courseStudentPanel.add(studentButtonsPanel, BorderLayout.SOUTH);
+		courseAssignPanel.add(assignButtonsPanel, BorderLayout.SOUTH);
+		
+		coursePanel.add(courseInnerPanel, BorderLayout.CENTER);
 	}
 	
 	private void createCourseBottomPanel() {
-		courseBottomCards = new CardLayout();
-		courseBottomPanel = new JPanel(courseBottomCards);
-		
-		studentButtonsPanel = new JPanel();
-		assignButtonsPanel = new JPanel();
-		
-		courseBottomPanel.add(studentButtonsPanel, "Student Buttons");
-		courseBottomPanel.add(assignButtonsPanel, "Assignment Buttons");
-		coursePanel.add(courseBottomPanel, BorderLayout.SOUTH);
+
 	}
 	
-	private void addStudentButtons() {
+	private void addStudentButtons(JPanel buttonsPanel) {
 		enrollment =  new JButton("ENROLL/UNENROLL");
 		emailStudents = new JButton("EMAIL STUDENTS");
 		searchStudents = new JButton("SEARCH A STUDENT");
 		findStudents = new JTextField();
 		findStudents.setColumns(15);
-		studentButtonsPanel.add(enrollment);
-		studentButtonsPanel.add(emailStudents);
-		studentButtonsPanel.add(searchStudents);
-		studentButtonsPanel.add(findStudents);
+		buttonsPanel.add(enrollment);
+		buttonsPanel.add(emailStudents);
+		buttonsPanel.add(searchStudents);
+		buttonsPanel.add(findStudents);
 	}
 	
-	private void addAssignButtons() {
+	private void addAssignButtons(JPanel buttonsPanel) {
 		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
 		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
 		viewSubmissions = new JButton("VIEW SUBMISSIONS");
-		assignButtonsPanel.add(setAssignActive);
-		assignButtonsPanel.add(uploadAssign);
-		assignButtonsPanel.add(viewSubmissions);
+		buttonsPanel.add(setAssignActive);
+		buttonsPanel.add(uploadAssign);
+		buttonsPanel.add(viewSubmissions);
 	}
 
 	
