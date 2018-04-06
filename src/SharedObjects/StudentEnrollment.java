@@ -1,5 +1,7 @@
 package SharedObjects;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,18 +15,22 @@ public class StudentEnrollment implements Serializable{
 	private int studentid;
 	private int courseid;
 	private int enrollmentid;
+	private String firstname;
+	private String lastname;
 	private static final long serialVersionUID = 5;
 
-	public StudentEnrollment(int enrollmentid, int studentid, int courseid) {
-		this.enrollmentid=enrollmentid;
+	public StudentEnrollment(String firstname, String lastname, int studentid, int courseid, int enrollmentid) {
+		this.firstname=firstname;
+		this.lastname=lastname;
 		this.studentid=studentid;
 		this.courseid=courseid;
+		this.enrollmentid=enrollmentid;
 	}
 	
-	public int getStudentId()
-	{
-		return studentid;
-	}
+//	public int getStudentId()
+//	{
+//		return studentid;
+//	}
 	
 	public String[] browseStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
 	{

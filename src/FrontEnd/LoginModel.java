@@ -1,5 +1,7 @@
 package FrontEnd;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

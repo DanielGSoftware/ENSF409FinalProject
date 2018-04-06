@@ -1,5 +1,10 @@
 package FrontEnd;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -401,7 +406,25 @@ public class ProfessorView extends JFrame {
 	
 	public String[] EnrollStudentJOptionPane()
 	{
-		
+		Object[] objects={ "insert",  "exit"};
+		JPanel panel=new JPanel();
+		String[] info=new String[2];
+		JTextField firstname=new JTextField("Enter Student First Name");
+		JTextField lastname=new JTextField("Enter Student Last Name");
+		panel.add(firstname);
+		panel.add(lastname);
+		int result = JOptionPane.showOptionDialog(null, panel, "Enter Info for Student",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, objects, null);
+		if (result==JOptionPane.YES_OPTION){
+			info[0]=firstname.getText();
+			info[1]=lastname.getText();
+		}	
+		if (result==JOptionPane.NO_OPTION){
+			JOptionPane.getRootFrame().dispose();
+		}
+		return info;
+
 	}
 	
 	

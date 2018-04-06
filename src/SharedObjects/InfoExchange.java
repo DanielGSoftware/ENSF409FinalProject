@@ -1,5 +1,7 @@
 package SharedObjects;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.Serializable;
 
 public class InfoExchange implements Serializable {

@@ -1,5 +1,7 @@
 package FrontEnd;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -144,7 +146,7 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
-	public String StudentEnrollment(int studentid, int courseid)
+	public String StudentEnrollment(String firstname, String lastname)
 	{
 		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
 		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");

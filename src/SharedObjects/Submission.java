@@ -1,5 +1,7 @@
 package SharedObjects;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 public class Submission extends InfoExchange{
 
 	public Submission(String opcode) {

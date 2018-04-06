@@ -1,5 +1,7 @@
 package FrontEnd;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.BufferedReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

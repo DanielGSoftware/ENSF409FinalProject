@@ -1,6 +1,8 @@
 package FrontEnd;
 
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

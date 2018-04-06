@@ -1,5 +1,7 @@
 package SharedObjects;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 public class Grade extends InfoExchange{
 
 	public Grade(String opcode) {

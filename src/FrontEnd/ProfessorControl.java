@@ -1,5 +1,7 @@
 package FrontEnd;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
@@ -215,10 +217,9 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//picks up what student is hit
-			String[] strings=pView.EnrollStudent();
+			String[] strings=pView.EnrollStudentJOptionPane();
 			String[] string=new String[1];
-			string[0]=pModel.StudentEnrollment(1000,1070);
+			string[0]=pModel.StudentEnrollment(strings[0],strings[1]);
 			pView.updateDisplay(string);
 		}
 	}
