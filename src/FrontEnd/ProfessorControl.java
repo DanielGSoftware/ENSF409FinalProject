@@ -219,8 +219,8 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] strings=pView.EnrollStudentJOptionPane();
 			String[] string=new String[1];
-			string[0]=pModel.StudentEnrollment(strings[0],strings[1]);
-			pView.updateDisplay(string);
+			pModel.studentEnrollment(strings[0],strings[1]);
+			//pView.updateDisplay(string);
 		}
 	}
 }

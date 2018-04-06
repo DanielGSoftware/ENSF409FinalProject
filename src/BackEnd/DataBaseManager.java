@@ -117,9 +117,9 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Student Enrollment Proff"))
 				{
 					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
-					String[] strings=object.browseStudentsEnrolled(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
-					infoExchange.setInfo(strings);
-					writeobject.writeObject(infoExchange);
+					object.deleteEnrollment(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+//					infoExchange.setInfo(strings);
+//					writeobject.writeObject(infoExchange);
 				}
 				
 				else if (string.equals("View Students Proff"))

@@ -58,11 +58,11 @@ public class StudentEnrollment implements Serializable{
 	
 	public void deleteEnrollment(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
-		String sql = "DELETE FROM " +table + " WHERE STUDENT_ID=? AND COURSE_ID=?";
+		String sql = "DELETE FROM " +table + " WHERE FIRSTNAME=? AND LASTNAME=?";
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, studentid);
-			statement.setInt(2, courseid);
+			statement.setString(1, firstname);
+			statement.setString(2, lastname);
 			statement.executeUpdate();
 			System.out.println("enrollment removed");
 		}

@@ -151,7 +151,9 @@ public class DataBaseBuilder
 		String sql = "CREATE TABLE " + tablename + "(" +
 			     "ENROLLMENT_ID INT(8) NOT NULL, " +
 			     "STUDENT_ID INT(8) NOT NULL, " +  
-			     "COURSE_ID INT(8) NOT NULL,"+
+			     "COURSE_ID INT(8) NOT NULL, "+
+			     "FIRSTNAME VARCHAR(20) NOT NULL, "+
+			     "LASTNAME VARCHAR(20) NOT NULL,"+
 			     "PRIMARY KEY ( enrollment_id ))";
 		try {
 			statement = jdbc_connection.prepareStatement(sql);
@@ -171,12 +173,15 @@ public class DataBaseBuilder
 			{
 				String string[] = sc.nextLine().split(";");
 				String sql = "INSERT INTO Student_Enrollment" +
-						" VALUES ( ?, ?, ?)";
+						" VALUES ( ?, ?, ?, ?, ?)";
 				try{
 					statement = jdbc_connection.prepareStatement(sql);
 					statement.setInt(1, id);
 					statement.setInt(2, Integer.parseInt(string[0]));
 					statement.setInt(3, Integer.parseInt(string[1]));
+					statement.setString(4, string[2]);
+					statement.setString(5, string[3]);
+
 					statement.executeUpdate();
 				}
 				catch(SQLException e)

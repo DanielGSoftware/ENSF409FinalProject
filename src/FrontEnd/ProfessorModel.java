@@ -135,7 +135,7 @@ public class ProfessorModel extends MainModel {
 			flushAndReset(sendObject);
 			infoExchange= (InfoExchange) readObject.readObject();
 			result=infoExchange.getInfo();
-			result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
+			result[4]=studentEnrollment(Integer.parseInt(result[3]), courseid);
 			System.out.print("here");
 		}
 		catch (IOException e) {
@@ -146,9 +146,9 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
-	public String StudentEnrollment(String firstname, String lastname)
+	public void studentEnrollment(String firstname, String lastname)
 	{
-		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
+		StudentEnrollment se=new StudentEnrollment(firstname, lastname, 0, 0 ,0);
 		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");
 		String string=null;
 		try {
@@ -156,12 +156,12 @@ public class ProfessorModel extends MainModel {
 			flushAndReset(sendObject);
 			sendObject.writeObject(se);
 			flushAndReset(sendObject);
-			infoExchange= (InfoExchange) readObject.readObject();
-			string=infoExchange.getInfo()[0];
-		} catch (IOException | ClassNotFoundException e) {
+//			infoExchange= (InfoExchange) readObject.readObject();
+//			string=infoExchange.getInfo()[0];
+		} catch (IOException e) {
 			System.out.print("Error: search enn in proff model wont work");
 		} 
-		return string;
+		//return string;
 	}
 	
 	public void addAssignment(int courseid, String filename, String path)
