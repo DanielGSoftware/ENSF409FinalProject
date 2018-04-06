@@ -1,5 +1,7 @@
 package SharedObjects;
-
+/**
+ * Huzaifa Amar and Daniel Guieb
+ */
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
