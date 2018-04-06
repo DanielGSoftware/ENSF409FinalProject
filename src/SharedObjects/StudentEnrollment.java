@@ -28,7 +28,7 @@ public class StudentEnrollment implements Serializable{
 		return studentid;
 	}
 	
-	public String[] browseStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
+	public String[] viewStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("in browse enrolled stuendts");
 		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID=?";

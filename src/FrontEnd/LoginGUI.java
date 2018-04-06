@@ -22,10 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 public class LoginGUI extends JFrame{
-	private boolean validLogin;
-	
-	private LoginModel theModel;
-	
 	private JTextField userT;
 	private JTextField passT;
 	private JButton signInB;
@@ -41,7 +37,7 @@ public class LoginGUI extends JFrame{
 	
 	public LoginGUI(ObjectInputStream readObject, ObjectOutputStream sendObject) {
 		super("Login");
-		theModel = new LoginModel(readObject, sendObject);
+		new LoginModel(readObject, sendObject);
 		container = getContentPane();
 		setLayout(new BorderLayout());
 		setSize(500, 160);
@@ -144,10 +140,6 @@ public class LoginGUI extends JFrame{
 			}
 			
 		});
-	}
-	
-	private void close() {
-		System.exit(1);
 	}
 	
 	public void sendError(String s) {

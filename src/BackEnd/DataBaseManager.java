@@ -1,21 +1,13 @@
 package BackEnd;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.sql.Connection;
 
 import SharedObjects.Assignment;
@@ -30,8 +22,8 @@ public class DataBaseManager implements Runnable {
 	private PreparedStatement statement;
 	private Connection jdbc_connection;
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
-			  LOGIN          = "root",
-			  PASSWORD       = "huzaifa147";
+						 LOGIN          = "root",
+						 PASSWORD       = "huzaifa147";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
@@ -58,13 +50,13 @@ public class DataBaseManager implements Runnable {
 				if (string.equals("Login Attempt"))
 				{
 					System.out.println("in login attempt databasemangaer");
-					User object= (User) readobject.readObject();
-					String[] strings=object.findUser(USERTABLE, jdbc_connection, statement);
-					infoExchange.setInfo(strings);
+					User user= (User) readobject.readObject();
+					String[] listOfUsers=user.findUser(USERTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(listOfUsers);
 					writeobject.writeObject(infoExchange);
 				}
 				
-				else if (string.equals("Browse Courses Proff")){
+				else if (string.equals("View Courses Proff")){
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
 					//infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
@@ -105,31 +97,31 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Search Students Proff"))
 				{
 					User user = (User)readobject.readObject(); 
-					String[] strings=new String[5];
-					strings=user.searchStudents(USERTABLE, jdbc_connection, statement);
-					System.out.println(strings[0]);
-					infoExchange.setInfo(strings);
+					String[] listOfStudents=new String[5];
+					listOfStudents=user.searchStudents(USERTABLE, jdbc_connection, statement);
+					System.out.println(listOfStudents[0]);
+					infoExchange.setInfo(listOfStudents);
 					writeobject.writeObject(infoExchange);
 				}
 				
 				else if (string.equals("Student Enrollment Proff"))
 				{
-					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
-					String[] strings=object.browseStudentsEnrolled(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
-					infoExchange.setInfo(strings);
+					StudentEnrollment enrollments= (StudentEnrollment) readobject.readObject();
+					String[] listOfEnrollments=enrollments.viewStudentsEnrolled(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(listOfEnrollments);
 					writeobject.writeObject(infoExchange);
 				}
 				
 				else if (string.equals("View Students Proff"))
 				{
-					StudentEnrollment studentEnrollment= (StudentEnrollment) readobject.readObject();
-					int[] studentsid=studentEnrollment.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					StudentEnrollment enrollments= (StudentEnrollment) readobject.readObject();
+					int[] studentIDs=enrollments.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
 					ArrayList<String> list=new ArrayList<String>();
-					for (int i=0; i<studentsid.length; i++) {
-						User user=new User(studentsid[i], null, null, null, null, "S");
-						String[] strings=user.searchStudentsUserId(USERTABLE, jdbc_connection, statement);
+					for (int i=0; i<studentIDs.length; i++) {
+						User user=new User(studentIDs[i], null, null, null, null, "S");
+						String[] listOfStudents=user.searchStudentsUserId(USERTABLE, jdbc_connection, statement);
 						//System.out.println(strings[2]);
-						list.add(strings[2]);
+						list.add(listOfStudents[2]);
 					}
 					
 					String[] temp=new String[list.size()];
@@ -140,7 +132,7 @@ public class DataBaseManager implements Runnable {
 					writeobject.writeObject(infoExchange);
 				}
 				
-				else if (string.equals("Browse Assignment Proff"))
+				else if (string.equals("View Assignment Proff"))
 				{
 					Assignment assignment= (Assignment) readobject.readObject();
 					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);

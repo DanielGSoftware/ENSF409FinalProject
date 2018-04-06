@@ -19,11 +19,11 @@ public class ProfessorModel extends MainModel {
 		super(readObject, sendObject);
 	}
 	
-	public String[] browseCourse(int proffid) 
+	public String[] viewCourse(int proffid) 
 	{
 		Course course=new Course(proffid, null, -1, -1);
 		String[] courselist=null;
-		InfoExchange infoExchange=new InfoExchange("Browse Courses Proff");
+		InfoExchange infoExchange=new InfoExchange("View Courses Proff");
 		try {
 			System.out.println("writing info exchange to database");
 			sendObject.writeObject(infoExchange);
@@ -52,7 +52,7 @@ public class ProfessorModel extends MainModel {
 			sendObject.writeObject(course);
 			flushAndReset(sendObject);
 		} catch (IOException e) {
-			System.out.print("Error: broswe course in proff model wont work");
+			System.out.print("Error: browse course in proff model wont work");
 		}
 	}
 	
@@ -121,7 +121,7 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
-	public String[] SearchStudents(String lastname, int courseid)
+	public String[] searchStudents(String lastname, int courseid)
 	{
 		User user=new User(0, null, null, null, lastname, "S");
 		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
@@ -133,7 +133,7 @@ public class ProfessorModel extends MainModel {
 			flushAndReset(sendObject);
 			infoExchange= (InfoExchange) readObject.readObject();
 			result=infoExchange.getInfo();
-			result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
+			result[4]=studentEnrollment(Integer.parseInt(result[3]), courseid);
 			System.out.print("here");
 		}
 		catch (IOException e) {
@@ -144,7 +144,7 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
-	public String StudentEnrollment(int studentid, int courseid)
+	public String studentEnrollment(int studentid, int courseid)
 	{
 		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
 		InfoExchange infoExchange=new InfoExchange("Student Enrollment Proff");
@@ -176,10 +176,10 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
-	public String[] browseAssignment(int courseid)
+	public String[] viewAssign(int courseid)
 	{
-		System.out.println("In browse assignments");
-		InfoExchange infoExchange=new InfoExchange("Browse Assignment Proff");
+		System.out.println("In view assignments");
+		InfoExchange infoExchange=new InfoExchange("View Assignment Proff");
 		Assignment assignment=new Assignment(courseid, null, null);
 		String[] strings=null;
 		try {

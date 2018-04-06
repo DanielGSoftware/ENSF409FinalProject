@@ -27,15 +27,7 @@ public class ProfessorControl {
 	public ProfessorControl(ProfessorModel model, ProfessorView view) {
 		pModel=model; 
 		pView=view;
-//		pView.addCreateCourseListener(new CreateCourseListener());
-//		pView.addBrowseCourseListener(new BrowseCourseListener());
-//		//pView.addCourseActiveListener(new CourseActiveStatus());
-//		//pView.addListListener(new ListListener());
-//		pView.addSearchStudentsListener(new SearchStudentsListener());
-//		pView.addEnrollStudentListener(new StudentEnrollmentListener());
-		pView.addHomeListeners(new CreateCourseListener(), new ViewCourseListener(), new CourseActiveStatus(), new ViewStudentsListener(),
-							  new ViewAssignmentsListener(), new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), new StudentEnrollmentListener(), 
-							  new UploadAssignmentListener(), new AssignmentActiveStatusListener(), new ViewSubmissionsListener(), new CourseListListener());
+		pView.addHomeListeners(new CreateCourseListener(), new ViewCourseListener(), new CourseListListener());
 		pView.setVisible(true);
 	}
 	
@@ -66,8 +58,8 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Browsing all assingments in course");
-			String[] assignments=pModel.browseAssignment(pView.getCourseID());
-			pView.seeAssigns(assignments);
+			String[] assignments=pModel.viewAssign(pView.getCourseID());
+			pView.viewAssignsPage(assignments);
 		}
 	}
 	
@@ -78,7 +70,7 @@ public class ProfessorControl {
 			String[] a=pView.getSelectedList();
 			int courseid=Integer.parseInt(a[0]);
 			String[] string=pModel.viewStudents(courseid);
-			pView.updateDisplay(string);
+			pView.updateStudentListDisplay(string);
 		}
 		
 	}
@@ -122,7 +114,7 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("PRESSED HOME");
-			pView.seeHome();
+			pView.viewHomePage();
 			
 		}
 		
@@ -134,7 +126,7 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] courselist=pModel.browseCourse(pView.getProffID());
+			String[] courselist=pModel.viewCourse(pView.getProffID());
 //			pView.seeCourses();
 			pView.makeCourseJList(courselist);
 		}
@@ -146,7 +138,7 @@ public class ProfessorControl {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			pView.seeCourses();
+			pView.viewCoursesPage();
 			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
 									 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
 									 new StudentEnrollmentListener(), new UploadAssignmentListener(), new AssignmentActiveStatusListener(), 
@@ -162,7 +154,8 @@ public class ProfessorControl {
 			System.out.println("courseactivestatus button hit in control class");
 			String[] course=pView.getSelectedList();
 			pModel.courseActive(course);
-			pView.displayCourseActiveUpdateMessage();
+			pView.simpleMessage("Course Activation Status Sucessfully Changed. "
+								+ "Please hit browse courses to see changes");
 		}
 	}
 	
@@ -204,10 +197,10 @@ public class ProfessorControl {
 			//some JOptionPane gives  student id and course id
 			String[] a=pView.getSelectedList();
 			int courseid=Integer.parseInt(a[0]);
-			String[] strings=pModel.SearchStudents(pView.getStudents(), courseid);
+			String[] strings=pModel.searchStudents(pView.getStudents(), courseid);
 			//display information in gui 
 			System.out.println(strings[0]);
-			pView.updateDisplay(strings);
+			pView.updateStudentListDisplay(strings);
 		}
 	}
 	
@@ -216,10 +209,10 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//picks up what student is hit
-			String[] strings=pView.EnrollStudent();
+//			String[] strings=pView.EnrollStudent();							error in code
 			String[] string=new String[1];
-			string[0]=pModel.StudentEnrollment(1000,1070);
-			pView.updateDisplay(string);
+			string[0]=pModel.studentEnrollment(1000,1070);
+			pView.updateStudentListDisplay(string);
 		}
 	}
 }

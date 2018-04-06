@@ -4,13 +4,9 @@ package FrontEnd;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 
@@ -48,7 +44,6 @@ public class Client {
 		try { 
 			Client client=new Client("localhost", 9090);
 			client.makeLoginGUI();
-			//client.makeProfessorGUI("Winston", "DaGorilla", 1030);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -60,7 +55,7 @@ public class Client {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("send buytton presed");
+			System.out.println("sign in button presed");
 			String[] string=loginModel.loginAttempt(loginView.getUser(), loginView.getPass());
 			if (string!=null) {
 				loginView.setVisible(false);
@@ -71,7 +66,6 @@ public class Client {
 					e.printStackTrace();
 				}
 			}
-				
 			else {
 				loginView.sendError("Incorrect Login Information: User does not exist in database");
 			}
