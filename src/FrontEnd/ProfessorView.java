@@ -125,21 +125,19 @@ public class ProfessorView extends JFrame {
 	{
 		JPanel grandPanel = new JPanel();
 		
-		String welcome = "Welcome to your home page, Professor " +
-						 profffirstname + " " + profflastname + " ("+proffid+")" + 
-						 "\n" + "What would you like to do?";
-		
 //		String[] argument= {"Welcome Professor "+profffirstname+" "+profflastname+" ("+proffid+")", "You are currently in no course or student page"};
 //		listmodel=new DefaultListModel<String>();
 //		listmodel.addElement(argument[0]);
 //		listmodel.addElement(argument[1]);
 //		displaylist=new JList<String>();
 //		displaylist.setModel(listmodel);
-		JTextArea welcomePane = new JTextArea(welcome);
+		JTextArea welcomePane = new JTextArea("Welcome to your home page, Professor " +
+				 							   profffirstname + " " + profflastname + " ("+proffid+")" + 
+				 							   "\n" + "What would you like to do?");
 		welcomePane.setFont(new Font("Courier New", Font.PLAIN, 14));
 //		welcomePane.setColumns(30);
 		welcomePane.setRows(20);
-		
+		welcomePane.setEditable(false);
 		
 //		System.out.println("In constructor: " + displaylist.getModel().getSize());
 //		displaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
