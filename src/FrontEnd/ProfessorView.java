@@ -339,34 +339,34 @@ public class ProfessorView extends JFrame {
 	}
 	
 	
-	public void updateDisplay(String[] list)
-	{
-		System.out.println("updating display");
-
-		listmodel.removeAllElements();
-
-		while (!studentListModel.isEmpty())
-		{
-			studentListModel.removeElementAt(0);
-		}
-
-		
-		for (int i=0; i<list.length; i++) {
-			studentListModel.addElement(list[i]);
-		}
-		listmodel.addElement("\n\n");
-	}
-	
-	public void addCourseActiveListener(ActionListener a)
-	{
-		setCourseactive.addActionListener(a);
-	}
-	
-	public void addListListener(ListSelectionListener a)
-	{
-
-		displaylist.addListSelectionListener(a);
-	}
+//	public void updateDisplay(String[] list)
+//	{
+//		System.out.println("updating display");
+//
+//		listmodel.removeAllElements();
+//
+//		while (!studentListModel.isEmpty())
+//		{
+//			studentListModel.removeElementAt(0);
+//		}
+//
+//		
+//		for (int i=0; i<list.length; i++) {
+//			studentListModel.addElement(list[i]);
+//		}
+//		listmodel.addElement("\n\n");
+//	}
+//	
+//	public void addCourseActiveListener(ActionListener a)
+//	{
+//		setCourseactive.addActionListener(a);
+//	}
+//	
+//	public void addListListener(ListSelectionListener a)
+//	{
+//
+//		displaylist.addListSelectionListener(a);
+//	}
 	
 	public void addSearchStudentsListener(ActionListener a)
 	{
@@ -387,8 +387,8 @@ public class ProfessorView extends JFrame {
 //	}
 	
 
-		studentJList.addListSelectionListener(a);
-	}
+		//studentJList.addListSelectionListener(a);
+
 
 	public ArrayList<String> getSelectedList()
 	{

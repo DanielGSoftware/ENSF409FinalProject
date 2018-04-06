@@ -16,12 +16,12 @@ public class ProfessorControl {
 	public ProfessorControl(ProfessorModel model, ProfessorView view) {
 		pModel=model; 
 		pView=view;
-		pView.addCreateCourseListener(new CreateCourseListener());
-		pView.addBrowseCourseListener(new BrowseCourseListener());
-		//pView.addCourseActiveListener(new CourseActiveStatus());
-		//pView.addListListener(new ListListener());
-		pView.addSearchStudentsListener(new SearchStudentsListener());
-		pView.addEnrollStudentListener(new StudentEnrollmentListener());
+//		pView.addCreateCourseListener(new CreateCourseListener());
+//		pView.addBrowseCourseListener(new BrowseCourseListener());
+//		//pView.addCourseActiveListener(new CourseActiveStatus());
+//		//pView.addListListener(new ListListener());
+//		pView.addSearchStudentsListener(new SearchStudentsListener());
+//		pView.addEnrollStudentListener(new StudentEnrollmentListener());
 		pView.setVisible(true);
 	}
 	
