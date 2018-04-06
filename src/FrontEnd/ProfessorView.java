@@ -357,7 +357,7 @@ public class ProfessorView extends JFrame {
 				if (result == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				}
-				if (result==JOptionPane.NO_OPTION)
+				else if (result==JOptionPane.NO_OPTION)
 					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			}
 			
