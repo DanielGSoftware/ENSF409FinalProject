@@ -89,5 +89,25 @@ public class Course implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	public String courseofStudent(String coursetable, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE__ID = ?";
+		String course=null;
+		ResultSet object;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			object=statement.executeQuery();		
+			if (object.getInt("ACTIVE")==1) {
+				course=""+courseid+";"+object.getString("NAME");
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return course;
+	}
 
 }

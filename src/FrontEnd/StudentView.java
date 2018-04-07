@@ -44,7 +44,7 @@ public class StudentView extends JFrame{
 	private JButton uploadAssign;
 	private JButton sendEmailToProff;
 	
-	public StudentView(int studentID, String studentFirstName, String studentLastName
+	public StudentView(int studentID, String studentFirstName, String studentLastName,
 					   String[] courses) {
 		super("Student Learning Platform");
 		this.studentID = studentID;
@@ -58,6 +58,21 @@ public class StudentView extends JFrame{
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
+	}
+	
+	public String getFirstName()
+	{
+		return studentFirstName;
+	}
+	
+	public String getLastName()
+	{
+		return studentLastName;
+	}
+	
+	public int getStudentID()
+	{
+		return studentID;
 	}
 	
 	public void simpleMessage(String message) {
