@@ -146,6 +146,22 @@ public class DataBaseManager implements Runnable {
 					assignment.addAssignments(ASSIGNMENTTABLE, jdbc_connection, statement, id);
 				}
 				
+				else if (string.equals("Get List of Courses Student"))
+				{
+					StudentEnrollment studentEnrollment=(StudentEnrollment) readobject.readObject();
+					int[] courses_student=studentEnrollment.viewCoursesForStudent(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					Course course=null;
+					ArrayList<String> listofcourses=new ArrayList<String>();
+					for (int i=0; i<courses_student.length; i++) {
+						course=new Course(-1, null, -1, courses_student[i]);
+						listofcourses.add(course.courseofStudent(COURSETABLE, jdbc_connection, statement));
+					}
+					String result=new String[listofcourses.size()];
+					for (int i=0; i<listofcourses.size(); i++) {
+						
+					}
+				}
+				
 				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {
