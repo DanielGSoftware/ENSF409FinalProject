@@ -274,8 +274,8 @@ public class ProfessorView extends JFrame {
 	public void viewCoursesPage() {
 		int index=courseJList.getSelectedIndex();
 		String string=courseListModel.get(index);
-		String[] info=string.split(";");
-		createCourseDisplay(info);
+		String[] courseInfo=string.split(";");
+		createCourseDisplay(courseInfo);
 		mainCards.show(container, "COURSES");	
 	}
 	
@@ -321,9 +321,7 @@ public class ProfessorView extends JFrame {
 //		
 //	}
 	
-	
-	
-	
+
 	
 	public void addHomeListeners(ActionListener createCourses, ActionListener viewCourses, 
 			 ListSelectionListener courseListListener) 
