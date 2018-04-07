@@ -19,11 +19,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import SharedObjects.Course;
 
 public class StudentView extends JFrame{
 	private String studentFirstName;
 	private String studentLastName;
 	private int studentID;
+	private int currentCourseID;
 	
 	private CardLayout mainCards;
 	private Container container;
@@ -39,13 +45,12 @@ public class StudentView extends JFrame{
 	private JPanel coursePanel;
 	private DefaultListModel<String> assignListModel;
 	private JList<String> assignJList;
-	private JTextField assignGrade;
+	private JTextField grade;
 	private JScrollPane assignScrollPane;
 	private JButton uploadAssign;
 	private JButton sendEmailToProff;
 	
-	public StudentView(int studentID, String studentFirstName, String studentLastName
-					   String[] courses) {
+	public StudentView(int studentID, String studentFirstName, String studentLastName) {
 		super("Student Learning Platform");
 		this.studentID = studentID;
 		this.studentFirstName = studentFirstName;
@@ -58,6 +63,7 @@ public class StudentView extends JFrame{
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
+		initializeCourseDisplay();
 	}
 	
 	public void simpleMessage(String message) {
@@ -87,7 +93,7 @@ public class StudentView extends JFrame{
 		createBanner(bannerPanel, "Student Learning Platform");
 		JPanel welcomePanel = new JPanel();
 		JLabel welcomeLabel = new JLabel("Welcome, " + studentFirstName + " " + 
-										studentLastName + " ("+studentID+").");
+										studentLastName + " ("+studentID+")");
 		welcomePanel.add(welcomeLabel);
 		grandPanel.add(bannerPanel);
 		grandPanel.add(welcomePanel);
@@ -98,12 +104,57 @@ public class StudentView extends JFrame{
 		JPanel grandPanel = new JPanel();
 		
 		courseListModel = new DefaultListModel<String>();
+		courseJList = new JList<String>(courseListModel);
 		
 		
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
 	}
 	
+	private void initializeCourseDisplay() {
+		coursePanel = new JPanel(new BorderLayout());
+		container.add(coursePanel, "COURSE");
+		grade = new JTextField();
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
+		assignListModel = new DefaultListModel<String>();
+		assignJList = new JList<String>(assignListModel);
+		assignJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		assignJList.setVisibleRowCount(15);
+		assignJList.setFont(new Font("Courier New", Font.BOLD, 11));
+	}
+	
+	
+	
+	private void createCourseDisplay(String []courseInfo) {
+		createCourseTopPanel(courseInfo);
+		createCourseInnerPanel(courseInfo);
+	}
+	
+	private void createCourseTopPanel(String [] courseInfo) {
+		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
+		JPanel bannerPanel = new JPanel();
+		//WHERE courseInfo[0] IS THE COURSE NAME
+		createBanner(bannerPanel, courseInfo[0]);
+		JPanel topButtons = new JPanel();
+		topButtons.add(uploadAssign);
+		topButtons.add(sendEmailToProff);
+		grandPanel.add(bannerPanel);
+		grandPanel.add(topButtons);
+		coursePanel.add(grandPanel, BorderLayout.NORTH);
+		
+	}
+	
+	private void createCourseInnerPanel(String[] courseInfo) {
+		JPanel grandPanel = new JPanel(new BorderLayout());
+		JPanel bottomPanel = new JPanel();
+		JScrollPane assignScrollPane = new JScrollPane(assignJList);
+		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
+		bottomPanel.add(gradeInfo);
+		bottomPanel.add(grade);
+		grandPanel.add(assignScrollPane, BorderLayout.CENTER);
+		grandPanel.add(bottomPanel, BorderLayout.SOUTH);
+	}
 	
 	private void makeWindowListener()
 	{
