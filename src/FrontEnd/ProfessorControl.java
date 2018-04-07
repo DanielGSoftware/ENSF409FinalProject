@@ -128,7 +128,7 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] courselist=pModel.viewCourse(pView.getProffID());
 //			pView.seeCourses();
-			pView.makeCourseJList(courselist);
+			pView.createCourseJList(courselist);
 		}
 		
 	}

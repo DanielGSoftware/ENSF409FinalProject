@@ -67,6 +67,7 @@ public class ProfessorView extends JFrame {
 		this.proffFirstName=proffFirstName;
 		this.proffLastName=proffLastName;
 		container=getContentPane();
+		mainCards = new CardLayout();
 		container.setLayout(mainCards);
 		String[] info=new String[3];
 		info[2]="Hi";
@@ -103,12 +104,12 @@ public class ProfessorView extends JFrame {
 	
 	public void createHomeDisplay() {
 		homePanel = new JPanel(new BorderLayout());
-		container.add(homePanel, "Home");
+		container.add(homePanel, "HOME");
 		createHomeTopPanel();
 		createHomeCenterPanel();
 	}
 
-	public void makeCourseJList(String[] courselist)
+	public void createCourseJList(String[] courselist)
 	{
 		courseListModel.removeAllElements();
 		for (int i=0; i<courselist.length; i++)
@@ -154,7 +155,7 @@ public class ProfessorView extends JFrame {
 	
 	public void createCourseDisplay(String [] info) {
 		coursePanel = new JPanel(new BorderLayout());
-		container.add(coursePanel, "Courses");
+		container.add(coursePanel, "COURSES");
 		createCourseTopPanel(info);
 		createCourseInnerPanel(info);
 	}
@@ -189,8 +190,8 @@ public class ProfessorView extends JFrame {
 		JScrollPane studentScrollPane = createStudentScrollPane(info[0]);
 		JScrollPane assignScrollPane = createAssignScrollPane(info[0]);
 		
-		courseInnerPanel.add(courseStudentPanel, "Students");
-		courseInnerPanel.add(courseAssignPanel, "Assignments");
+		courseInnerPanel.add(courseStudentPanel, "STUDENTS");
+		courseInnerPanel.add(courseAssignPanel, "ASSIGNMENTS");
 		courseAssignPanel.add(assignScrollPane, BorderLayout.CENTER);
 		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
@@ -253,7 +254,7 @@ public class ProfessorView extends JFrame {
 	}
 	
 	public void viewStudentsPage() {
-		courseInnerCards.show(courseInnerPanel, "Students");
+		courseInnerCards.show(courseInnerPanel, "STUDENTS");
 	}
 	
 	public void viewAssignsPage(String[] assignments) {
@@ -261,11 +262,11 @@ public class ProfessorView extends JFrame {
 		for (int i=0; i<assignments.length; i++) {
 			assignListModel.addElement(assignments[i]);
 		}
-		courseInnerCards.show(courseInnerPanel, "Assignments");
+		courseInnerCards.show(courseInnerPanel, "ASSIGNMENTS");
 	}
 	
 	public void viewHomePage() {
-		mainCards.show(container, "Home");
+		mainCards.show(container, "HOME");
 		studentJList.clearSelection();
 		courseJList.clearSelection();
 	}
@@ -275,7 +276,7 @@ public class ProfessorView extends JFrame {
 		String string=courseListModel.get(index);
 		String[] info=string.split(";");
 		createCourseDisplay(info);
-		mainCards.show(container, "Courses");	
+		mainCards.show(container, "COURSES");	
 	}
 	
 	public String[] getSelectedList()
