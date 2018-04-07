@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -102,11 +103,12 @@ public class StudentView extends JFrame{
 	
 	private void createHomeCenterPanel() {
 		JPanel grandPanel = new JPanel();
-		
 		courseListModel = new DefaultListModel<String>();
 		courseJList = new JList<String>(courseListModel);
+		JScrollPane courseScrollPane = new JScrollPane(courseJList);
+		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		
+		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
 	}
@@ -142,13 +144,13 @@ public class StudentView extends JFrame{
 		grandPanel.add(bannerPanel);
 		grandPanel.add(topButtons);
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
-		
 	}
 	
 	private void createCourseInnerPanel(String[] courseInfo) {
 		JPanel grandPanel = new JPanel(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
 		JScrollPane assignScrollPane = new JScrollPane(assignJList);
+		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
