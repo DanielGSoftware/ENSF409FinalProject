@@ -23,6 +23,7 @@ public class StudentModel extends MainModel {
 			flushAndReset(sendObject);
 			sendObject.writeObject(studentEnrollment);
 			flushAndReset(sendObject);
+			infoExchange= (InfoExchange) readObject.readObject();
 		} catch (IOException e) {
 			System.out.println("Error: gdgdfgdfgdfgbroswe course in proff model wont work");
 		} catch (ClassNotFoundException e) {

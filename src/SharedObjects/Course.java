@@ -92,7 +92,7 @@ public class Course implements Serializable{
 	
 	public String courseofStudent(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
-		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE__ID = ?";
+		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE_ID = ?";
 		String course=null;
 		ResultSet object;
 		try{
@@ -100,7 +100,7 @@ public class Course implements Serializable{
 			statement.setInt(1, courseid);
 			object=statement.executeQuery();		
 			if (object.getInt("ACTIVE")==1) {
-				course=""+courseid+";"+object.getString("NAME");
+				course=courseid+";"+object.getString("NAME");
 			}
 		}
 		catch(SQLException e)

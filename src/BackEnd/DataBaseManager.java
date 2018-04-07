@@ -54,6 +54,7 @@ public class DataBaseManager implements Runnable {
 					String[] listOfUsers=user.findUser(USERTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(listOfUsers);
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("View Courses Proff")){
@@ -62,6 +63,7 @@ public class DataBaseManager implements Runnable {
 					//infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));
 					infoExchange.setInfo(course.browseCourses(COURSETABLE, jdbc_connection, statement));
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("Create Course Proff"))
@@ -102,6 +104,7 @@ public class DataBaseManager implements Runnable {
 					System.out.println(listOfStudents[0]);
 					infoExchange.setInfo(listOfStudents);
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("Student Enrollment Proff"))
@@ -110,6 +113,7 @@ public class DataBaseManager implements Runnable {
 					String[] listOfEnrollments=enrollments.viewStudentsEnrolled(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(listOfEnrollments);
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("View Students Proff"))
@@ -130,6 +134,7 @@ public class DataBaseManager implements Runnable {
 					}
 					infoExchange.setInfo(temp);
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("View Assignment Proff"))
@@ -138,6 +143,7 @@ public class DataBaseManager implements Runnable {
 					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(result);
 					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				else if (string.equals("Upload Assignment Proff"))
@@ -156,12 +162,15 @@ public class DataBaseManager implements Runnable {
 						course=new Course(-1, null, -1, courses_student[i]);
 						listofcourses.add(course.courseofStudent(COURSETABLE, jdbc_connection, statement));
 					}
-					String result=new String[listofcourses.size()];
+					String[] result=new String[listofcourses.size()];
 					for (int i=0; i<listofcourses.size(); i++) {
-						
+						System.out.println(listofcourses.get(i));
+						result[i]=listofcourses.get(i);
 					}
+					infoExchange.setInfo(result);
+					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
-				
 				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {
@@ -170,4 +179,10 @@ public class DataBaseManager implements Runnable {
 			}
 		}
 	}
+	
+	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
+		sendObject.flush();
+		sendObject.reset();
+	}
+	
 }	
