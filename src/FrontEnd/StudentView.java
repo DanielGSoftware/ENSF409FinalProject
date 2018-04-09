@@ -83,6 +83,11 @@ public class StudentView extends JFrame{
 		return studentID;
 	}
 	
+	public int getCourseID()
+	{
+		return currentCourseID;
+	}
+	
 	public void simpleMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, null, JOptionPane.PLAIN_MESSAGE);
 	}

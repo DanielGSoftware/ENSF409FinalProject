@@ -22,8 +22,20 @@ public class StudentControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String[] listofcourses=sModel.getCourseList(sView.getStudentID());
+			//ADD TO VIEW!
 		}
 	}
 	
-	
+	class SendEmailToProff implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//sModel.sendEmailToProff(sView.getCourseID(), sView.readEmailMessage());
+			//make sure to open up a JOptionPane where we type in message.
+			//email message should also have students id
+			//read email message returns an array of strings
+			//current parameter value courseid
+			sModel.sendEmailToProff(1070);
+		}
+	}
 }

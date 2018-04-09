@@ -109,5 +109,24 @@ public class Course implements Serializable{
 		}
 		return course;
 	}
+	
+	public int getProffID(String coursetable, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE_ID = ? AND ACTIVE = ?";
+		int proffif=0;
+		ResultSet object;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			statement.setInt(2, active);
+			object=statement.executeQuery();	
+			proffif=object.getInt("PROFF_ID");
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return proffif;
+	}
 
 }

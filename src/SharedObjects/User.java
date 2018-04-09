@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sound.midi.MidiDevice.Info;
+
+import BackEnd.EmailHandler;
+
 public class User implements Serializable {
 	private int id;
 	private String password;
@@ -111,5 +115,46 @@ public class User implements Serializable {
 //		System.out.println(temp[0]);
 //		System.out.println(temp[1]);
 		return temp;
+	}
+	
+	public String[] getEmailInfoStudent(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
+		String[] emailinfo=null;
+		ResultSet object;
+		try {
+			statement=jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.setString(2, type);
+			object=statement.executeQuery();
+			if (object.next()) {
+				emailinfo[0]=object.getString("EMAIL");
+				emailinfo[1]=object.getString("EMAILPASSWORD");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emailinfo;
+	}
+	
+	public String getEmailInfoProff(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
+		String emailinfo=null;
+		ResultSet object;
+		try {
+			statement=jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.setString(2, type);
+			object=statement.executeQuery();
+			if (object.next()) {
+				emailinfo=object.getString("EMAIL");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emailinfo;
 	}
 }

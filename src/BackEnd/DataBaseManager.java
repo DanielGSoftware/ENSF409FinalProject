@@ -159,6 +159,20 @@ public class DataBaseManager implements Runnable {
 					writeobject.writeObject(infoExchange);
 					flushAndReset(writeobject);
 				}
+				
+				else if (string.equals("Send an Email to the Proff"))
+				{
+					//String[] email=infoExchange.getInfo()
+					User user=new User(1000, null, null, null, null, "S"); //userid pulled from joptionpane
+					String[] emailinfo=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
+					Course course=new Course(-1, null, 1, 1070); //course id from infoexchange string array
+					int proffid=course.getProffID(COURSETABLE, jdbc_connection, statement);
+					user=new User(proffid, null, null, null, null, "P");
+					String proffemail=user.getEmailInfoProff(USERTABLE, jdbc_connection, statement);
+					EmailHandler emailHandler=new EmailHandler("amarhuzaifa@gmail.com", "Huzaifa@147", "daniel.guieb2@gmail.com", "SubjectLine", "The email itself is: ohyeah");
+					emailHandler.createEmail();
+					//above first 3 parameters are emailinfo[0] and emailinfo[1] and proffsemail
+				}
 				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {

@@ -39,6 +39,7 @@ public class DataBaseBuilder
 			     "USER_ID INT(8) NOT NULL, " +
 			     "PASSWORD VARCHAR(20) NOT NULL, " + 
 			     "EMAIL VARCHAR(50) NOT NULL, " + 
+			     "EMAILPASSWORD VARCHAR (50) NOT NULL, "+
 			     "FIRSTNAME VARCHAR(30) NOT NULL, " + 
 			     "LASTNAME VARCHAR(30) NOT NULL, " + 
 			     "TYPE CHAR(1) NOT NULL,"+
@@ -61,7 +62,7 @@ public class DataBaseBuilder
 			{
 				String string[] = sc.nextLine().split(";");
 				String sql = "INSERT INTO USERS" +
-						" VALUES ( ?, ?, ?, ?, ?, ?);";
+						" VALUES ( ?, ?, ?, ?, ?, ?, ?);";
 				try{
 					statement = jdbc_connection.prepareStatement(sql);
 					statement.setInt(1, id);
@@ -70,6 +71,7 @@ public class DataBaseBuilder
 					statement.setString(4, string[2]);
 					statement.setString(5, string[3]);
 					statement.setString(6, string[4]);
+					statement.setString(7, string[5]);
 					statement.executeUpdate();
 				}
 				catch(SQLException e)
