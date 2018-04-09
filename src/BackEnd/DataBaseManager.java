@@ -82,20 +82,6 @@ public class DataBaseManager implements Runnable {
 					User user = (User)readobject.readObject(); 
 				}
 				
-//				else if (string.equals("Search Students Proff"))
-//				{
-//					StudentEnrollment object= (StudentEnrollment) readobject.readObject();
-//					if (object.browseStudentsEnrolled(USERTABLE, jdbc_connection, statement)) {
-//						User user=new User(object.getStudentId(), null, null, null, null, "S");
-//						String[] strings=user.findUser(USERTABLE, jdbc_connection, statement);
-//						infoExchange.setInfo(strings);
-//						writeobject.writeObject(infoExchange);
-//					}
-//					else {
-//						System.out.println("student not found");
-//					}	
-//				}
-				
 				else if (string.equals("Search Students Proff"))
 				{
 					User user = (User)readobject.readObject(); 
@@ -160,7 +146,9 @@ public class DataBaseManager implements Runnable {
 					ArrayList<String> listofcourses=new ArrayList<String>();
 					for (int i=0; i<courses_student.length; i++) {
 						course=new Course(-1, null, -1, courses_student[i]);
-						listofcourses.add(course.courseofStudent(COURSETABLE, jdbc_connection, statement));
+						String coursename=course.courseofStudent(COURSETABLE, jdbc_connection, statement);
+						if (coursename!=null)
+							listofcourses.add(coursename);
 					}
 					String[] result=new String[listofcourses.size()];
 					for (int i=0; i<listofcourses.size(); i++) {
