@@ -54,18 +54,21 @@ public class StudentView extends JFrame{
 
 	public StudentView(int studentID, String studentFirstName, String studentLastName) {
 		super("Student Learning Platform");
+		System.out.println("wow");
 		this.studentID = studentID;
 		this.studentFirstName = studentFirstName;
 		this.studentLastName = studentLastName;
 		container = getContentPane();
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
-		
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
 		initializeCourseDisplay();
+		String[] fuckMe = {"im so happy", "i love this project", "wowow uwu xD"};
+		createCourseDisplay(fuckMe);
+		mainCards.show(container, "COURSE");
 	}
 	
 	public String getFirstName()
@@ -108,7 +111,7 @@ public class StudentView extends JFrame{
 		createHomeTopPanel();
 		createHomeCenterPanel();
 	}
-
+	
 	private void createHomeTopPanel() {
 		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
 		JPanel bannerPanel = new JPanel();
@@ -177,6 +180,7 @@ public class StudentView extends JFrame{
 		bottomPanel.add(grade);
 		grandPanel.add(assignScrollPane, BorderLayout.CENTER);
 		grandPanel.add(bottomPanel, BorderLayout.SOUTH);
+		coursePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
 	private void makeWindowListener()
@@ -196,7 +200,9 @@ public class StudentView extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		StudentView sv = new StudentView(69420, "Daniel", "Guieb");
+		System.out.println("before");
+		StudentView sv = new StudentView(69240, "Daniel", "Guieb");
+		System.out.println("after");
 		sv.setVisible(true);
 	}
 }
