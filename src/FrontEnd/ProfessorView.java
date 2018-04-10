@@ -65,13 +65,13 @@ public class ProfessorView extends JFrame implements OurColours{
 		container=getContentPane();
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
-		String[] info=new String[3];
+//		String[] info=new String[3];
 		//info[2]="Hi";
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
-		createCourseDisplay(info);
+		intitializeCourseDisplay();
 	}
 	
 	public void setCurrentCourseID(int courseID) {
@@ -191,9 +191,29 @@ public class ProfessorView extends JFrame implements OurColours{
 	 * WILL ACTUALLY PUT THE CONTENTS INTO IT
 	 * 
 	 */
-	public void createCourseDisplay(String [] courseInfo) {
+	
+	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
+		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+		viewStudents = new JButton("STUDENTS");
+		viewAssigns = new JButton("ASSIGNMENTS");
+		returnHome = new JButton("HOME");
+		courseInnerCards = new CardLayout();
+		courseInnerPanel = new JPanel(courseInnerCards);
+		
+		enrollment =  new JButton("ENROLL/UNENROLL");
+		emailStudents = new JButton("EMAIL STUDENTS");
+		searchStudents = new JButton("SEARCH A STUDENT");
+		findStudents = new JTextField();
+		findStudents.setColumns(15);
+		
+		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+	}
+	
+	public void createCourseDisplay(String [] courseInfo) {
 		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);
@@ -206,11 +226,6 @@ public class ProfessorView extends JFrame implements OurColours{
 		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
 		
-		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-		viewStudents = new JButton("STUDENTS");
-		viewAssigns = new JButton("ASSIGNMENTS");
-		returnHome = new JButton("HOME");
-		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
 		topButtons.add(viewAssigns);
@@ -222,8 +237,6 @@ public class ProfessorView extends JFrame implements OurColours{
 	}
 	
 	private void createCourseInnerPanel(String[] courseInfo) {
-		courseInnerCards = new CardLayout();
-		courseInnerPanel = new JPanel(courseInnerCards);
 		
 		JPanel courseStudentPanel = new JPanel(new BorderLayout());
 		JPanel courseAssignPanel = new JPanel(new BorderLayout());
@@ -277,11 +290,6 @@ public class ProfessorView extends JFrame implements OurColours{
 	 * @param buttonsPanel - the student button panel
 	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
-		enrollment =  new JButton("ENROLL/UNENROLL");
-		emailStudents = new JButton("EMAIL STUDENTS");
-		searchStudents = new JButton("SEARCH A STUDENT");
-		findStudents = new JTextField();
-		findStudents.setColumns(15);
 		buttonsPanel.add(enrollment);
 		buttonsPanel.add(emailStudents);
 		buttonsPanel.add(searchStudents);
@@ -292,9 +300,6 @@ public class ProfessorView extends JFrame implements OurColours{
 	 * @param buttonsPanel - the assignment button panel
 	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
-		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-		viewSubmissions = new JButton("VIEW SUBMISSIONS");
 		buttonsPanel.add(setAssignActive);
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
