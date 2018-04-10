@@ -120,7 +120,7 @@ public class User implements Serializable {
 	public String[] getEmailInfoStudent(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
-		String[] emailinfo=null;
+		String[] emailinfo=new String[2];
 		ResultSet object;
 		try {
 			statement=jdbc_connection.prepareStatement(sql);

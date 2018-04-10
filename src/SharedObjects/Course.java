@@ -120,7 +120,8 @@ public class Course implements Serializable{
 			statement.setInt(1, courseid);
 			statement.setInt(2, active);
 			object=statement.executeQuery();	
-			proffif=object.getInt("PROFF_ID");
+			if (object.next())
+				proffif=object.getInt("PROFF_ID");
 		}
 		catch(SQLException e)
 		{
