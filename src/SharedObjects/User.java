@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sound.midi.MidiDevice.Info;
+import javax.swing.table.TableModel;
 
 import BackEnd.EmailHandler;
 
@@ -42,11 +43,15 @@ public class User implements Serializable {
 			statement.setString(2, lastName);
 			object=statement.executeQuery();
 			if (object.next()) {
-				temp=new String[3];
-				temp[0]=object.getString("FIRSTNAME");
-				temp[1]=object.getString("LASTNAME");
+				temp=new String[4];
+				if (object.getString("TYPE").equals("S"))
+					temp[0]="STUDENT";
+				else
+					temp[0]="PROFF";
+				temp[1]=object.getString("FIRSTNAME");
+				temp[2]=object.getString("LASTNAME");
 				int idfromtable=object.getInt("USER_ID");
-				temp[2]=Integer.toString(idfromtable);
+				temp[3]=Integer.toString(idfromtable);
 			}
 		}
 		catch (SQLException e)
@@ -138,10 +143,10 @@ public class User implements Serializable {
 		return emailinfo;
 	}
 	
-	public String getEmailInfoProff(String table, Connection jdbc_connection, PreparedStatement statement)
+	public String[] getEmailInfoProff(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
-		String emailinfo=null;
+		String[] emailinfo=new String[2];
 		ResultSet object;
 		try {
 			statement=jdbc_connection.prepareStatement(sql);
@@ -149,7 +154,8 @@ public class User implements Serializable {
 			statement.setString(2, type);
 			object=statement.executeQuery();
 			if (object.next()) {
-				emailinfo=object.getString("EMAIL");
+				emailinfo[0]=object.getString("EMAIL");
+				emailinfo[1]=object.getString("EMAILPASSWORD");
 			}
 		}
 		catch (SQLException e) {

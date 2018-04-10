@@ -47,8 +47,13 @@ public class ProfessorControl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			/**
+			 * emailinfo[0]=courseid
+			 * emailinfo[1]=subjectline
+			 * emailinfo[2]=emailmessage
+			 */
+			//!COURSE ACTIVATIONS STATUS MUST BE CHECKED SOMEHOW!
+			pModel.sendEmailToStudents();
 		}
 		
 	}

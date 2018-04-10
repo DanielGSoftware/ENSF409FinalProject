@@ -194,6 +194,19 @@ public class ProfessorModel extends MainModel {
 		return strings;
 	}
 	
+	public void sendEmailToStudents()
+	{
+		//infoexchange will 
+		InfoExchange infoExchange=new InfoExchange("Send Email to all Students Enrolled in Course");
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
 		sendObject.flush();
 		sendObject.reset();

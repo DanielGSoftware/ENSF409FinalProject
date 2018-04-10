@@ -271,8 +271,8 @@ public class DataBaseBuilder
 						statement = jdbc_connection.prepareStatement(sql);
 						statement.setInt(1, ++id);
 						statement.setInt(2, 1070);
-						statement.setString(3, "Assignment1.txt");
-						statement.setString(4, "C:\\Users\\muham\\OneDrive\\Documents\\ENSF409FinalProject\\Assignment1.txt");
+						statement.setString(3, "Assignment2.txt");
+						statement.setString(4, "C:\\Users\\muham\\OneDrive\\Documents\\ENSF409ProffFiles\\sendToStudents\\Assignment1.txt");
 						statement.setInt(5, 1);
 						statement.setString(6, "March 6, 2020");
 						statement.executeUpdate();
@@ -307,6 +307,6 @@ public class DataBaseBuilder
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
-		dataBaseBuilder.fillAssignmentTable("Assignment1.txt");
+		dataBaseBuilder.fillAssignmentTable("Assignment2.txt");
 	}
 }

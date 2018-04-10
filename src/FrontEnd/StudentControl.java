@@ -13,7 +13,10 @@ public class StudentControl {
 	private StudentView sView;
 	
 	public StudentControl(StudentModel model, StudentView view) {
-		 
+		 sModel=model;
+		 sView=view;
+		 sView.setVisible(true);
+		 sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
 	}
 	
 	class GetCourseList implements ActionListener 
@@ -33,8 +36,18 @@ public class StudentControl {
 			//make sure to open up a JOptionPane where we type in message.
 			//email message should also have students id
 			//read email message returns an array of strings
-			//current parameter value courseid
-			sModel.sendEmailToProff(1070);
+			sModel.sendEmailToProff();
+		}
+	}
+	
+	class DownLoadAssignment implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//file's name should be picked up and sent 
+			//perhaps file path as well?
+			sModel.downloadAssignment("Assignment1.txt", 1070);
+			
 		}
 	}
 	

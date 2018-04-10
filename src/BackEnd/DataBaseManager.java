@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.channels.NonWritableChannelException;
+import java.security.spec.ECPrivateKeySpec;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,6 +31,7 @@ public class DataBaseManager implements Runnable {
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
 	public static String ASSIGNMENTTABLE = "Assignment_Table";
 	private int id;
+	private User user;
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
@@ -125,6 +128,7 @@ public class DataBaseManager implements Runnable {
 				
 				else if (string.equals("View Assignment Proff"))
 				{
+					//DOWNLOAD ASSIGNMENTS AS WELL
 					Assignment assignment= (Assignment) readobject.readObject();
 					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(result);
@@ -135,7 +139,22 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Upload Assignment Proff"))
 				{
 					Assignment assignment = (Assignment) readobject.readObject();
+					id+=10;
 					assignment.addAssignments(ASSIGNMENTTABLE, jdbc_connection, statement, id);
+				}
+				
+				else if (string.equals("Student Downloading Assignment"))
+				{
+					System.out.println("Download assignmenets and studd in database manger");
+					Assignment assignment=(Assignment) readobject.readObject();
+					String[] fileinfo=assignment.downloadAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+					FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
+					fileHandler.downloadAssignmentToStudent();
+				}
+				
+				else if (string.equals("Student Uploading Assignment"))
+				{
+					
 				}
 				
 				else if (string.equals("Get List of Courses Student"))
@@ -164,14 +183,32 @@ public class DataBaseManager implements Runnable {
 				{
 					//String[] email=infoExchange.getInfo()
 					User user=new User(1000, null, null, null, null, "S"); //userid pulled from joptionpane
-					String[] emailinfo=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
+					String[] emailinfostudent=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
 					Course course=new Course(-1, null, 1, 1070); //course id from infoexchange string array
 					int proffid=course.getProffID(COURSETABLE, jdbc_connection, statement);
 					user=new User(proffid, null, null, null, null, "P");
-					String proffemail=user.getEmailInfoProff(USERTABLE, jdbc_connection, statement);
+					String[] proffemail=user.getEmailInfoProff(USERTABLE, jdbc_connection, statement);
 					EmailHandler emailHandler=new EmailHandler("amarhuzaifa@gmail.com", "Huzaifa@147", "daniel.guieb2@gmail.com", "SubjectLine", "The email itself is: ohyeah");
 					emailHandler.createEmail();
-					//above first 3 parameters are emailinfo[0] and emailinfo[1] and proffsemail
+					//above first 3 parameters are emailinfostudet[0] and emailinfostudent[1] and proffsemail[0]
+				}
+				
+				else if (string.equals("Send Email to all Students Enrolled in Course"))
+				{
+					System.out.println("Now sending some email");
+					StudentEnrollment studentEnrollment=new StudentEnrollment(-1, -1, 1070);
+					int[] studentids=studentEnrollment.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
+					//below 1030 is proffs (winstons) id
+					User user=new User(1030, null, null, null, null, "P");
+					String[] emailinfoproff=user.getEmailInfoProff(USERTABLE, jdbc_connection, statement);
+					for (int i=0; i<studentids.length; i++) {
+						user=new User(studentids[i], null, null, null, null, "S");
+						String[] emailofstudent=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
+						//below: first 2 are proff info, so emailinfoproff[0] and [1]
+						//last 3 are emailofstudent[0] and from infoExchange's string array
+						EmailHandler emailHandler=new EmailHandler("qazfugioshi@gmail.com", "DanielGee", "amarhuzaifa@gmail.com", "SubjectLine", "OOGA BOOGA");
+						emailHandler.createEmail();
+					}
 				}
 				id+=10;
 			} 

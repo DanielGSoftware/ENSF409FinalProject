@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>ENSF409ProffFiles</name>
+			<type>2</type>
+			<location>C:/Users/muham/OneDrive/Documents/ENSF409ProffFiles</location>
+		</link>
+		<link>
+			<name>ENSF409StudentFiles</name>
+			<type>2</type>
+			<location>C:/Users/muham/OneDrive/Documents/ENSF409StudentFiles</location>
+		</link>
+	</linkedResources>
 </projectDescription>

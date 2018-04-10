@@ -67,8 +67,10 @@ public class Client {
 			if (string!=null) {
 				loginView.setVisible(false);
 				try {
-					//makeProfessorGUI(string[0], string[1], Integer.parseInt(string[2]));
-					makeStudentGUI(string[0], string[1], Integer.parseInt(string[2]));
+					if (string[0].equals("PROFF"))
+						makeProfessorGUI(string[1], string[2], Integer.parseInt(string[3]));
+					else
+						makeStudentGUI(string[1], string[2], Integer.parseInt(string[3]));
 				} 
 				catch (NumberFormatException | IOException e) {
 					e.printStackTrace();

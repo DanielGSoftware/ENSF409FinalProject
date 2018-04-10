@@ -73,4 +73,26 @@ public class Assignment implements Serializable {
 		}
 	}
 	
+	public String[] downloadAssignment(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ? AND TITLE = ?";
+		String[] fileinfo=new String[2];
+		ResultSet assignment;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			statement.setString(2, filename);
+			assignment=statement.executeQuery();
+			if (assignment.next()) {
+				fileinfo[0]=assignment.getString("TITLE");
+				fileinfo[1]=assignment.getString("PATH");
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return fileinfo;
+	}
+	
 }
