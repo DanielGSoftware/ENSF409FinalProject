@@ -14,7 +14,9 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
-public class ProfessorView extends JFrame {
+import com.sun.codemodel.JOp;
+
+public class ProfessorView extends JFrame implements OurColours{
 	private String proffFirstName;
 	private String proffLastName;
 	private int proffID;
@@ -48,19 +50,12 @@ public class ProfessorView extends JFrame {
 	private JButton setAssignActive;
 	private JButton viewSubmissions;
 	
-	public String getSearchParam()
-	{
-		return findStudents.getText();
-	}
 	
-	public int getCourseID()
-	{
-		String string=courseJList.getSelectedValue();
-		String[] strings=string.split(";");
-		return Integer.parseInt(strings[0]);
-	}
-	
-	
+	/**	A constructor which requires a professor's ID, first name, and last name.
+	 * @param proffID - the professor's ID
+	 * @param proffFirstName - the professor's first name 
+	 * @param proffLastName - the professor's last name
+	 */
 	public ProfessorView(int proffID, String proffFirstName, String proffLastName) {
 		super("Professor Learning Platform");
 		this.proffID=proffID;
@@ -82,42 +77,50 @@ public class ProfessorView extends JFrame {
 	{
 		return proffID;
 	}
+	public String getSearchParam()
+	{
+		return findStudents.getText();
+	}
+	
+	public int getCourseID()
+	{
+		String string=courseJList.getSelectedValue();
+		String[] strings=string.split(";");
+		return Integer.parseInt(strings[0]);
+	}
 	
 	public DefaultListModel<String> getListModel()
 	{
 		return studentListModel;
 	}
 	
+	/** Creates a JOptionPane which displays the message to the user.
+	 * @param message - the message to be displayed
+	 */
 	public void simpleMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, null, JOptionPane.PLAIN_MESSAGE);
 	}
-	 
-	private void createBanner(JPanel bannerPanel, String topMessage)
-	{
-		JLabel banner=new JLabel(topMessage);
-		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(Color.white);
-		bannerPanel.setOpaque(true);
-		bannerPanel.add(banner, JLabel.CENTER);
-		bannerPanel.setBackground(new Color(255, 209, 175));
+	
+	/** Creates a JOptionPane which displays the error to the user.
+	 * @param errorMessage - the specific error message
+	 */
+	public void simpleError(String errorMessage) {
+		JOptionPane.showMessageDialog(null, errorMessage, "An error has occured",
+									  JOptionPane.ERROR_MESSAGE);
 	}
 	
+	/** Creates the home panel and adds it as the first card to the 
+	 * container's cardLayout
+	 */
 	public void createHomeDisplay() {
 		homePanel = new JPanel(new BorderLayout());
 		container.add(homePanel, "HOME");
 		createHomeTopPanel();
 		createHomeCenterPanel();
 	}
-
-	public void createCourseJList(String[] courselist)
-	{
-		courseListModel.removeAllElements();
-		for (int i=0; i<courselist.length; i++)
-		{
-			courseListModel.addElement(courselist[i]);
-		}
-	}
 	
+	/** Creates the top panel of the home panel
+	 */
 	private void createHomeTopPanel()
 	{	
 		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
@@ -134,7 +137,23 @@ public class ProfessorView extends JFrame {
 		homePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
+	/** Creates the "banner" of a page, which includes a ribbon and a message.
+	 * @param bannerPanel - the JPanel which will be the banner panel
+	 * @param topMessage - the display message
+	 */
+	private void createBanner(JPanel bannerPanel, String topMessage)
+	{
+		JLabel banner=new JLabel(topMessage);
+		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
+		banner.setForeground(FONTCOLOUR);
+		bannerPanel.setOpaque(true);
+		bannerPanel.add(banner, JLabel.CENTER);
+		bannerPanel.setBackground(MAINCOLOUR);
+	}
 	
+	
+	/** Creates the center panel of the home page
+	 */
 	private void createHomeCenterPanel()
 	{
 		JPanel grandPanel = new JPanel();
@@ -153,17 +172,27 @@ public class ProfessorView extends JFrame {
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
-	public void createCourseDisplay(String [] info) {
+
+	/*
+	 * NOT COMMENTED BECAUSE GOING TO CREATE A METHOD CALLED
+	 * 			initializeCourseDisplay();
+	 * WHICH WILL DO THE INITIALIZING AND THEN 
+	 * 			createCourseDisplay(String[] info)
+	 * WILL ACTUALLY PUT THE CONTENTS INTO IT
+	 * 
+	 */
+	public void createCourseDisplay(String [] courseInfo) {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
-		createCourseTopPanel(info);
-		createCourseInnerPanel(info);
+		createCourseTopPanel(courseInfo);
+		createCourseInnerPanel(courseInfo);
 	}
 	
-	private void createCourseTopPanel(String[] info) {
+	private void createCourseTopPanel(String[] courseInfo) {
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
 		JPanel bannerPanel = new JPanel();
-		createBanner(bannerPanel, info[1]);
+		//Where [1] is the name of the course
+		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
 		
 		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
@@ -181,14 +210,15 @@ public class ProfessorView extends JFrame {
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
-	private void createCourseInnerPanel(String[] info) {
+	private void createCourseInnerPanel(String[] courseInfo) {
 		courseInnerCards = new CardLayout();
 		courseInnerPanel = new JPanel(courseInnerCards);
 		
 		JPanel courseStudentPanel = new JPanel(new BorderLayout());
 		JPanel courseAssignPanel = new JPanel(new BorderLayout());
-		JScrollPane studentScrollPane = createStudentScrollPane(info[0]);
-		JScrollPane assignScrollPane = createAssignScrollPane(info[0]);
+		//where [0] is the course ID
+		JScrollPane studentScrollPane = createStudentScrollPane(courseInfo[0]);
+		JScrollPane assignScrollPane = createAssignScrollPane(courseInfo[0]);
 		
 		courseInnerPanel.add(courseStudentPanel, "STUDENTS");
 		courseInnerPanel.add(courseAssignPanel, "ASSIGNMENTS");
@@ -232,6 +262,9 @@ public class ProfessorView extends JFrame {
 		return assignScrollPane;
 	}
 	
+	/** Initializes buttons and adds them onto the buttonPanel
+	 * @param buttonsPanel - the student button panel
+	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
 		enrollment =  new JButton("ENROLL/UNENROLL");
 		emailStudents = new JButton("EMAIL STUDENTS");
@@ -244,6 +277,9 @@ public class ProfessorView extends JFrame {
 		buttonsPanel.add(findStudents);
 	}
 	
+	/** Initializes buttons and adds them onto the buttonPanel
+	 * @param buttonsPanel - the assignment button panel
+	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
 		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
 		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
@@ -251,6 +287,18 @@ public class ProfessorView extends JFrame {
 		buttonsPanel.add(setAssignActive);
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
+	}
+	
+	/** Adds the elements of courseList to the courseListModel
+	 * @param courseList - the courses to be on the courseListModel
+	 */
+	public void createCourseJList(String[] courseList)
+	{
+		courseListModel.removeAllElements();
+		for (int i=0; i<courseList.length; i++)
+		{
+			courseListModel.addElement(courseList[i]);
+		}
 	}
 	
 	public void viewStudentsPage() {
@@ -321,8 +369,81 @@ public class ProfessorView extends JFrame {
 //		
 //	}
 	
+	/** Gives the user a pop-up where they can enter their email contents.
+	 * @return a String array which contains the professor ID, subject, and 
+	 * 		   email message.
+	 */
+	public String [] sendingMail() {
+		/*	[0] is the proffID
+		 * 	[1] is the subject line
+		 * 	[2] is the email message
+		 */	
+		String[] theMail = new String[3];
+		JPanel emailPanel = new JPanel(new BorderLayout());
+		JTextField subject = new JTextField("Subject");
+		JTextArea messageA = new JTextArea("Enter ");
+		JScrollPane mScrollPane = new JScrollPane(messageA);
+		mScrollPane.setVerticalScrollBarPolicy(
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);	
+		emailPanel.add(subject, BorderLayout.NORTH);
+		emailPanel.add(mScrollPane, BorderLayout.CENTER);
+		String[] buttons = {"SEND", "CANCEL"};
+		UIManager.put("OptionPane.minimumSize", new Dimension(500,500));
+		int result = JOptionPane.showOptionDialog(null, emailPanel, "SEND AN EMAIL",
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, 
+				null, buttons, null);
+		if(result == JOptionPane.YES_OPTION) {
+			theMail[0] = ""+proffID;
+			theMail[1] = subject.getText();
+			theMail[2] = messageA.getText();
+		}
+		else {
+			JOptionPane.getRootFrame().dispose();
+		}
+		UIManager.put("OptionPane.minimumSize", new Dimension(100,50));
+		return theMail;
+	}
 
+	/** Gives the user a pop-up where they can create a course.
+	 * @return a String array which contains the name of the course and its active bit
+	 */
+	public String[] createCourse()
+	{
+		Object[] objects={ "create course",  "cancel"};
+		JPanel panel=new JPanel();
+		JTextField coursename=new JTextField("Enter the Course Name");
+		JTextField active=new JTextField("Active?");
+		panel.add(coursename);
+		panel.add(active);
+		int result = JOptionPane.showOptionDialog(null, panel, 
+				"Enter Info of new Course to Create",JOptionPane.YES_NO_OPTION, 
+				JOptionPane.PLAIN_MESSAGE, null, objects, null);
+		
+		if (result==JOptionPane.YES_OPTION){
+			if (!active.getText().equals("1") && !active.getText().equals("0")) {
+				JOptionPane.showMessageDialog(null, "Active field should either have a 1"
+						+ " (course active) or O (course inactive)","Error",
+						JOptionPane.PLAIN_MESSAGE);
+			}
+			else {
+				String[] strings= {coursename.getText(), active.getText()};
+				JOptionPane.showMessageDialog(null, "Course succesfully entered",
+						"Success",JOptionPane.PLAIN_MESSAGE);
+				return strings;
+			}
+		}	
+			
+		if (result==JOptionPane.NO_OPTION){
+			JOptionPane.getRootFrame().dispose();
+		}
+		return null;
+	}
 	
+	/** Adds listeners onto their respective buttons and lists
+	 * @param createCourses - the createCourses listener
+	 * @param viewCourses - the viewCourses listener
+	 * @param courseListListener - the courseListListener listener
+	 */
 	public void addHomeListeners(ActionListener createCourses, ActionListener viewCourses, 
 			 ListSelectionListener courseListListener) 
 	{
@@ -331,6 +452,18 @@ public class ProfessorView extends JFrame {
 		this.courseJList.addListSelectionListener(courseListListener);
 	}
 
+	/** Adds listeners onto their respective buttons 
+	 * @param setCourseActive -  the setCourseActive listener
+	 * @param viewStudents - the viewStudents listener
+	 * @param viewAssigns - the viewAssigns listener
+	 * @param returnHome - the returnHome listener
+	 * @param emailStudents - the emailStudents listener 
+	 * @param searchStudents - the searchStudents listener
+	 * @param enrollment - the enrollment listener
+	 * @param uploadAssign - the uploadAssign listener
+	 * @param setAssignActive - the setAssignActive listener
+	 * @param viewSubmissions - the viewSubmissions listener
+	 */
 	public void addCourseListeners(ActionListener setCourseActive, ActionListener viewStudents, ActionListener viewAssigns, 
 			   ActionListener returnHome, ActionListener emailStudents, ActionListener searchStudents, 
 			   ActionListener enrollment, ActionListener uploadAssign, ActionListener setAssignActive, 
@@ -347,30 +480,8 @@ public class ProfessorView extends JFrame {
 		this.viewSubmissions.addActionListener(viewSubmissions);
 	}
 	
-	public String [] sendingMail() {
-		/*	[0] is the courseID
-		 * 	[1] is the subject line
-		 * 	[2] is the email message
-		 */	
-		String[] theMail = new String[3];
-		JPanel emailPanel = createEmailPanel();
-		String[] buttons = {"Send", "Cancel"};
-		JOptionPane.showOptionDialog(emailPanel, null, "Send an email", JOptionPane.YES_NO_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, buttons, null);
-		
-		
-		
-		
-		return theMail;
-	}
-	
-	private JPanel createEmailPanel() {
-		JPanel emailPanel = new JPanel();
-		
-		
-		return emailPanel;
-	}
-	
+	/**	Sets the default closing option of the overall JFrame
+	 */
 	private void makeWindowListener()
 	{
 		addWindowListener(new WindowAdapter() {
@@ -386,42 +497,7 @@ public class ProfessorView extends JFrame {
 			
 		});
 	}
-	
-	public String[] createCourse()
-	{
-		Object[] objects={ "create course",  "cancel"};
-		JPanel panel=new JPanel();
-		JTextField coursename=new JTextField("Enter the Course Name");
-		JTextField active=new JTextField("Active?");
-		panel.add(coursename);
-		panel.add(active);
-		int result = JOptionPane.showOptionDialog(null, panel, "Enter Info of new Course to Create",
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, objects, null);
-		
-		if (result==JOptionPane.YES_OPTION){
-			if (!active.getText().equals("1") && !active.getText().equals("0")) {
-				JOptionPane.showMessageDialog(null, "Active field should either have a 1"
-						+ " (course active) or O (course inactive)","Error",JOptionPane.PLAIN_MESSAGE);
-			}
-			else {
-				String[] strings= {coursename.getText(), active.getText()};
-				JOptionPane.showMessageDialog(null, "Course succesfully entered","Success",JOptionPane.PLAIN_MESSAGE);
-				return strings;
-			}
-		}	
-			
-		if (result==JOptionPane.NO_OPTION){
-			JOptionPane.getRootFrame().dispose();
-		}
-		return null;
-	}
-	
-	public void addBrowseCourseListener(ActionListener a)
-	{
-		viewCourses.addActionListener(a);
-	}
-	
+
 	
 //	public void updateDisplay(String[] list)
 //	{

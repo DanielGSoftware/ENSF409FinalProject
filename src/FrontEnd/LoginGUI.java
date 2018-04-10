@@ -21,19 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class LoginGUI extends JFrame{
+public class LoginGUI extends JFrame implements OurColours{
 	private JTextField userT;
 	private JTextField passT;
 	private JButton signInB;
 	private Container container;
-	
-	/*
-	 * Create an interface of colors that are consistent and pretty, but in 
-	 * the mean time use this code for everything
-	 */
-	public Color myPink = new Color(255, 166, 207);
-	public Color myPeach = new Color(255, 209, 175);
-	public Color myOrange = new Color(255, 192, 78);
 	
 	public LoginGUI(ObjectInputStream readObject, ObjectOutputStream sendObject) {
 		super("Login");
@@ -60,9 +52,9 @@ public class LoginGUI extends JFrame{
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(new Color(80, 86, 87));
+		banner.setForeground(FONTCOLOUR);
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(myPeach);
+		bannerPanel.setBackground(MAINCOLOUR);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
