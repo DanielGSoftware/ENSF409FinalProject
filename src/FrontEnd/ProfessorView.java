@@ -38,7 +38,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	private JButton returnHome;
 	private JPanel courseInnerPanel;
 	private CardLayout courseInnerCards;
-	private JScrollPane searchresults;
+	private JScrollPane courseScrollPane;
 	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
 	private JList<String> studentJList = new JList<String>();	
 	private DefaultListModel<String> assignListModel;
@@ -174,10 +174,11 @@ public class ProfessorView extends JFrame implements OurColours{
 			courseListModel.addElement(welcomeMessage[i]);
 		}
 		courseJList = new JList<String>(courseListModel);
-		searchresults=new JScrollPane(courseJList);
-		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		grandPanel.add(searchresults);
+		courseScrollPane=new JScrollPane(courseJList);
+		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		courseScrollPane.setPreferredSize(new Dimension(500, 300));
+		
+		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
@@ -254,7 +255,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		studentScrollPane.setPreferredSize(new Dimension(90,100));
+		studentScrollPane.setPreferredSize(new Dimension(500,300));
 		return studentScrollPane;
 	}
 	
@@ -268,7 +269,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		
 		JScrollPane assignScrollPane = new JScrollPane(assignmentJList);
 		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		assignScrollPane.setPreferredSize(new Dimension(90,100));
+		assignScrollPane.setPreferredSize(new Dimension(500,300));
 		return assignScrollPane;
 	}
 	
@@ -440,7 +441,7 @@ public class ProfessorView extends JFrame implements OurColours{
 				JOptionPane.showMessageDialog(null, "Course succesfully entered",
 						"Success",JOptionPane.PLAIN_MESSAGE);
 				return strings;
-			}
+			}	
 		}	
 			
 		if (result==JOptionPane.NO_OPTION){
