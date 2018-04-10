@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 
 public class Assignment implements Serializable {
@@ -73,7 +74,7 @@ public class Assignment implements Serializable {
 		}
 	}
 	
-	public String[] downloadAssignment(String table, Connection jdbc_connection, PreparedStatement statement)
+	public String[] downloadAssignmentStudent(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ? AND TITLE = ?";
 		String[] fileinfo=new String[2];
@@ -95,4 +96,50 @@ public class Assignment implements Serializable {
 		return fileinfo;
 	}
 	
+	public String[] downloadAssignmentsProff(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ?";
+		ArrayList<String> fileinfo = new ArrayList<String>();
+		ResultSet assignment;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			statement.setString(2, filename);
+			assignment=statement.executeQuery();
+			while (assignment.next()) {
+				fileinfo.add(assignment.getString("TITLE")+";"+assignment.getString("PATH"));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		String[] temp=new String[fileinfo.size()];
+		for (int i=0; i<fileinfo.size(); i++) {
+			temp[i]=fileinfo.get(i);
+		}
+		return temp;
+	}
+	
+	//was supposed to be used for proff download assignments
+	public int numberOfAssignmentsWithID(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ?";
+		int c=0;
+		ResultSet assignment;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			assignment=statement.executeQuery();
+			while (assignment.next()) {
+				c++;
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return c;
+	}
 }

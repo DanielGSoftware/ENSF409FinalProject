@@ -2,6 +2,7 @@ package FrontEnd;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Action;
 
@@ -15,8 +16,9 @@ public class StudentControl {
 	public StudentControl(StudentModel model, StudentView view) {
 		 sModel=model;
 		 sView=view;
+		 //view.addcourses()
 		 sView.setVisible(true);
-		 sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
+		// sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
 	}
 	
 	class GetCourseList implements ActionListener 
@@ -47,7 +49,17 @@ public class StudentControl {
 			//file's name should be picked up and sent 
 			//perhaps file path as well?
 			sModel.downloadAssignment("Assignment1.txt", 1070);
-			
+		}
+	}
+	
+	class UploadAssignment implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//File file=sView.chooseFile();
+			//need course id and file path
+			sModel.uploadAssignment(1070, "trialassignmenttosendtoproff.txt", 
+					"C:\\Users\\muham\\OneDrive\\Documents\\ENSF409StudentFiles\\sendToProff\\trialassignmenttosendtoproff.txt");
 		}
 	}
 	

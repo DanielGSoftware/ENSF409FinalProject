@@ -1,5 +1,6 @@
 package BackEnd;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -126,17 +127,33 @@ public class DataBaseManager implements Runnable {
 					flushAndReset(writeobject);
 				}
 				
-				else if (string.equals("View Assignment Proff"))
+//				else if (string.equals("View Assignment Proff"))
+//				{
+//					Assignment assignment= (Assignment) readobject.readObject();
+//					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+//					infoExchange.setInfo(result);
+//					int numassignments=assignment.numberOfAssignmentsWithID(ASSIGNMENTTABLE, jdbc_connection, statement);
+//					
+//					for (int i=0; i<numassignments; i++) {
+//						String[] fileinfo=assignment.downloadAssignmentProff(ASSIGNMENTTABLE, jdbc_connection, statement);
+//						FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
+//						fileHandler.downloadAssignmentsToProff();
+//					}
+//					
+//					writeobject.writeObject(infoExchange);
+//					flushAndReset(writeobject);
+//				}
+				
+				else if (string.equals("Download All Assignments into Proff Folder"))
 				{
-					//DOWNLOAD ASSIGNMENTS AS WELL
 					Assignment assignment= (Assignment) readobject.readObject();
-					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
-					infoExchange.setInfo(result);
-					writeobject.writeObject(infoExchange);
-					flushAndReset(writeobject);
+					String[] fileinfo=assignment.downloadAssignmentsProff(ASSIGNMENTTABLE, jdbc_connection, statement);
+					
+					
+					
 				}
 				
-				else if (string.equals("Upload Assignment Proff"))
+				else if (string.equals("Upload Assignment"))
 				{
 					Assignment assignment = (Assignment) readobject.readObject();
 					id+=10;
@@ -147,14 +164,9 @@ public class DataBaseManager implements Runnable {
 				{
 					System.out.println("Download assignmenets and studd in database manger");
 					Assignment assignment=(Assignment) readobject.readObject();
-					String[] fileinfo=assignment.downloadAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+					String[] fileinfo=assignment.downloadAssignmentStudent(ASSIGNMENTTABLE, jdbc_connection, statement);
 					FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
 					fileHandler.downloadAssignmentToStudent();
-				}
-				
-				else if (string.equals("Student Uploading Assignment"))
-				{
-					
 				}
 				
 				else if (string.equals("Get List of Courses Student"))

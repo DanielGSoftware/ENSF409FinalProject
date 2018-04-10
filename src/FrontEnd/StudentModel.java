@@ -64,10 +64,10 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
-	public void uploadAssignment(String filename, int courseid)
+	public void uploadAssignment(int courseid, String filename, String path)
 	{
-		InfoExchange infoExchange=new InfoExchange("Student Uploading Assignment");
-		Assignment assignment=new Assignment(courseid, filename, null);
+		InfoExchange infoExchange=new InfoExchange("Student Uploading");
+		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
@@ -75,7 +75,6 @@ public class StudentModel extends MainModel {
 			flushAndReset(sendObject);
 		}
 		catch (IOException e) {
-		System.out.println("Error: send email to proff for a course failed");
 		}
 	}
 	
