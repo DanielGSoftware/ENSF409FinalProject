@@ -66,7 +66,7 @@ public class StudentView extends JFrame{
 		makeWindowListener();
 		createHomeDisplay();
 		initializeCourseDisplay();
-		String[] fuckMe = {"im so happy", "i love this project", "wowow uwu xD"};
+		String[] fuckMe = {"fuck this", "i love this project", "wowow uwu xD"};
 		createCourseDisplay(fuckMe);
 		mainCards.show(container, "COURSE");
 	}
