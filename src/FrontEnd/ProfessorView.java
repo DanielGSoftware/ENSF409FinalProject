@@ -20,6 +20,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	private String proffFirstName;
 	private String proffLastName;
 	private int proffID;
+	private int currentCourseID;
 	
 	private CardLayout mainCards;
 	private Container container;
@@ -71,6 +72,14 @@ public class ProfessorView extends JFrame implements OurColours{
 		makeWindowListener();
 		createHomeDisplay();
 		createCourseDisplay(info);
+	}
+	
+	public void setCurrentCourseID(int courseID) {
+		currentCourseID = courseID;
+	}
+	
+	public int getCurrentCourseID() {
+		return currentCourseID;
 	}
 	
 	public int getProffID()
@@ -184,6 +193,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	public void createCourseDisplay(String [] courseInfo) {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
+		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);
 	}
@@ -381,7 +391,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		String[] theMail = new String[3];
 		JPanel emailPanel = new JPanel(new BorderLayout());
 		JTextField subject = new JTextField("Subject");
-		JTextArea messageA = new JTextArea("Enter ");
+		JTextArea messageA = new JTextArea("What do you want to say?");
 		JScrollPane mScrollPane = new JScrollPane(messageA);
 		mScrollPane.setVerticalScrollBarPolicy(
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);	
@@ -389,7 +399,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		emailPanel.add(mScrollPane, BorderLayout.CENTER);
 		String[] buttons = {"SEND", "CANCEL"};
 		UIManager.put("OptionPane.minimumSize", new Dimension(500,500));
-		int result = JOptionPane.showOptionDialog(null, emailPanel, "SEND AN EMAIL",
+		int result = JOptionPane.showOptionDialog(null, emailPanel, "Send an email",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, 
 				null, buttons, null);
 		if(result == JOptionPane.YES_OPTION) {

@@ -75,9 +75,19 @@ public class StudentView extends JFrame implements OurColours{
 		makeWindowListener();
 		createHomeDisplay();
 		initializeCourseDisplay();
-//		String[] fuckMe = {"nvm its chill", "i love this project", "wowow uwu xD"};
-//		createCourseDisplay(fuckMe);
-//		mainCards.show(container, "COURSE");
+		
+		String[] testCourseInfo = {"ENCM369", "1070"};
+		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3"};
+		createCourseDisplay(testCourseInfo, testAssignInfo);
+		mainCards.show(container, "COURSE");
+	}
+	
+	public void setCurrentCourseID(int courseID) {
+		currentCourseID = courseID;
+	}
+	
+	public int getCurrentCourseID() {
+		return currentCourseID;
 	}
 	
 	public String getFirstName()
@@ -176,7 +186,7 @@ public class StudentView extends JFrame implements OurColours{
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSE");
 		grade = new JTextField();
-		grade.setColumns(10);
+		grade.setColumns(5);
 		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
 		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
 		assignListModel = new DefaultListModel<String>();
@@ -193,6 +203,8 @@ public class StudentView extends JFrame implements OurColours{
 	 * @param assignInfo - the information of the assignments
 	 */
 	private void createCourseDisplay(String []courseInfo, String[] assignInfo) {
+		//Where courseInfo[1] is the courseID
+		setCurrentCourseID(Integer.parseInt(courseInfo[1]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(assignInfo);
 	}
@@ -221,7 +233,16 @@ public class StudentView extends JFrame implements OurColours{
 		JPanel bottomPanel = new JPanel();
 		JScrollPane assignScrollPane = new JScrollPane(assignJList);
 		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//TODO create JList from assignInfo
+		for(int i=0; i<assignInfo.length; i++) {
+			assignListModel.addElement(assignInfo[i]);
+		}
+		
+		/*
+		 * Listener for assignListModel should set the text of grade to
+		 * whatever the assignment grade is from database
+		 */
+		
+		
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
