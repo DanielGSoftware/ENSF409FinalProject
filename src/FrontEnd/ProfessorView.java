@@ -66,7 +66,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
 		String[] info=new String[3];
-		info[2]="Hi";
+		//info[2]="Hi";
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
