@@ -20,6 +20,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	private String proffFirstName;
 	private String proffLastName;
 	private int proffID;
+	private int currentCourseID;
 	
 	private CardLayout mainCards;
 	private Container container;
@@ -37,7 +38,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	private JButton returnHome;
 	private JPanel courseInnerPanel;
 	private CardLayout courseInnerCards;
-	private JScrollPane searchresults;
+	private JScrollPane courseScrollPane;
 	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
 	private JList<String> studentJList = new JList<String>();	
 	private DefaultListModel<String> assignListModel;
@@ -71,6 +72,14 @@ public class ProfessorView extends JFrame implements OurColours{
 		makeWindowListener();
 		createHomeDisplay();
 		createCourseDisplay(info);
+	}
+	
+	public void setCurrentCourseID(int courseID) {
+		currentCourseID = courseID;
+	}
+	
+	public int getCurrentCourseID() {
+		return currentCourseID;
 	}
 	
 	public int getProffID()
@@ -165,10 +174,11 @@ public class ProfessorView extends JFrame implements OurColours{
 			courseListModel.addElement(welcomeMessage[i]);
 		}
 		courseJList = new JList<String>(courseListModel);
-		searchresults=new JScrollPane(courseJList);
-		searchresults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		grandPanel.add(searchresults);
+		courseScrollPane=new JScrollPane(courseJList);
+		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		courseScrollPane.setPreferredSize(new Dimension(500, 300));
+		
+		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
@@ -184,6 +194,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	public void createCourseDisplay(String [] courseInfo) {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
+		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);
 	}
@@ -244,7 +255,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		studentScrollPane.setPreferredSize(new Dimension(90,100));
+		studentScrollPane.setPreferredSize(new Dimension(500,300));
 		return studentScrollPane;
 	}
 	
@@ -258,7 +269,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		
 		JScrollPane assignScrollPane = new JScrollPane(assignmentJList);
 		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		assignScrollPane.setPreferredSize(new Dimension(90,100));
+		assignScrollPane.setPreferredSize(new Dimension(500,300));
 		return assignScrollPane;
 	}
 	
@@ -381,7 +392,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		String[] theMail = new String[3];
 		JPanel emailPanel = new JPanel(new BorderLayout());
 		JTextField subject = new JTextField("Subject");
-		JTextArea messageA = new JTextArea("Enter ");
+		JTextArea messageA = new JTextArea("What do you want to say?");
 		JScrollPane mScrollPane = new JScrollPane(messageA);
 		mScrollPane.setVerticalScrollBarPolicy(
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);	
@@ -389,7 +400,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		emailPanel.add(mScrollPane, BorderLayout.CENTER);
 		String[] buttons = {"SEND", "CANCEL"};
 		UIManager.put("OptionPane.minimumSize", new Dimension(500,500));
-		int result = JOptionPane.showOptionDialog(null, emailPanel, "SEND AN EMAIL",
+		int result = JOptionPane.showOptionDialog(null, emailPanel, "Send an email",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, 
 				null, buttons, null);
 		if(result == JOptionPane.YES_OPTION) {
@@ -430,7 +441,7 @@ public class ProfessorView extends JFrame implements OurColours{
 				JOptionPane.showMessageDialog(null, "Course succesfully entered",
 						"Success",JOptionPane.PLAIN_MESSAGE);
 				return strings;
-			}
+			}	
 		}	
 			
 		if (result==JOptionPane.NO_OPTION){

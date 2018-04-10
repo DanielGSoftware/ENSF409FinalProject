@@ -21,6 +21,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
@@ -75,9 +77,21 @@ public class StudentView extends JFrame implements OurColours{
 		makeWindowListener();
 		createHomeDisplay();
 		initializeCourseDisplay();
-//		String[] fuckMe = {"nvm its chill", "i love this project", "wowow uwu xD"};
-//		createCourseDisplay(fuckMe);
-//		mainCards.show(container, "COURSE");
+		
+		//Testing
+		String[] testCourseInfo = {"ENCM369", "1070"};
+		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
+								   "Assign 4", "Assign 5", "Assign 6"};
+		createCourseDisplay(testCourseInfo, testAssignInfo);
+		mainCards.show(container, "COURSE");
+	}
+	
+	public void setCurrentCourseID(int courseID) {
+		currentCourseID = courseID;
+	}
+	
+	public int getCurrentCourseID() {
+		return currentCourseID;
 	}
 	
 	public String getFirstName()
@@ -161,12 +175,33 @@ public class StudentView extends JFrame implements OurColours{
 		JPanel grandPanel = new JPanel();
 		courseListModel = new DefaultListModel<String>();
 		courseJList = new JList<String>(courseListModel);
-		JScrollPane courseScrollPane = new JScrollPane(courseJList);
-		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		JScrollPane courseScrollPane = new JScrollPane(courseJList,
+			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		courseScrollPane.setPreferredSize(new Dimension(500, 300));
+		
+		//Testing
+//		courseJList.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				String[] testCourseInfo = 
+//						courseJList.getSelectedValue().split(", ");
+//				String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
+//										   "Assign 4", "Assign 5", "Assign 6"};
+//				createCourseDisplay(testCourseInfo, testAssignInfo);
+//				mainCards.show(container, "COURSE");
+//			}
+//		});
+		
 		
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
+	}
+	
+	public void addCourses(String[] courses) {
+		for(int i=0; i<courses.length; i++) {
+			courseListModel.addElement(courses[i]);
+		}
 	}
 	
 	/** Initializes the components to be used in the course panel when a user
@@ -176,7 +211,7 @@ public class StudentView extends JFrame implements OurColours{
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSE");
 		grade = new JTextField();
-		grade.setColumns(10);
+		grade.setColumns(5);
 		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
 		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
 		assignListModel = new DefaultListModel<String>();
@@ -185,6 +220,7 @@ public class StudentView extends JFrame implements OurColours{
 		assignJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignJList.setVisibleRowCount(15);
 		assignJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		coursePanel.add(assignScrollPane, BorderLayout.CENTER);
 	}
 
 	
@@ -193,6 +229,8 @@ public class StudentView extends JFrame implements OurColours{
 	 * @param assignInfo - the information of the assignments
 	 */
 	private void createCourseDisplay(String []courseInfo, String[] assignInfo) {
+		//Where courseInfo[1] is the courseID
+		setCurrentCourseID(Integer.parseInt(courseInfo[1]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(assignInfo);
 	}
@@ -219,9 +257,19 @@ public class StudentView extends JFrame implements OurColours{
 	private void createCourseInnerPanel(String[] assignInfo) {
 		JPanel grandPanel = new JPanel(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
-		JScrollPane assignScrollPane = new JScrollPane(assignJList);
-		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//TODO create JList from assignInfo
+		JScrollPane assignScrollPane = new JScrollPane(assignJList,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		assignScrollPane.setPreferredSize(new Dimension(500,  300));
+		
+		for(int i=0; i<assignInfo.length; i++) {
+			assignListModel.addElement(assignInfo[i]);
+		}
+		/*
+		 * Listener for assignListModel should set the text of grade to
+		 * whatever the assignment grade is from database
+		 */
+		//Testing
+		
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
@@ -230,13 +278,23 @@ public class StudentView extends JFrame implements OurColours{
 		coursePanel.add(grandPanel, BorderLayout.CENTER);
 	}
 	
+	
+	/** Finds and returns information about the selected assignment
+	 * @return a String array of the current coures ID and the assignment name
+	 */
+	public String[] getAssignmentInfo() {
+		String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
+		return assignInfo;
+	}
+	
 	/**	Sets the default closing option of the overall JFrame
 	 */
 	private void makeWindowListener()
 	{
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				int result = JOptionPane.showConfirmDialog((JFrame) e.getSource(), "Are you sure you want to exit the application?",
+				int result = JOptionPane.showConfirmDialog((JFrame) e.getSource(), 
+						"Are you sure you want to exit the application?",
 						"Exit Application", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -249,7 +307,9 @@ public class StudentView extends JFrame implements OurColours{
 	}
 	
 	public static void main(String[] args) {
+		String[] courses = {"ENCM369, 1070", "ENGG233, 3030", "ENSF409, 2080"};
 		StudentView sv = new StudentView(69240, "Daniel", "Guieb");
+		sv.addCourses(courses);
 		sv.setVisible(true);
 	}
 }
