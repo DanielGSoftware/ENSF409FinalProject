@@ -15,6 +15,8 @@ public class StudentControl {
 	public StudentControl(StudentModel model, StudentView view) {
 		sModel=model;
 		sView=view;
+		System.out.println("Sending email to proff");
+		sModel.sendEmailToProff(1070);
 	}
 	
 	class GetCourseList implements ActionListener 
@@ -38,4 +40,5 @@ public class StudentControl {
 			sModel.sendEmailToProff(1070);
 		}
 	}
+	
 }

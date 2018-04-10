@@ -39,6 +39,13 @@ public class Client {
 		ProfessorControl proffcontrol=new ProfessorControl(proffmodel, proffview);
 	}
 	
+	private void makeStudentGUI(String studentfirstname, String studentlastname, int studenid) throws IOException
+	{
+		StudentModel studentmodel=new StudentModel(sendObject, readObject);
+		StudentView studenview=new StudentView(studenid, studentfirstname, studentlastname);
+		StudentControl studentcontrol=new StudentControl(studentmodel, studenview);
+	}
+	
 	public static void main(String[] args)
 	{
 		try { 
@@ -60,7 +67,8 @@ public class Client {
 			if (string!=null) {
 				loginView.setVisible(false);
 				try {
-					makeProfessorGUI(string[0], string[1], Integer.parseInt(string[2]));
+					//makeProfessorGUI(string[0], string[1], Integer.parseInt(string[2]));
+					makeStudentGUI(string[0], string[1], Integer.parseInt(string[2]));
 				} 
 				catch (NumberFormatException | IOException e) {
 					e.printStackTrace();
