@@ -14,8 +14,6 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
-import com.sun.codemodel.JOp;
-
 public class ProfessorView extends JFrame implements OurColours{
 	private String proffFirstName;
 	private String proffLastName;
