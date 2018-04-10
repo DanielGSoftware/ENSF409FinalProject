@@ -161,7 +161,7 @@ public class ProfessorModel extends MainModel {
 	
 	public void addAssignment(int courseid, String filename, String path)
 	{
-		InfoExchange infoExchange=new InfoExchange("Upload Assignment Proff");
+		InfoExchange infoExchange=new InfoExchange("Upload Assignment");
 		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
 			sendObject.writeObject(infoExchange);
@@ -200,6 +200,21 @@ public class ProfessorModel extends MainModel {
 		InfoExchange infoExchange=new InfoExchange("Send Email to all Students Enrolled in Course");
 		try {
 			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void downloadAllAssignments(int courseid)
+	{
+		InfoExchange infoExchange=new InfoExchange("Download All Assignments into Proff Folder");
+		Assignment assignment=new Assignment(courseid, null, null);
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
 			flushAndReset(sendObject);
 		}
 		catch (IOException e) {

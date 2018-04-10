@@ -45,7 +45,7 @@ public class FileHandler {
 		}		
 	}
 	
-	public void downloadAssignmentToProff()
+	public void downloadAssignmentsToProff()
 	{
 		
 	}
