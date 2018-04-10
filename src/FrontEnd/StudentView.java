@@ -150,8 +150,6 @@ public class StudentView extends JFrame{
 		assignJList.setFont(new Font("Courier New", Font.BOLD, 11));
 	}
 	
-	
-	
 	private void createCourseDisplay(String []courseInfo) {
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);

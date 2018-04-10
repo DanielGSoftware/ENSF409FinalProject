@@ -347,6 +347,30 @@ public class ProfessorView extends JFrame {
 		this.viewSubmissions.addActionListener(viewSubmissions);
 	}
 	
+	public String [] sendingMail() {
+		/*	[0] is the courseID
+		 * 	[1] is the subject line
+		 * 	[2] is the email message
+		 */	
+		String[] theMail = new String[3];
+		JPanel emailPanel = createEmailPanel();
+		String[] buttons = {"Send", "Cancel"};
+		JOptionPane.showOptionDialog(emailPanel, null, "Send an email", JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, buttons, null);
+		
+		
+		
+		
+		return theMail;
+	}
+	
+	private JPanel createEmailPanel() {
+		JPanel emailPanel = new JPanel();
+		
+		
+		return emailPanel;
+	}
+	
 	private void makeWindowListener()
 	{
 		addWindowListener(new WindowAdapter() {
