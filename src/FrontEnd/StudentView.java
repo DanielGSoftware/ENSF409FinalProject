@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.ejb.HomeHandle;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -285,6 +286,10 @@ public class StudentView extends JFrame implements OurColours{
 	public String[] getAssignmentInfo() {
 		String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
 		return assignInfo;
+	}
+	
+	public void addHomeListener(ListSelectionListener courseJList) {
+		this.courseJList.addListSelectionListener(courseJList);
 	}
 	
 	/**	Sets the default closing option of the overall JFrame
