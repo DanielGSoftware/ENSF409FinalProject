@@ -2,6 +2,8 @@ package FrontEnd;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -65,8 +67,7 @@ public class StudentControl {
 			//need course id and file path
 			String filename=file.getName();
 			String filepath=file.getAbsolutePath();
-			sModel.uploadAssignment(sView.getCurrentCourseID(), "trialassignmenttosendtoproff.txt", 
-					"C:\\Users\\muham\\OneDrive\\Documents\\ENSF409StudentFiles\\sendToProff\\trialassignmenttosendtoproff.txt");
+			sModel.uploadAssignment(sView.getCurrentCourseID(), filename, filepath);
 		}
 	}
 	
