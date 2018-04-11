@@ -41,6 +41,7 @@ public class StudentView extends JFrame implements OurStyle{
 	private JPanel homePanel;
 	private DefaultListModel<String> courseListModel;
 	private JList<String> courseJList;
+	private JButton getCourses;
 	
 	/*
 	 * Course panel displays the student's assignments where they can click on
@@ -137,6 +138,7 @@ public class StudentView extends JFrame implements OurStyle{
 		container.add(homePanel, "HOME");
 		createHomeTopPanel();
 		createHomeCenterPanel();
+		createHomeBotPanel();
 	}
 	
 	/**	Creates the top panel of the home panel
@@ -189,16 +191,25 @@ public class StudentView extends JFrame implements OurStyle{
 				mainCards.show(container, "COURSE");
 			}
 		});
-		
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
 	}
 	
 	public void addCourses(String[] courses) {
+		homePanel.setVisible(false);
 		for(int i=0; i<courses.length; i++) {
 			courseListModel.addElement(courses[i]);
 		}
+		homePanel.setVisible(true);
+	}
+	
+	private void createHomeBotPanel() {
+		JPanel grandPanel = new JPanel();
+		setOurStyle(grandPanel);
+		getCourses = new JButton("See Courses");
+		grandPanel.add(getCourses);
+		homePanel.add(grandPanel, BorderLayout.SOUTH);
 	}
 	
 	/** Initializes the components to be used in the course panel when a user
@@ -343,8 +354,9 @@ public class StudentView extends JFrame implements OurStyle{
 	/** Adds a list selection listener to the course JList
 	 * @param courseJList - the courseJList listener
 	 */
-	public void addHomeListener(ListSelectionListener courseJList) {
+	public void addHomeListeners(ListSelectionListener courseJList, ActionListener getCourses) {
 		this.courseJList.addListSelectionListener(courseJList);
+		this.getCourses.addActionListener(getCourses);
 	}
 	
 	/** Adds listeners onto their respective buttons and list

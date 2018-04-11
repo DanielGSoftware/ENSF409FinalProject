@@ -31,9 +31,9 @@ public class StudentModel extends MainModel {
 			infoExchange= (InfoExchange) readObject.readObject();
 			courselist=infoExchange.getInfo();
 		} catch (IOException e) {
-			System.out.println("Error: loook at  course in student model wont work");
+			System.out.println("Error: look at  course in student model wont work");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error: broswe course in proff model wont work");
+			System.out.println("Error: browse course in student model wont work");
 		}
 		return courselist;
 	}
