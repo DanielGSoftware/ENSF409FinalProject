@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+
+import javax.sound.midi.MidiDevice.Info;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
@@ -62,13 +64,13 @@ public class ProfessorView extends JFrame implements OurStyle{
 		container=getContentPane();
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
-//		String[] info=new String[3];
-		//info[2]="Hi";
+		String[] info= {"hi", "hello", "wow"};
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
-		intitializeCourseDisplay();
+//		intitializeCourseDisplay();
+		createCourseDisplay(info);
 	}
 	
 	public void setCurrentCourseID(int courseID) {
@@ -197,19 +199,21 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 */
 	
 	private void intitializeCourseDisplay() {
-		coursePanel = new JPanel(new BorderLayout());
-		container.add(coursePanel, "COURSES");
-		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-		viewStudents = new JButton("STUDENTS");
-		viewAssigns = new JButton("ASSIGNMENTS");
-		returnHome = new JButton("HOME");
-		setButtonStyle(setCourseactive);
-		setButtonStyle(viewStudents);
-		setButtonStyle(viewAssigns);
-		setButtonStyle(returnHome);
+//		coursePanel = new JPanel(new BorderLayout());
+//		container.add(coursePanel, "COURSES");
+//		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+//		viewStudents = new JButton("STUDENTS");
+//		viewAssigns = new JButton("ASSIGNMENTS");
+//		returnHome = new JButton("HOME");
+//		setButtonStyle(setCourseactive);
+//		setButtonStyle(viewStudents);
+//		setButtonStyle(viewAssigns);
+//		setButtonStyle(returnHome);
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
+		coursePanel = new JPanel(new BorderLayout());
+		container.add(coursePanel, "COURSES");
 		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);
@@ -222,6 +226,15 @@ public class ProfessorView extends JFrame implements OurStyle{
 		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
 		setOurStyle(topButtons);
+		
+		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+		viewStudents = new JButton("STUDENTS");
+		viewAssigns = new JButton("ASSIGNMENTS");
+		returnHome = new JButton("HOME");
+		setButtonStyle(setCourseactive);
+		setButtonStyle(viewStudents);
+		setButtonStyle(viewAssigns);
+		setButtonStyle(returnHome);
 		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
