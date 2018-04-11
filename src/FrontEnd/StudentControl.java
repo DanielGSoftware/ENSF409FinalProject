@@ -2,13 +2,8 @@ package FrontEnd;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.swing.Action;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import SharedObjects.User;
 
 public class StudentControl {
 	
@@ -36,12 +31,7 @@ public class StudentControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("LMAO");
-			System.out.println(sView.getStudentID());
 			String[] listofcourses=sModel.getCourseList(sView.getStudentID());
-			for(int i=0; i<listofcourses.length; i++) {
-				System.out.println(listofcourses[i]);
-			}
 			sView.addCourses(listofcourses);
 		}
 	}
