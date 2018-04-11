@@ -248,8 +248,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
 		JPanel studentButtonsPanel = new JPanel();
-		addStudentButtons(studentButtonsPanel);
 		JPanel assignButtonsPanel = new JPanel();
+		addStudentButtons(studentButtonsPanel);
 		addAssignButtons(assignButtonsPanel);
 		courseStudentPanel.add(studentButtonsPanel, BorderLayout.SOUTH);
 		courseAssignPanel.add(assignButtonsPanel, BorderLayout.SOUTH);
