@@ -204,7 +204,7 @@ public class ProfessorControl {
 			int courseid=Integer.parseInt(a[0]);
 			String string=null;
 			System.out.println(string);
-			System.out.println("This is the result in search parametter "+pView.getSearchParam());
+			System.out.println("This is the result in search parametter "+pView.getSearchParam().length());
 			String[] strings=pModel.searchStudents(pView.getSearchParam(), courseid);
 			//display information in gui 
 			System.out.println(strings[0]);

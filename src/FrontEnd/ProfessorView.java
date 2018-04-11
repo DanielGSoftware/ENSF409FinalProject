@@ -86,7 +86,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public String getSearchParam()
 	{
-		return findStudents.getText();
+		System.out.println(findStudents.getSelectedText());
+		return findStudents.getSelectedText();
 	}
 	
 	public int getCourseID()
@@ -294,6 +295,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		setOurStyle(emailStudents);
 		setOurStyle(searchStudents);
 		findStudents = new JTextField();
+		//findStudents.setEnabled(false);
 		findStudents.setColumns(15);
 		findStudents.setBorder(BORDER);
 		buttonsPanel.add(enrollment);
