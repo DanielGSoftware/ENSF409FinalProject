@@ -136,7 +136,7 @@ public class DataBaseManager implements Runnable {
 //						FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
 //						fileHandler.downloadAssignmentsToProff();
 //					}
-//					
+//					 
 //					writeobject.writeObject(infoExchange);
 //					flushAndReset(writeobject);
 //				}
@@ -218,7 +218,7 @@ public class DataBaseManager implements Runnable {
 						String[] emailofstudent=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
 						//below: first 2 are proff info, so emailinfoproff[0] and [1]
 						//last 3 are emailofstudent[0] and from infoExchange's string array
-						EmailHandler emailHandler=new EmailHandler("qazfugioshi@gmail.com", "DanielGee", "amarhuzaifa@gmail.com", "SubjectLine", "OOGA BOOGA");
+						EmailHandler emailHandler=new EmailHandler("qazfugioshi@gmail.com", "DanielGee", "shehrozn1@gmail.com", "SubjectLine", "OOGA BOOGA");
 						emailHandler.createEmail();
 					}
 				}
@@ -233,6 +233,9 @@ public class DataBaseManager implements Runnable {
 				{
 					Grade grade=(Grade) readobject.readObject();
 					String[] assignmentGrade=grade.viewStudentGrade(GRADETABLE, jdbc_connection, statement);
+					infoExchange.setInfo(assignmentGrade);
+					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
 				}
 				
 				id+=10;
