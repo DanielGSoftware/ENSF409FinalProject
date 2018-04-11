@@ -83,6 +83,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	{
 		return proffID;
 	}
+	
 	public String getSearchParam()
 	{
 		return findStudents.getText();
