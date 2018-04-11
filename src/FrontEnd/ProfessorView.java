@@ -222,6 +222,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		//Where [1] is the name of the course
 		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
+		setOurStyle(topButtons);
 		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
