@@ -226,12 +226,13 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("Mark Assignment-Proff"))
 				{
 					Grade grade=(Grade) readobject.readObject();
-					grade.proffInsertingGrade(STUDENTENROLLMENTTABLE, jdbc_connection, statement, id);
+					grade.proffInsertingGrade(GRADETABLE, jdbc_connection, statement, id);
 				}
 				
 				else if (string.equals("View Grades-Student"))
 				{
-					
+					Grade grade=(Grade) readobject.readObject();
+					String[] assignmentGrade=grade.viewStudentGrade(GRADETABLE, jdbc_connection, statement);
 				}
 				
 				id+=10;
