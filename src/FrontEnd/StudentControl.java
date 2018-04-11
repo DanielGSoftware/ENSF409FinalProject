@@ -71,9 +71,11 @@ public class StudentControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//File file=sView.chooseFile();
+			File file=sView.chooseFile();
 			//need course id and file path
-			sModel.uploadAssignment(1070, "trialassignmenttosendtoproff.txt", 
+			String filename=file.getName();
+			String filepath=file.getAbsolutePath();
+			sModel.uploadAssignment(sView.getCurrentCourseID(), "trialassignmenttosendtoproff.txt", 
 					"C:\\Users\\muham\\OneDrive\\Documents\\ENSF409StudentFiles\\sendToProff\\trialassignmenttosendtoproff.txt");
 		}
 	}
