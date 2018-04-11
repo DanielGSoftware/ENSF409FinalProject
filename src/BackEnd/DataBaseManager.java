@@ -83,10 +83,6 @@ public class DataBaseManager implements Runnable {
 					course.courseActivationStatus(COURSETABLE, jdbc_connection, statement);
 				}
 				
-				else if(string.equals("Login Attempt")) {
-					User user = (User)readobject.readObject(); 
-				}
-				
 				else if (string.equals("Search Students Proff"))
 				{
 					User user = (User)readobject.readObject(); 
