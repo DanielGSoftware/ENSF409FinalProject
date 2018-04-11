@@ -208,6 +208,23 @@ public class ProfessorView extends JFrame implements OurStyle{
 		setButtonStyle(returnHome);
 		courseInnerCards = new CardLayout();
 		courseInnerPanel = new JPanel(courseInnerCards);
+
+		enrollment =  new JButton("ENROLL/UNENROLL");
+		emailStudents = new JButton("EMAIL STUDENTS");
+		searchStudents = new JButton("SEARCH A STUDENT");
+		setOurStyle(enrollment);
+		setOurStyle(emailStudents);
+		setOurStyle(searchStudents);
+		findStudents = new JTextField();
+		findStudents.setColumns(15);
+		findStudents.setBorder(BORDER);
+		
+		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+		setOurStyle(setAssignActive);
+		setOurStyle(uploadAssign);
+		setOurStyle(viewSubmissions);
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
@@ -288,15 +305,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 * @param buttonsPanel - the student button panel
 	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
-		enrollment =  new JButton("ENROLL/UNENROLL");
-		emailStudents = new JButton("EMAIL STUDENTS");
-		searchStudents = new JButton("SEARCH A STUDENT");
-		setOurStyle(enrollment);
-		setOurStyle(emailStudents);
-		setOurStyle(searchStudents);
-		findStudents = new JTextField();
-		findStudents.setColumns(15);
-		findStudents.setBorder(BORDER);
 		buttonsPanel.add(enrollment);
 		buttonsPanel.add(emailStudents);
 		buttonsPanel.add(searchStudents);
@@ -307,12 +315,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 * @param buttonsPanel - the assignment button panel
 	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
-		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-		viewSubmissions = new JButton("VIEW SUBMISSIONS");
-		setOurStyle(setAssignActive);
-		setOurStyle(uploadAssign);
-		setOurStyle(viewSubmissions);
 		buttonsPanel.add(setAssignActive);
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
