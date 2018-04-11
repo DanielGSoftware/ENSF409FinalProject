@@ -230,6 +230,9 @@ public class DataBaseManager implements Runnable {
 				}
 				
 				else if (string.equals("View Grades-Student"))
+				{
+					
+				}
 				
 				id+=10;
 			} 

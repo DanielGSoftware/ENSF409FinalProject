@@ -68,7 +68,11 @@ public class StudentControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//paramters should be filename, courseid, studentid
-			String assignmentGrade=sModel.viewGradeForAssignment();
+			int assignmentGrade=sModel.viewGradeForAssignment();
+			if (assignmentGrade==0) {
+				System.out.println("Error: when tryna get student grades, "
+						+ "database connection returned null");
+			}
 		}
 	}
 	
