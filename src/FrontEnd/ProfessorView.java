@@ -199,47 +199,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
-//		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-//		viewStudents = new JButton("STUDENTS");
-//		viewAssigns = new JButton("ASSIGNMENTS");
-//		returnHome = new JButton("HOME");
-//		setButtonStyle(setCourseactive);
-//		setButtonStyle(viewStudents);
-//		setButtonStyle(viewAssigns);
-//		setButtonStyle(returnHome);
-		
-//		courseInnerCards = new CardLayout();
-//		courseInnerPanel = new JPanel(courseInnerCards);
-//		studentListModel=new DefaultListModel<String>();
-////		studentListModel.addElement(id);
-//		studentJList=new JList<String>(studentListModel);
-//		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		studentJList.setVisibleRowCount(15);
-//		studentJList.setFont(SMALLFONT);
-//		
-//		assignListModel=new DefaultListModel<String>();
-////		assignListModel.addElement(id);
-//		assignmentJList=new JList<String>(studentListModel);
-//		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		assignmentJList.setVisibleRowCount(15);
-//		assignmentJList.setFont(SMALLFONT);
-		
-//		enrollment =  new JButton("ENROLL/UNENROLL");
-//		emailStudents = new JButton("EMAIL STUDENTS");
-//		searchStudents = new JButton("SEARCH A STUDENT");
-//		setButtonStyle(enrollment);
-//		setButtonStyle(emailStudents);
-//		setButtonStyle(searchStudents);
-//		findStudents = new JTextField();
-//		findStudents.setColumns(15);
-//		findStudents.setBorder(BORDER);
-		
-//		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-//		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-//		viewSubmissions = new JButton("VIEW SUBMISSIONS");
-//		setButtonStyle(setAssignActive);
-//		setButtonStyle(uploadAssign);
-//		setButtonStyle(viewSubmissions);
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
@@ -407,12 +366,23 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return strings;
 	}
 	
-	public void updateStudentListDisplay(String[] string)
-	{
+	public void updateStudentListDisplay(String[] students)
+	{	
+		studentJList.setVisible(false);
 		studentListModel.removeAllElements();
-		for (int i=0; i<string.length; i++) {
-			studentListModel.addElement(string[i]);
+		for (int i=0; i<students.length; i++) {
+			studentListModel.addElement(students[i]);
 		}
+		studentJList.setVisible(true);
+	}
+	
+	public void updateAssignListDisplay(String[] assigns) {
+		assignmentJList.setVisible(false);
+		assignListModel.removeAllElements();
+		for (int i=0; i<assigns.length; i++) {
+			assignListModel.addElement(assigns[i]);
+		}
+		assignmentJList.setVisible(true);
 	}
 	
 	public File chooseFile()

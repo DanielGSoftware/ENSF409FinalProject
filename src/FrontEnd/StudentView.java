@@ -89,6 +89,10 @@ public class StudentView extends JFrame implements OurStyle{
 		currentCourseID = courseID;
 	}
 	
+	public void setGrade(int theGrade) {
+		grade.setText(""+theGrade);
+	}
+	
 	public int getCurrentCourseID() {
 		return currentCourseID;
 	}
@@ -107,6 +111,7 @@ public class StudentView extends JFrame implements OurStyle{
 	{
 		return studentID;
 	}
+	
 	
 	/** Creates a JOptionPane which displays the message to the user.
 	 * @param message - the message to be displayed
@@ -224,6 +229,7 @@ public class StudentView extends JFrame implements OurStyle{
 		coursePanel.add(assignScrollPane, BorderLayout.CENTER);
 	}
 
+	
 	
 	/** Creates the course display from the courseInfo and assignInfo
 	 * @param courseInfo - the information of the course

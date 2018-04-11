@@ -61,8 +61,8 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] a=pView.getSelectedList();
 			int courseid=Integer.parseInt(a[0]);
-			String[] string=pModel.viewStudents(courseid);
-			pView.updateStudentListDisplay(string);
+			String[] students=pModel.viewStudents(courseid);
+			pView.updateStudentListDisplay(students);
 		}
 		
 	}
