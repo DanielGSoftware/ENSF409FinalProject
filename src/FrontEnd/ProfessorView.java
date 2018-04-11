@@ -199,14 +199,14 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
-		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-		viewStudents = new JButton("STUDENTS");
-		viewAssigns = new JButton("ASSIGNMENTS");
-		returnHome = new JButton("HOME");
-		setButtonStyle(setCourseactive);
-		setButtonStyle(viewStudents);
-		setButtonStyle(viewAssigns);
-		setButtonStyle(returnHome);
+//		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+//		viewStudents = new JButton("STUDENTS");
+//		viewAssigns = new JButton("ASSIGNMENTS");
+//		returnHome = new JButton("HOME");
+//		setButtonStyle(setCourseactive);
+//		setButtonStyle(viewStudents);
+//		setButtonStyle(viewAssigns);
+//		setButtonStyle(returnHome);
 		
 //		courseInnerCards = new CardLayout();
 //		courseInnerPanel = new JPanel(courseInnerCards);
@@ -224,22 +224,22 @@ public class ProfessorView extends JFrame implements OurStyle{
 //		assignmentJList.setVisibleRowCount(15);
 //		assignmentJList.setFont(SMALLFONT);
 		
-		enrollment =  new JButton("ENROLL/UNENROLL");
-		emailStudents = new JButton("EMAIL STUDENTS");
-		searchStudents = new JButton("SEARCH A STUDENT");
-		setButtonStyle(enrollment);
-		setButtonStyle(emailStudents);
-		setButtonStyle(searchStudents);
-		findStudents = new JTextField();
-		findStudents.setColumns(15);
-		findStudents.setBorder(BORDER);
+//		enrollment =  new JButton("ENROLL/UNENROLL");
+//		emailStudents = new JButton("EMAIL STUDENTS");
+//		searchStudents = new JButton("SEARCH A STUDENT");
+//		setButtonStyle(enrollment);
+//		setButtonStyle(emailStudents);
+//		setButtonStyle(searchStudents);
+//		findStudents = new JTextField();
+//		findStudents.setColumns(15);
+//		findStudents.setBorder(BORDER);
 		
-		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-		viewSubmissions = new JButton("VIEW SUBMISSIONS");
-		setButtonStyle(setAssignActive);
-		setButtonStyle(uploadAssign);
-		setButtonStyle(viewSubmissions);
+//		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+//		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+//		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+//		setButtonStyle(setAssignActive);
+//		setButtonStyle(uploadAssign);
+//		setButtonStyle(viewSubmissions);
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
@@ -258,14 +258,14 @@ public class ProfessorView extends JFrame implements OurStyle{
 		JPanel topButtons = new JPanel();
 		setOurStyle(topButtons);
 		
-//		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
-//		viewStudents = new JButton("STUDENTS");
-//		viewAssigns = new JButton("ASSIGNMENTS");
-//		returnHome = new JButton("HOME");
-//		setButtonStyle(setCourseactive);
-//		setButtonStyle(viewStudents);
-//		setButtonStyle(viewAssigns);
-//		setButtonStyle(returnHome);
+		setCourseactive = new JButton("CHANGE COURSE ACTIVE STATUS");
+		viewStudents = new JButton("STUDENTS");
+		viewAssigns = new JButton("ASSIGNMENTS");
+		returnHome = new JButton("HOME");
+		setButtonStyle(setCourseactive);
+		setButtonStyle(viewStudents);
+		setButtonStyle(viewAssigns);
+		setButtonStyle(returnHome);
 		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
@@ -331,15 +331,15 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 * @param buttonsPanel - the student button panel
 	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
-//		enrollment =  new JButton("ENROLL/UNENROLL");
-//		emailStudents = new JButton("EMAIL STUDENTS");
-//		searchStudents = new JButton("SEARCH A STUDENT");
-//		setButtonStyle(enrollment);
-//		setButtonStyle(emailStudents);
-//		setButtonStyle(searchStudents);
-//		findStudents = new JTextField();
-//		findStudents.setColumns(15);
-//		findStudents.setBorder(BORDER);
+		enrollment =  new JButton("ENROLL/UNENROLL");
+		emailStudents = new JButton("EMAIL STUDENTS");
+		searchStudents = new JButton("SEARCH A STUDENT");
+		setButtonStyle(enrollment);
+		setButtonStyle(emailStudents);
+		setButtonStyle(searchStudents);
+		findStudents = new JTextField();
+		findStudents.setColumns(15);
+		findStudents.setBorder(BORDER);
 		buttonsPanel.add(enrollment);
 		buttonsPanel.add(emailStudents);
 		buttonsPanel.add(searchStudents);
@@ -350,12 +350,12 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 * @param buttonsPanel - the assignment button panel
 	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
-//		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
-//		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
-//		viewSubmissions = new JButton("VIEW SUBMISSIONS");
-//		setButtonStyle(setAssignActive);
-//		setButtonStyle(uploadAssign);
-//		setButtonStyle(viewSubmissions);
+		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
+		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+		setButtonStyle(setAssignActive);
+		setButtonStyle(uploadAssign);
+		setButtonStyle(viewSubmissions);
 		buttonsPanel.add(setAssignActive);
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
