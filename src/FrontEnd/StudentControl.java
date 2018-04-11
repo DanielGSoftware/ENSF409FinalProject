@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.Action;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import SharedObjects.User;
 
@@ -16,17 +18,30 @@ public class StudentControl {
 	public StudentControl(StudentModel model, StudentView view) {
 		 sModel=model;
 		 sView=view;
+		 sView.addHomeListeners(new courseListener(), new GetCourseList());
 		 //view.addcourses()
 		 sView.setVisible(true);
 		// sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
+	}
+	
+	class courseListener implements ListSelectionListener
+	{
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			
+		}
 	}
 	
 	class GetCourseList implements ActionListener 
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("LMAO");
 			String[] listofcourses=sModel.getCourseList(sView.getStudentID());
-			//ADD TO VIEW!
+			for(int i=0; i<listofcourses.length; i++) {
+				System.out.println(listofcourses[i]);
+			}
+			sView.addCourses(listofcourses);
 		}
 	}
 	
