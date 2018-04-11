@@ -1,23 +1,10 @@
 package FrontEnd;
 
-import java.awt.Graphics;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.swing.Action;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.View;
-import javax.swing.text.Position.Bias;
-
-import SharedObjects.Course;
 
 public class ProfessorControl {
 	private ProfessorModel pModel;
