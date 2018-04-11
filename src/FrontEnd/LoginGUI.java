@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class LoginGUI extends JFrame implements OurColours{
+public class LoginGUI extends JFrame implements OurStyle{
 	private JTextField userT;
 	private JTextField passT;
 	private JButton signInB;
@@ -52,9 +52,9 @@ public class LoginGUI extends JFrame implements OurColours{
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(FONTCOLOUR);
+		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(MAINCOLOUR);
+		bannerPanel.setBackground(BACKGROUND);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}

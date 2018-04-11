@@ -2,7 +2,6 @@ package FrontEnd;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,7 +13,7 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
-public class ProfessorView extends JFrame implements OurColours{
+public class ProfessorView extends JFrame implements OurStyle{
 	private String proffFirstName;
 	private String proffLastName;
 	private int proffID;
@@ -134,6 +133,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		JPanel bannerPanel = new JPanel();
 		createBanner(bannerPanel, "Professor Learning Platform");
 		JPanel buttonPanel=new JPanel();
+		buttonPanel.setBackground(BACKGROUND);
 		createCourses=new JButton("CREATE A COURSE");
 		viewCourses=new JButton("VIEW COURSES");
 		
@@ -151,11 +151,11 @@ public class ProfessorView extends JFrame implements OurColours{
 	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
 		JLabel banner=new JLabel(topMessage);
-		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(FONTCOLOUR);
+		banner.setFont(BUTTONFONT);
+		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
 		bannerPanel.add(banner, JLabel.CENTER);
-		bannerPanel.setBackground(MAINCOLOUR);
+		bannerPanel.setBackground(BACKGROUND);
 	}
 	
 	
@@ -164,6 +164,7 @@ public class ProfessorView extends JFrame implements OurColours{
 	private void createHomeCenterPanel()
 	{
 		JPanel grandPanel = new JPanel();
+		grandPanel.setBackground(BACKGROUND);
 		String[] welcomeMessage= {"Welcome to your home page, Professor " +
 								   proffFirstName + " " + proffLastName + " ("+proffID+")",
 								   "What would you like to do?"};
@@ -174,7 +175,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		courseJList = new JList<String>(courseListModel);
 		courseScrollPane=new JScrollPane(courseJList);
 		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		courseScrollPane.setPreferredSize(new Dimension(500, 300));
+		courseScrollPane.setPreferredSize(new Dimension(600, 350));
 		
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
@@ -451,7 +452,7 @@ public class ProfessorView extends JFrame implements OurColours{
 		return null;
 	}
 	
-	/** Adds listeners onto their respective buttons and lists
+	/** Adds listeners onto their respective buttons and list
 	 * @param createCourses - the createCourses listener
 	 * @param viewCourses - the viewCourses listener
 	 * @param courseListListener - the courseListListener listener
