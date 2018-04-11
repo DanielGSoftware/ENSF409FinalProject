@@ -368,12 +368,12 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public void updateStudentListDisplay(String[] students)
 	{	
-		studentJList.setVisible(false);
+		courseInnerPanel.setVisible(false);
 		studentListModel.removeAllElements();
 		for (int i=0; i<students.length; i++) {
 			studentListModel.addElement(students[i]);
 		}
-		studentJList.setVisible(true);
+		courseInnerPanel.setVisible(true);
 	}
 	
 	public void updateAssignListDisplay(String[] assigns) {
