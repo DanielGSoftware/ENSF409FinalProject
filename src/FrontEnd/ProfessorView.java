@@ -208,21 +208,21 @@ public class ProfessorView extends JFrame implements OurStyle{
 		setButtonStyle(viewAssigns);
 		setButtonStyle(returnHome);
 		
-		courseInnerCards = new CardLayout();
-		courseInnerPanel = new JPanel(courseInnerCards);
-		studentListModel=new DefaultListModel<String>();
-//		studentListModel.addElement(id);
-		studentJList=new JList<String>(studentListModel);
-		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		studentJList.setVisibleRowCount(15);
-		studentJList.setFont(SMALLFONT);
-		
-		assignListModel=new DefaultListModel<String>();
-//		assignListModel.addElement(id);
-		assignmentJList=new JList<String>(studentListModel);
-		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		assignmentJList.setVisibleRowCount(15);
-		assignmentJList.setFont(SMALLFONT);
+//		courseInnerCards = new CardLayout();
+//		courseInnerPanel = new JPanel(courseInnerCards);
+//		studentListModel=new DefaultListModel<String>();
+////		studentListModel.addElement(id);
+//		studentJList=new JList<String>(studentListModel);
+//		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		studentJList.setVisibleRowCount(15);
+//		studentJList.setFont(SMALLFONT);
+//		
+//		assignListModel=new DefaultListModel<String>();
+////		assignListModel.addElement(id);
+//		assignmentJList=new JList<String>(studentListModel);
+//		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		assignmentJList.setVisibleRowCount(15);
+//		assignmentJList.setFont(SMALLFONT);
 		
 		enrollment =  new JButton("ENROLL/UNENROLL");
 		emailStudents = new JButton("EMAIL STUDENTS");
@@ -299,14 +299,14 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	public JScrollPane createStudentScrollPane(String id) {
-//		courseInnerCards = new CardLayout();
-//		courseInnerPanel = new JPanel(courseInnerCards);
-//		studentListModel=new DefaultListModel<String>();
+		courseInnerCards = new CardLayout();
+		courseInnerPanel = new JPanel(courseInnerCards);
+		studentListModel=new DefaultListModel<String>();
 		studentListModel.addElement(id);
-//		studentJList=new JList<String>(studentListModel);
-//		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		studentJList.setVisibleRowCount(15);
-//		studentJList.setFont(SMALLFONT);
+		studentJList=new JList<String>(studentListModel);
+		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		studentJList.setVisibleRowCount(15);
+		studentJList.setFont(SMALLFONT);
 		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -315,12 +315,12 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	public JScrollPane createAssignScrollPane(String id) {
-//		assignListModel=new DefaultListModel<String>();
+		assignListModel=new DefaultListModel<String>();
 		assignListModel.addElement(id);
-//		assignmentJList=new JList<String>(studentListModel);
-//		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		assignmentJList.setVisibleRowCount(15);
-//		assignmentJList.setFont(SMALLFONT);
+		assignmentJList=new JList<String>(studentListModel);
+		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		assignmentJList.setVisibleRowCount(15);
+		assignmentJList.setFont(SMALLFONT);
 		JScrollPane assignScrollPane = new JScrollPane(assignmentJList);
 		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		assignScrollPane.setPreferredSize(new Dimension(500,300));
