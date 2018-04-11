@@ -114,7 +114,6 @@ public class LoginGUI extends JFrame implements OurStyle{
 		fieldPanel.add(signInPanel, BorderLayout.SOUTH);
 		
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
-		
 		container.add(grandPanel, BorderLayout.CENTER);
 	}
 	
@@ -145,7 +144,6 @@ public class LoginGUI extends JFrame implements OurStyle{
 				else if (result==JOptionPane.NO_OPTION)
 					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			}
-			
 		});
 	}
 	
