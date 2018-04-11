@@ -223,6 +223,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		//Where [1] is the name of the course
 		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
+		setOurStyle(topButtons);
 		
 		topButtons.add(setCourseactive);
 		topButtons.add(viewStudents);
@@ -248,8 +249,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
 		JPanel studentButtonsPanel = new JPanel();
-		addStudentButtons(studentButtonsPanel);
 		JPanel assignButtonsPanel = new JPanel();
+		addStudentButtons(studentButtonsPanel);
 		addAssignButtons(assignButtonsPanel);
 		courseStudentPanel.add(studentButtonsPanel, BorderLayout.SOUTH);
 		courseAssignPanel.add(assignButtonsPanel, BorderLayout.SOUTH);
