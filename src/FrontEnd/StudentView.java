@@ -8,10 +8,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -349,6 +351,15 @@ public class StudentView extends JFrame implements OurStyle{
 	private void setOurStyle(JComponent theComponent) {
 		theComponent.setForeground(FOREGROUND);
 		theComponent.setBackground(BACKGROUND);
+	}
+	
+	public File chooseFile()
+	{
+		File selectedFile=null;
+		JFileChooser fileBrowser=new JFileChooser();
+		if(fileBrowser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			selectedFile = fileBrowser.getSelectedFile();
+		return selectedFile;
 	}
 	
 	/** Adds a list selection listener to the course JList

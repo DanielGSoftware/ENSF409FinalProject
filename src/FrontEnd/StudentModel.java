@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.mail.search.StringTerm;
-
 import SharedObjects.Assignment;
-import SharedObjects.Course;
 import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
