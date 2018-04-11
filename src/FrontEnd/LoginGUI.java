@@ -67,6 +67,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 		setOurStyle(fieldPanel);
 		
 		JPanel userPanel = new JPanel();
+		setOurStyle(userPanel);
 		JLabel userL = new JLabel("Username");
 		userL.setFont(SMALLFONT);
 		userT = new JTextField();

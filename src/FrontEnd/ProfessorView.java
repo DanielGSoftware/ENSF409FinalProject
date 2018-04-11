@@ -290,8 +290,12 @@ public class ProfessorView extends JFrame implements OurStyle{
 		enrollment =  new JButton("ENROLL/UNENROLL");
 		emailStudents = new JButton("EMAIL STUDENTS");
 		searchStudents = new JButton("SEARCH A STUDENT");
+		setOurStyle(enrollment);
+		setOurStyle(emailStudents);
+		setOurStyle(searchStudents);
 		findStudents = new JTextField();
 		findStudents.setColumns(15);
+		findStudents.setBorder(BORDER);
 		buttonsPanel.add(enrollment);
 		buttonsPanel.add(emailStudents);
 		buttonsPanel.add(searchStudents);
@@ -305,6 +309,9 @@ public class ProfessorView extends JFrame implements OurStyle{
 		setAssignActive = new JButton("CHANGE ACTIVE STATUS");
 		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
 		viewSubmissions = new JButton("VIEW SUBMISSIONS");
+		setOurStyle(setAssignActive);
+		setOurStyle(uploadAssign);
+		setOurStyle(viewSubmissions);
 		buttonsPanel.add(setAssignActive);
 		buttonsPanel.add(uploadAssign);
 		buttonsPanel.add(viewSubmissions);
