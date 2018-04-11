@@ -2,3 +2,6 @@
 .classpath
 lib/mysql-connector-java-5.1.46-bin.jar
 .classpath
+src/BackEnd/DataBaseManager.java
+src/DatabaseConstruction/DataBaseBuilder.java
+.classpath
