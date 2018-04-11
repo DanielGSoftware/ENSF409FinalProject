@@ -52,7 +52,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(FONT);
+		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
 		bannerPanel.setBackground(BACKGROUND);
 		bannerPanel.add(banner, JLabel.CENTER);

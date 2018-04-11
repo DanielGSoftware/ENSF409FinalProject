@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -142,11 +143,11 @@ public class StudentView extends JFrame implements OurStyle{
 		JPanel bannerPanel = new JPanel();
 		createBanner(bannerPanel, "Student Learning Platform");
 		JPanel welcomePanel = new JPanel();
+		setOurStyle(welcomePanel);
 		JLabel welcomeLabel = new JLabel("Welcome, " + studentFirstName + " " + 
 										studentLastName + " ("+studentID+")");
+		welcomeLabel.setFont(SMALLFONT);
 		welcomePanel.add(welcomeLabel);
-		welcomePanel.setForeground(FONT);
-		welcomePanel.setBackground(BACKGROUND);
 		grandPanel.add(bannerPanel);
 		grandPanel.add(welcomePanel);
 		homePanel.add(grandPanel, BorderLayout.NORTH);
@@ -159,25 +160,24 @@ public class StudentView extends JFrame implements OurStyle{
 	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
 		JLabel banner=new JLabel(topMessage);
-//		banner.setBorder(BLACKBORDER);
 		banner.setFont(BIGFONT);
-		banner.setForeground(FONT);
+		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
 		bannerPanel.add(banner, JLabel.CENTER);
-		bannerPanel.setBackground(BACKGROUND);
+		setOurStyle(bannerPanel);
 	}
 	
 	/** Creates the center panel of the home page
 	 */
 	private void createHomeCenterPanel() {
 		JPanel grandPanel = new JPanel();
-		grandPanel.setBackground(BACKGROUND);
+		setOurStyle(grandPanel);
 		courseListModel = new DefaultListModel<String>();
 		courseJList = new JList<String>(courseListModel);
 		JScrollPane courseScrollPane = new JScrollPane(courseJList,
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		courseScrollPane.setPreferredSize(new Dimension(600, 350));
-		
+		courseJList.setFont(SMALLFONT);
 		
 		//Testing
 		courseJList.addListSelectionListener(new ListSelectionListener() {
@@ -207,16 +207,16 @@ public class StudentView extends JFrame implements OurStyle{
 		grade = new JTextArea();
 		grade.setColumns(5);
 		grade.setEditable(false);
+		grade.setBorder(BORDER);
 		uploadAssign = new JButton("SUBMIT TO DROPBOX");
-		
-		
-		setButtonLook(uploadAssign);
-		
-		
-		uploadAssign.setForeground(Color.white);
 		downloadAssign = new JButton("DOWNLOAD ASSIGNMENT");
 		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
 		returnHome = new JButton("HOME");
+		setButtonStyle(uploadAssign);
+		setButtonStyle(downloadAssign);
+		setButtonStyle(sendEmailToProff);
+		setButtonStyle(sendEmailToProff);
+		setButtonStyle(returnHome);
 		assignListModel = new DefaultListModel<String>();
 		assignJList = new JList<String>(assignListModel);
 		assignScrollPane = new JScrollPane(assignJList);
@@ -247,7 +247,7 @@ public class StudentView extends JFrame implements OurStyle{
 		//Where courseInfo[0] is the course name
 		createBanner(bannerPanel, courseInfo[0]);
 		JPanel topButtons = new JPanel();
-		topButtons.setBackground(BACKGROUND);
+		setOurStyle(topButtons);
 		topButtons.add(downloadAssign);
 		topButtons.add(uploadAssign);
 		topButtons.add(sendEmailToProff);
@@ -265,7 +265,6 @@ public class StudentView extends JFrame implements OurStyle{
 		JPanel bottomPanel = new JPanel();
 		JScrollPane assignScrollPane = new JScrollPane(assignJList,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//		assignScrollPane.setPreferredSize(new Dimension(500,  300));
 		for(int i=0; i<assignInfo.length; i++) {
 			assignListModel.addElement(assignInfo[i]);
 		}
@@ -277,7 +276,7 @@ public class StudentView extends JFrame implements OurStyle{
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
-		bottomPanel.setBackground(BACKGROUND);
+		setOurStyle(bottomPanel);
 		grandPanel.add(assignScrollPane, BorderLayout.CENTER);
 		grandPanel.add(bottomPanel, BorderLayout.SOUTH);
 		coursePanel.add(grandPanel, BorderLayout.CENTER);
@@ -326,11 +325,16 @@ public class StudentView extends JFrame implements OurStyle{
 		return theMail;
 	}
 	
-	private void setButtonLook(JButton theButton) {
+	private void setButtonStyle(JButton theButton) {
+		theButton.setForeground(BUTTONTEXT);
 		theButton.setBackground(FOREGROUND);
-		theButton.setFont(SMALLFONT);
+		theButton.setFont(BUTTONFONT);
 	}
 	
+	private void setOurStyle(JComponent theComponent) {
+		theComponent.setForeground(FOREGROUND);
+		theComponent.setBackground(BACKGROUND);
+	}
 	
 	/** Adds a list selection listener to the course JList
 	 * @param courseJList - the courseJList listener

@@ -2,7 +2,6 @@ package FrontEnd;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -152,8 +151,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
 		JLabel banner=new JLabel(topMessage);
-		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(FONT);
+		banner.setFont(BUTTONFONT);
+		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
 		bannerPanel.add(banner, JLabel.CENTER);
 		bannerPanel.setBackground(BACKGROUND);
