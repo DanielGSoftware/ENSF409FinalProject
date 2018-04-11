@@ -107,7 +107,8 @@ public class Assignment implements Serializable {
 			statement.setString(2, filename);
 			assignment=statement.executeQuery();
 			while (assignment.next()) {
-				fileinfo.add(assignment.getString("TITLE")+";"+assignment.getString("PATH"));
+				if (assignment.getString("PATH").contains("sendToProff"))
+					fileinfo.add(assignment.getString("TITLE")+";"+assignment.getString("PATH"));
 			}
 		}
 		catch(SQLException e)
@@ -120,26 +121,5 @@ public class Assignment implements Serializable {
 			temp[i]=fileinfo.get(i);
 		}
 		return temp;
-	}
-	
-	//was supposed to be used for proff download assignments
-	public int numberOfAssignmentsWithID(String table, Connection jdbc_connection, PreparedStatement statement)
-	{
-		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ?";
-		int c=0;
-		ResultSet assignment;
-		try{
-			statement = jdbc_connection.prepareStatement(sql);
-			statement.setInt(1, courseid);
-			assignment=statement.executeQuery();
-			while (assignment.next()) {
-				c++;
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return c;
 	}
 }

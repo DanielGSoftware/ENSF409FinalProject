@@ -63,4 +63,13 @@ public class StudentControl {
 		}
 	}
 	
+	class ViewGradeForAssignment implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//paramters should be filename, courseid
+			String assignmentGrade=sModel.viewGradesForAssignment(String filename);
+		}
+	}
+	
 }

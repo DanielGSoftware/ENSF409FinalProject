@@ -220,4 +220,14 @@ public class ProfessorControl {
 			pView.updateStudentListDisplay(string);
 		}
 	}
+	
+	class SetGradesForAssignment implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//get assignment name from view
+			//parameter should be file name, course id, studentid, and the grade
+			pModel.setGradesForAssignment("Assignment1.txt", 1070, 1000, 87);
+		}
+	}
 }

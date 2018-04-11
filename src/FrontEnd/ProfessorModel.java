@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import SharedObjects.Assignment;
 import SharedObjects.Course;
+import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
@@ -215,6 +216,21 @@ public class ProfessorModel extends MainModel {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
 			sendObject.writeObject(assignment);
+			flushAndReset(sendObject);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setGradesForAssignment(String filename, int courseid, int studentid, int grade)
+	{
+		InfoExchange infoExchange=new InfoExchange("Mark Assignment-Proff");
+		Grade gradeObject=new Grade(filename, studentid, courseid, grade);
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(gradeObject);
 			flushAndReset(sendObject);
 		}
 		catch (IOException e) {

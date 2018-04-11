@@ -78,6 +78,11 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
+	public String viewGradesForAssignment()
+	{
+		
+	}
+	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
 		sendObject.flush();
 		sendObject.reset();

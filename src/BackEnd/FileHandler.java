@@ -47,6 +47,24 @@ public class FileHandler {
 	
 	public void downloadAssignmentsToProff()
 	{
-		
+		try {
+			File toRead=new File(fileToDownloadPath);
+			FileReader fileReader=new FileReader(toRead);
+			BufferedReader reader=new BufferedReader(fileReader);
+			File toDownload=new File(profffolder, fileToDownloadName);
+			toDownload.createNewFile();
+			PrintWriter writer=new PrintWriter(toDownload);
+			String readline=reader.readLine();
+			while (readline!=null) {
+				writer.println(readline);
+				readline=reader.readLine();
+			}
+			reader.close();
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 }

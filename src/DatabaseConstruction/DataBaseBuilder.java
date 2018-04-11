@@ -243,7 +243,7 @@ public class DataBaseBuilder
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
 			     "GRADE_ID INT(8) NOT NULL, " +
-			     "ASSIGNMENT_ID INT(8) NOT NULL, " +  
+			     "ASSIGNMENT_NAME VARCHAR(50) NOT NULL, " +  
 			     "STUDENT_ID INT(8) NOT NULL, "+
 			     "COURSE_ID INT(8) NOT NULL, "+
 			     "ASSIGNMENT_GRADE INT(3) NOT NULL,"+
@@ -271,7 +271,7 @@ public class DataBaseBuilder
 						statement = jdbc_connection.prepareStatement(sql);
 						statement.setInt(1, ++id);
 						statement.setInt(2, 1070);
-						statement.setString(3, "Assignment2.txt");
+						statement.setString(3, "Assignment1.txt");
 						statement.setString(4, "C:\\Users\\muham\\OneDrive\\Documents\\ENSF409ProffFiles\\sendToStudents\\Assignment1.txt");
 						statement.setInt(5, 1);
 						statement.setString(6, "March 6, 2020");

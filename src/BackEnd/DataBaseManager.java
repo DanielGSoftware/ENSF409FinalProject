@@ -15,6 +15,7 @@ import java.sql.Connection;
 
 import SharedObjects.Assignment;
 import SharedObjects.Course;
+import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
@@ -31,8 +32,8 @@ public class DataBaseManager implements Runnable {
 	public static String USERTABLE = "Users";
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
 	public static String ASSIGNMENTTABLE = "Assignment_Table";
+	public static String GRADETABLE = "Grade_Table";
 	private int id;
-	private User user;
 	
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
@@ -148,9 +149,12 @@ public class DataBaseManager implements Runnable {
 				{
 					Assignment assignment= (Assignment) readobject.readObject();
 					String[] fileinfo=assignment.downloadAssignmentsProff(ASSIGNMENTTABLE, jdbc_connection, statement);
-					
-					
-					
+					FileHandler fileHandler=null;
+					for (int i=0; i<fileinfo.length; i++) {
+						String[] filenameandpath=fileinfo[i].split(";");
+						fileHandler=new FileHandler(filenameandpath[0], filenameandpath[1]);
+						fileHandler.downloadAssignmentsToProff();
+					}
 				}
 				
 				else if (string.equals("Upload Assignment"))
@@ -222,6 +226,15 @@ public class DataBaseManager implements Runnable {
 						emailHandler.createEmail();
 					}
 				}
+				
+				else if (string.equals("Mark Assignment-Proff"))
+				{
+					Grade grade=(Grade) readobject.readObject();
+					grade.proffInsertingGrade(STUDENTENROLLMENTTABLE, jdbc_connection, statement, id);
+				}
+				
+				else if (string.equals("View Grades-Student"))
+				
 				id+=10;
 			} 
 			catch (ClassNotFoundException | IOException e) {
