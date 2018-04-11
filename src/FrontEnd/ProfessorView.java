@@ -64,7 +64,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		container=getContentPane();
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
-		String[] info= {"hi", "hello", "wow"};
+		String[] info= {"1", "hello", "wow"};
 		setSize(700, 500);
 		setResizable(false);
 		makeWindowListener();
