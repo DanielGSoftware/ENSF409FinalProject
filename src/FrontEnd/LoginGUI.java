@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -54,37 +55,39 @@ public class LoginGUI extends JFrame implements OurStyle{
 		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
 		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
-		bannerPanel.setBackground(BACKGROUND);
+		setOurStyle(bannerPanel);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
 	
 	private void createMainPanel() {
 		JPanel grandPanel = new JPanel(new BorderLayout());
+		setOurStyle(grandPanel);
 		JPanel fieldPanel = new JPanel(new BorderLayout());
+		setOurStyle(fieldPanel);
 		
 		JPanel userPanel = new JPanel();
 		JLabel userL = new JLabel("Username");
+		userL.setFont(SMALLFONT);
 		userT = new JTextField();
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
-//		userPanel.setBackground(new Color(198, 199, 255));
-		userPanel.setBackground(Color.white);
 		
 		JPanel passPanel = new JPanel();
+		setOurStyle(passPanel);
 		JLabel passL = new JLabel("Password");
+		passL.setFont(SMALLFONT);
 		passT = new JTextField();
 		passT.setColumns(15);
 		passPanel.add(passL);
-		passPanel.add(passT);
-//		passPanel.setBackground(new Color(198, 199, 255));
-		passPanel.setBackground(Color.white);
+		passPanel.add(passT);	
 		
 		JPanel signInPanel = new JPanel();
+		setOurStyle(signInPanel);
 		signInB = new JButton("Sign In");
+		setButtonStyle(signInB);
 		signInPanel.add(signInB);
-		signInPanel.setBackground(Color.white);
 //		signInB.addActionListener(new ActionListener() {
 //			
 //			@Override
@@ -112,6 +115,17 @@ public class LoginGUI extends JFrame implements OurStyle{
 		grandPanel.add(fieldPanel, BorderLayout.CENTER);
 		
 		container.add(grandPanel, BorderLayout.CENTER);
+	}
+	
+	private void setButtonStyle(JButton theButton) {
+		theButton.setForeground(BUTTONTEXT);
+		theButton.setBackground(FOREGROUND);
+		theButton.setFont(BUTTONFONT);
+	}
+	
+	private void setOurStyle(JComponent theComponent) {
+		theComponent.setForeground(FOREGROUND);
+		theComponent.setBackground(BACKGROUND);
 	}
 	
 	public void addSignInActionListener(ActionListener aListener) {

@@ -133,9 +133,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		JPanel bannerPanel = new JPanel();
 		createBanner(bannerPanel, "Professor Learning Platform");
 		JPanel buttonPanel=new JPanel();
-		buttonPanel.setBackground(BACKGROUND);
+		setOurStyle(buttonPanel);
 		createCourses=new JButton("CREATE A COURSE");
 		viewCourses=new JButton("VIEW COURSES");
+		setButtonStyle(createCourses);
+		setButtonStyle(viewCourses);
 		
 		buttonPanel.add(createCourses);
 		buttonPanel.add(viewCourses);
@@ -151,7 +153,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
 		JLabel banner=new JLabel(topMessage);
-		banner.setFont(BUTTONFONT);
+		banner.setFont(BIGFONT);
 		banner.setForeground(LABEL);
 		bannerPanel.setOpaque(true);
 		bannerPanel.add(banner, JLabel.CENTER);
@@ -164,7 +166,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void createHomeCenterPanel()
 	{
 		JPanel grandPanel = new JPanel();
-		grandPanel.setBackground(BACKGROUND);
+		setOurStyle(grandPanel);
 		String[] welcomeMessage= {"Welcome to your home page, Professor " +
 								   proffFirstName + " " + proffLastName + " ("+proffID+")",
 								   "What would you like to do?"};
@@ -173,6 +175,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 			courseListModel.addElement(welcomeMessage[i]);
 		}
 		courseJList = new JList<String>(courseListModel);
+		courseJList.setFont(SMALLFONT);
 		courseScrollPane=new JScrollPane(courseJList);
 		courseScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		courseScrollPane.setPreferredSize(new Dimension(600, 350));
@@ -198,6 +201,10 @@ public class ProfessorView extends JFrame implements OurStyle{
 		viewStudents = new JButton("STUDENTS");
 		viewAssigns = new JButton("ASSIGNMENTS");
 		returnHome = new JButton("HOME");
+		setButtonStyle(setCourseactive);
+		setButtonStyle(viewStudents);
+		setButtonStyle(viewAssigns);
+		setButtonStyle(returnHome);
 		courseInnerCards = new CardLayout();
 		courseInnerPanel = new JPanel(courseInnerCards);
 	}
@@ -253,7 +260,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		studentJList=new JList<String>(studentListModel);
 		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		studentJList.setVisibleRowCount(15);
-		studentJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		studentJList.setFont(SMALLFONT);
 		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -267,7 +274,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		assignmentJList=new JList<String>(studentListModel);
 		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignmentJList.setVisibleRowCount(15);
-		assignmentJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		assignmentJList.setFont(SMALLFONT);
 		
 		JScrollPane assignScrollPane = new JScrollPane(assignmentJList);
 		assignScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -452,6 +459,17 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return null;
 	}
 	
+	private void setButtonStyle(JButton theButton) {
+		theButton.setForeground(BUTTONTEXT);
+		theButton.setBackground(FOREGROUND);
+		theButton.setFont(BUTTONFONT);
+	}
+	
+	private void setOurStyle(JComponent theComponent) {
+		theComponent.setForeground(FOREGROUND);
+		theComponent.setBackground(BACKGROUND);
+	}
+	
 	/** Adds listeners onto their respective buttons and list
 	 * @param createCourses - the createCourses listener
 	 * @param viewCourses - the viewCourses listener
@@ -567,7 +585,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 //	}
 //	
 
-	
 	public static void main(String[] args) {
 		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
 		pView.setVisible(true);
