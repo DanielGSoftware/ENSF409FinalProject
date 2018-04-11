@@ -67,8 +67,8 @@ public class StudentControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//paramters should be filename, courseid
-			String assignmentGrade=sModel.viewGradesForAssignment(String filename);
+			//paramters should be filename, courseid, studentid
+			String assignmentGrade=sModel.viewGradeForAssignment();
 		}
 	}
 	

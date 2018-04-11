@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 
 import SharedObjects.Assignment;
 import SharedObjects.Course;
+import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 
@@ -78,9 +79,19 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
-	public String viewGradesForAssignment()
+	public String viewGradeForAssignment()
 	{
-		
+		InfoExchange infoExchange=new InfoExchange("Getting Grade for Student");
+		//
+		Grade grade=new Grade(assignName, studentid, courseid, assignmentGrade);
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
+			flushAndReset(sendObject);
+		}
+		catch (IOException e) {
+		}
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
