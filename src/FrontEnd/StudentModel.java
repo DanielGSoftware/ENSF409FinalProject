@@ -38,10 +38,15 @@ public class StudentModel extends MainModel {
 		return courselist;
 	}
 	
-	public void sendEmailToProff()
+	public void sendEmailToProff(int courseid, String[] message)
 	{
 		InfoExchange infoExchange=new InfoExchange("Send an Email to the Proff");
-		//infoExchange.setInfo(the message for email) with courseid inside it
+		String[] info=new String[4];
+		info[0]=""+courseid;
+		info[1]=message[0];
+		info[2]=message[1];
+		info[3]=message[2];
+		infoExchange.setInfo(info);
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);

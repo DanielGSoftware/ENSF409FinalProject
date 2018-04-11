@@ -19,7 +19,7 @@ public class StudentControl {
 		 sModel=model;
 		 sView=view;
 		 sView.addHomeListeners(new courseListener(), new GetCourseList());
-		 //view.addcourses()
+		 sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff());
 		 sView.setVisible(true);
 		// sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
 	}
@@ -37,6 +37,7 @@ public class StudentControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("LMAO");
+			System.out.println(sView.getStudentID());
 			String[] listofcourses=sModel.getCourseList(sView.getStudentID());
 			for(int i=0; i<listofcourses.length; i++) {
 				System.out.println(listofcourses[i]);
@@ -49,11 +50,10 @@ public class StudentControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//sModel.sendEmailToProff(sView.getCourseID(), sView.readEmailMessage());
+			sModel.sendEmailToProff(sView.getCurrentCourseID(), sView.sendingMail());
 			//make sure to open up a JOptionPane where we type in message.
 			//email message should also have students id
 			//read email message returns an array of strings
-			sModel.sendEmailToProff();
 		}
 	}
 	

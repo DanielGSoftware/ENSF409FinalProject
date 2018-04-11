@@ -99,8 +99,10 @@ public class Course implements Serializable{
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.setInt(1, courseid);
 			object=statement.executeQuery();		
-			if (object.getInt("ACTIVE")==1) {
-				course=courseid+";"+object.getString("NAME");
+			if (object.next()) {
+				if (object.getInt("ACTIVE")==1) {
+					course=courseid+";"+object.getString("NAME");
+				}
 			}
 		}
 		catch(SQLException e)
