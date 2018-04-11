@@ -73,6 +73,9 @@ public class StudentControl {
 				System.out.println("Error: when tryna get student grades, "
 						+ "database connection returned null");
 			}
+			else {
+				//add it to studentview
+			}
 		}
 	}
 	
