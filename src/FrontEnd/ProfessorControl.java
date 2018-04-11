@@ -28,10 +28,6 @@ public class ProfessorControl {
 		pModel=model; 
 		pView=view;
 		pView.addHomeListeners(new CreateCourseListener(), new ViewCourseListener(), new CourseListListener());
-		pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
-				 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
-				 new StudentEnrollmentListener(), new UploadAssignmentListener(), new AssignmentActiveStatusListener(), 
-				 new ViewSubmissionsListener());
 		pView.setVisible(true);
 	}
 	
@@ -148,6 +144,10 @@ public class ProfessorControl {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			pView.viewCoursesPage();
+			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
+					 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
+					 new StudentEnrollmentListener(), new UploadAssignmentListener(), new AssignmentActiveStatusListener(), 
+					 new ViewSubmissionsListener());
 		}
 		
 	}
