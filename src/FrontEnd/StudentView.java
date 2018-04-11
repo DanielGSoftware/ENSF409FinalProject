@@ -7,10 +7,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.ejb.HomeHandle;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,18 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
-import SharedObjects.Course;
-
-public class StudentView extends JFrame implements OurColours{
+public class StudentView extends JFrame implements OurStyle{
 	private String studentFirstName;
 	private String studentLastName;
 	private int studentID;
@@ -54,10 +51,12 @@ public class StudentView extends JFrame implements OurColours{
 	private JPanel coursePanel;
 	private DefaultListModel<String> assignListModel;
 	private JList<String> assignJList;
-	private JTextField grade;
+	private JTextArea grade;
 	private JScrollPane assignScrollPane;
+	private JButton downloadAssign;
 	private JButton uploadAssign;
 	private JButton sendEmailToProff;
+	private JButton returnHome;
 	
 
 	/** A constructor which requires the student's ID, first name, and last name.
@@ -84,7 +83,7 @@ public class StudentView extends JFrame implements OurColours{
 		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
 								   "Assign 4", "Assign 5", "Assign 6"};
 		createCourseDisplay(testCourseInfo, testAssignInfo);
-		mainCards.show(container, "COURSE");
+//		mainCards.show(container, "COURSE");
 	}
 	
 	public void setCurrentCourseID(int courseID) {
@@ -108,11 +107,6 @@ public class StudentView extends JFrame implements OurColours{
 	public int getStudentID()
 	{
 		return studentID;
-	}
-	
-	public int getCourseID()
-	{
-		return currentCourseID;
 	}
 	
 	/** Creates a JOptionPane which displays the message to the user.
@@ -151,6 +145,8 @@ public class StudentView extends JFrame implements OurColours{
 		JLabel welcomeLabel = new JLabel("Welcome, " + studentFirstName + " " + 
 										studentLastName + " ("+studentID+")");
 		welcomePanel.add(welcomeLabel);
+		welcomePanel.setForeground(FONT);
+		welcomePanel.setBackground(BACKGROUND);
 		grandPanel.add(bannerPanel);
 		grandPanel.add(welcomePanel);
 		homePanel.add(grandPanel, BorderLayout.NORTH);
@@ -163,36 +159,33 @@ public class StudentView extends JFrame implements OurColours{
 	private void createBanner(JPanel bannerPanel, String topMessage)
 	{
 		JLabel banner=new JLabel(topMessage);
-		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(FONTCOLOUR);
+//		banner.setBorder(BLACKBORDER);
+		banner.setFont(BIGFONT);
+		banner.setForeground(FONT);
 		bannerPanel.setOpaque(true);
 		bannerPanel.add(banner, JLabel.CENTER);
-		bannerPanel.setBackground(MAINCOLOUR);
+		bannerPanel.setBackground(BACKGROUND);
 	}
 	
 	/** Creates the center panel of the home page
 	 */
 	private void createHomeCenterPanel() {
 		JPanel grandPanel = new JPanel();
+		grandPanel.setBackground(BACKGROUND);
 		courseListModel = new DefaultListModel<String>();
 		courseJList = new JList<String>(courseListModel);
 		JScrollPane courseScrollPane = new JScrollPane(courseJList,
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		courseScrollPane.setPreferredSize(new Dimension(500, 300));
+		courseScrollPane.setPreferredSize(new Dimension(600, 350));
+		
 		
 		//Testing
-//		courseJList.addListSelectionListener(new ListSelectionListener() {
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				String[] testCourseInfo = 
-//						courseJList.getSelectedValue().split(", ");
-//				String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
-//										   "Assign 4", "Assign 5", "Assign 6"};
-//				createCourseDisplay(testCourseInfo, testAssignInfo);
-//				mainCards.show(container, "COURSE");
-//			}
-//		});
-		
+		courseJList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				mainCards.show(container, "COURSE");
+			}
+		});
 		
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
@@ -211,16 +204,25 @@ public class StudentView extends JFrame implements OurColours{
 	private void initializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSE");
-		grade = new JTextField();
+		grade = new JTextArea();
 		grade.setColumns(5);
-		uploadAssign = new JButton("UPLOAD ASSIGNMENT");
+		grade.setEditable(false);
+		uploadAssign = new JButton("SUBMIT TO DROPBOX");
+		
+		
+		setButtonLook(uploadAssign);
+		
+		
+		uploadAssign.setForeground(Color.white);
+		downloadAssign = new JButton("DOWNLOAD ASSIGNMENT");
 		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
+		returnHome = new JButton("HOME");
 		assignListModel = new DefaultListModel<String>();
 		assignJList = new JList<String>(assignListModel);
 		assignScrollPane = new JScrollPane(assignJList);
 		assignJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignJList.setVisibleRowCount(15);
-		assignJList.setFont(new Font("Courier New", Font.BOLD, 11));
+		assignJList.setFont(SMALLFONT);
 		coursePanel.add(assignScrollPane, BorderLayout.CENTER);
 	}
 
@@ -245,8 +247,11 @@ public class StudentView extends JFrame implements OurColours{
 		//Where courseInfo[0] is the course name
 		createBanner(bannerPanel, courseInfo[0]);
 		JPanel topButtons = new JPanel();
+		topButtons.setBackground(BACKGROUND);
+		topButtons.add(downloadAssign);
 		topButtons.add(uploadAssign);
 		topButtons.add(sendEmailToProff);
+		topButtons.add(returnHome);
 		grandPanel.add(bannerPanel);
 		grandPanel.add(topButtons);
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
@@ -260,8 +265,7 @@ public class StudentView extends JFrame implements OurColours{
 		JPanel bottomPanel = new JPanel();
 		JScrollPane assignScrollPane = new JScrollPane(assignJList,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		assignScrollPane.setPreferredSize(new Dimension(500,  300));
-		
+//		assignScrollPane.setPreferredSize(new Dimension(500,  300));
 		for(int i=0; i<assignInfo.length; i++) {
 			assignListModel.addElement(assignInfo[i]);
 		}
@@ -269,11 +273,11 @@ public class StudentView extends JFrame implements OurColours{
 		 * Listener for assignListModel should set the text of grade to
 		 * whatever the assignment grade is from database
 		 */
-		//Testing
 		
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
+		bottomPanel.setBackground(BACKGROUND);
 		grandPanel.add(assignScrollPane, BorderLayout.CENTER);
 		grandPanel.add(bottomPanel, BorderLayout.SOUTH);
 		coursePanel.add(grandPanel, BorderLayout.CENTER);
@@ -281,15 +285,70 @@ public class StudentView extends JFrame implements OurColours{
 	
 	
 	/** Finds and returns information about the selected assignment
-	 * @return a String array of the current coures ID and the assignment name
+	 * @return a String array of the current course ID and the assignment name
 	 */
 	public String[] getAssignmentInfo() {
-		String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
-		return assignInfo;
+		if(assignJList.getSelectedValue()!=null) {
+			String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
+			return assignInfo;
+		}
+		return null;
 	}
 	
+	public String [] sendingMail() {
+		/*	[0] is the studentID
+		 * 	[1] is the subject line
+		 * 	[2] is the email message
+		 */	
+		String[] theMail = new String[3];
+		JPanel emailPanel = new JPanel(new BorderLayout());
+		JTextField subject = new JTextField("Subject");
+		JTextArea messageA = new JTextArea("What do you want to say?");
+		JScrollPane mScrollPane = new JScrollPane(messageA);
+		mScrollPane.setVerticalScrollBarPolicy(
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);	
+		emailPanel.add(subject, BorderLayout.NORTH);
+		emailPanel.add(mScrollPane, BorderLayout.CENTER);
+		String[] buttons = {"SEND", "CANCEL"};
+		UIManager.put("OptionPane.minimumSize", new Dimension(500,500));
+		int result = JOptionPane.showOptionDialog(null, emailPanel, "Send an email",
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, 
+				null, buttons, null);
+		if(result == JOptionPane.YES_OPTION) {
+			theMail[0] = ""+studentID;
+			theMail[1] = subject.getText();
+			theMail[2] = messageA.getText();
+		}
+		else {
+			JOptionPane.getRootFrame().dispose();
+		}
+		UIManager.put("OptionPane.minimumSize", new Dimension(100,50));
+		return theMail;
+	}
+	
+	private void setButtonLook(JButton theButton) {
+		theButton.setBackground(FOREGROUND);
+		theButton.setFont(SMALLFONT);
+	}
+	
+	
+	/** Adds a list selection listener to the course JList
+	 * @param courseJList - the courseJList listener
+	 */
 	public void addHomeListener(ListSelectionListener courseJList) {
 		this.courseJList.addListSelectionListener(courseJList);
+	}
+	
+	/** Adds listeners onto their respective buttons and list
+	 * @param assignJList - the assignJList listener
+	 * @param uploadAssign - the uploadAssign listener
+	 * @param sendEmailToProff - the sendEmailToProff listener
+	 */
+	public void addCourseListeners(ListSelectionListener assignJList, 
+			ActionListener uploadAssign, ActionListener sendEmailToProff) {
+		this.assignJList.addListSelectionListener(assignJList);
+		this.uploadAssign.addActionListener(uploadAssign);
+		this.sendEmailToProff.addActionListener(sendEmailToProff);
 	}
 	
 	/**	Sets the default closing option of the overall JFrame
