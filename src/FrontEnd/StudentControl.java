@@ -16,7 +16,6 @@ public class StudentControl {
 		 sModel=model;
 		 sView=view;
 		 sView.addHomeListeners(new courseListener(), new GetCourseList());
-		 sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff());
 		 sView.setVisible(true);
 	}
 		
@@ -29,6 +28,7 @@ public class StudentControl {
 			String[] assignmentList=sModel.getAssignmentList(courseid);
 			System.out.println(assignmentList[0]);
 			sView.createCourseDisplay(courseinfo, assignmentList);
+			sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff());
 		}
 	}
 	

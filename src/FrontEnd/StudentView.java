@@ -230,26 +230,6 @@ public class StudentView extends JFrame implements OurStyle{
 	private void initializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSE");
-		grade = new JTextArea();
-		grade.setColumns(5);
-		grade.setEditable(false);
-		grade.setBorder(BORDER);
-		uploadAssign = new JButton("SUBMIT TO DROPBOX");
-		downloadAssign = new JButton("DOWNLOAD ASSIGNMENT");
-		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
-		returnHome = new JButton("HOME");
-		setButtonStyle(uploadAssign);
-		setButtonStyle(downloadAssign);
-		setButtonStyle(sendEmailToProff);
-		setButtonStyle(sendEmailToProff);
-		setButtonStyle(returnHome);
-		assignListModel = new DefaultListModel<String>();
-		assignJList = new JList<String>(assignListModel);
-		assignScrollPane = new JScrollPane(assignJList);
-		assignJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		assignJList.setVisibleRowCount(15);
-		assignJList.setFont(SMALLFONT);
-		coursePanel.add(assignScrollPane, BorderLayout.CENTER);
 	}
 
 	
@@ -273,9 +253,18 @@ public class StudentView extends JFrame implements OurStyle{
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
 		JPanel bannerPanel = new JPanel();
 		//Where courseInfo[0] is the course name
-		createBanner(bannerPanel, courseInfo[0]);
+		createBanner(bannerPanel, courseInfo[1]);
 		JPanel topButtons = new JPanel();
 		setOurStyle(topButtons);
+		uploadAssign = new JButton("SUBMIT TO DROPBOX");
+		downloadAssign = new JButton("DOWNLOAD ASSIGNMENT");
+		sendEmailToProff = new JButton("EMAIL PROFFESSOR");
+		returnHome = new JButton("HOME");
+		setButtonStyle(uploadAssign);
+		setButtonStyle(downloadAssign);
+		setButtonStyle(sendEmailToProff);
+		setButtonStyle(sendEmailToProff);
+		setButtonStyle(returnHome);
 		topButtons.add(downloadAssign);
 		topButtons.add(uploadAssign);
 		topButtons.add(sendEmailToProff);
@@ -291,17 +280,24 @@ public class StudentView extends JFrame implements OurStyle{
 	private void createCourseInnerPanel(String[] assignInfo) {
 		JPanel grandPanel = new JPanel(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
+		assignListModel = new DefaultListModel<String>();
+		assignJList = new JList<String>(assignListModel);
+		assignScrollPane = new JScrollPane(assignJList);
+		assignJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		assignJList.setVisibleRowCount(15);
+		assignJList.setFont(SMALLFONT);
+		coursePanel.add(assignScrollPane, BorderLayout.CENTER);
 		JScrollPane assignScrollPane = new JScrollPane(assignJList,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		for(int i=0; i<assignInfo.length; i++) {
 			assignListModel.addElement(assignInfo[i]);
 		}
-		/*
-		 * Listener for assignListModel should set the text of grade to
-		 * whatever the assignment grade is from database
-		 */
 		
 		JLabel gradeInfo = new JLabel("ASSIGNMENT GRADE: ");
+		grade = new JTextArea();
+		grade.setColumns(5);
+		grade.setEditable(false);
+		grade.setBorder(BORDER);
 		bottomPanel.add(gradeInfo);
 		bottomPanel.add(grade);
 		setOurStyle(bottomPanel);
