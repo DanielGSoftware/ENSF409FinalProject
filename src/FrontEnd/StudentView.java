@@ -92,8 +92,8 @@ public class StudentView extends JFrame implements OurStyle{
 		currentCourseID = courseID;
 	}
 	
-	public void setGrade(int theGrade) {
-		grade.setText(""+theGrade);
+	public void setGrade(int theGradeAsInt) {
+		grade.setText(""+theGradeAsInt);
 	}
 	
 	public int getCurrentCourseID() {
@@ -212,6 +212,10 @@ public class StudentView extends JFrame implements OurStyle{
 		homePanel.setVisible(true);
 	}
 	
+	public void hideGetCourseButton() {
+		getCourses.setVisible(false);
+	}
+	
 	private void createHomeBotPanel() {
 		JPanel grandPanel = new JPanel();
 		setOurStyle(grandPanel);
@@ -311,6 +315,7 @@ public class StudentView extends JFrame implements OurStyle{
 	 */
 	public String[] getAssignmentInfo() {
 		if(assignJList.getSelectedValue()!=null) {
+			// [0] is the courseID, [1] is the assign name
 			String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
 			return assignInfo;
 		}

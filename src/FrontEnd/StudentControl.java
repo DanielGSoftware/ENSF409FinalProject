@@ -35,6 +35,7 @@ public class StudentControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] listofcourses=sModel.getCourseList(sView.getStudentID());
 			sView.addCourses(listofcourses);
+			sView.hideGetCourseButton();
 		}
 	}
 	
@@ -85,6 +86,17 @@ public class StudentControl {
 				//add it to studentview
 			}
 		}
+	}
+	
+	class SelectedAssignment implements ListSelectionListener{
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			String[] assignInfo = sView.getAssignmentInfo();
+			//Where [1] is the assignment name
+			int grade = sModel.getAssignGrade(assignInfo);
+			sView.setGrade(grade);
+		}
+		
 	}
 	
 }
