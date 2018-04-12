@@ -88,6 +88,19 @@ public class StudentControl {
 		}
 	}
 	
+	class SelectedCourse implements ListSelectionListener
+	{
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			String[] courseInfo = sView.getCourseSelected();
+			//where [0] is the courseID as a string
+			String[] assignInfo = sModel.getAssignmentList(Integer.parseInt(courseInfo[0]));
+			sView.createCourseDisplay(courseInfo, assignInfo);
+		}
+		
+	}
+	
 	class SelectedAssignment implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {

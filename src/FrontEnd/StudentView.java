@@ -258,7 +258,7 @@ public class StudentView extends JFrame implements OurStyle{
 	 * @param courseInfo - the information of the course
 	 * @param assignInfo - the information of the assignments
 	 */
-	private void createCourseDisplay(String []courseInfo, String[] assignInfo) {
+	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
 		//Where courseInfo[1] is the courseID
 		setCurrentCourseID(Integer.parseInt(courseInfo[1]));
 		createCourseTopPanel(courseInfo);
@@ -310,6 +310,7 @@ public class StudentView extends JFrame implements OurStyle{
 	}
 	
 	
+	
 	/** Finds and returns information about the selected assignment
 	 * @return a String array of the current course ID and the assignment name
 	 */
@@ -320,6 +321,11 @@ public class StudentView extends JFrame implements OurStyle{
 			return assignInfo;
 		}
 		return null;
+	}
+	
+	public String[] getCourseSelected() {
+		String[] courseInfo = courseJList.getSelectedValue().split(";");
+		return courseInfo;
 	}
 	
 	public String [] sendingMail() {
