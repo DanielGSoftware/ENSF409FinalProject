@@ -64,7 +64,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		container.setLayout(mainCards);
 //		String[] info= {"1", "hello", "wow"};
 		setSize(700, 500);
-		setResizable(false);
+//		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
 		intitializeCourseDisplay();
@@ -199,12 +199,17 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
+		
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
 //		coursePanel = new JPanel(new BorderLayout());
 //		container.add(coursePanel, "COURSES");
 		currentCourseID = Integer.parseInt(courseInfo[0]);
+		if(viewStudents != null) {
+			container.remove(coursePanel);
+			intitializeCourseDisplay();
+		}
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(courseInfo);
 	}
@@ -349,24 +354,26 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public void viewHomePage() {
 		mainCards.show(container, "HOME");
-		studentJList.clearSelection();
-		courseJList.clearSelection();
+//		studentJList.clearSelection();
+//		courseJList.clearSelection();
+//		studentJList.setSelectedIndex(0);
+//		courseJList.setSelectedIndex(0);
 	}
 	
 	public void viewCoursesPage() {
-		int index=courseJList.getSelectedIndex();
-		String string=courseListModel.get(index);
-		String[] courseInfo=string.split(";");
-		createCourseDisplay(courseInfo);
+//		int index=courseJList.getSelectedIndex();
+//		String string=courseListModel.get(index);
+//		String deepCopyString = stringDeepCopy(string);
+//		String[] courseInfo=deepCopyString.split(";");
+//		createCourseDisplay(courseInfo);
 		mainCards.show(container, "COURSES");	
 	}
 	
-	public String[] getSelectedList()
-	{
-		String string=courseJList.getSelectedValue();
-		String[] strings=string.split(";");
-		System.out.println(string);
-		return strings;
+	public String[] getCourseInfo() {
+		int index = courseJList.getSelectedIndex();
+		String courseInfoAsOneLine = new String(courseListModel.get(index));
+		String[] courseInfo = courseInfoAsOneLine.split(";");
+		return courseInfo;
 	}
 	
 	public void updateStudentListDisplay(String[] students)

@@ -16,11 +16,11 @@ public class StudentControl {
 	public StudentControl(StudentModel model, StudentView view) {
 		 sModel=model;
 		 sView=view;
-		 sView.addHomeListeners(new courseListener(), new GetCourseList());
+		 sView.addHomeListeners(new SelectCourse(), new GetCourseList());
 		 sView.setVisible(true);
 	}
 		
-	class courseListener implements ListSelectionListener
+	class SelectCourse implements ListSelectionListener
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
@@ -29,8 +29,9 @@ public class StudentControl {
 			String[] assignmentList=sModel.getAssignmentList(courseid);
 			System.out.println(assignmentList[0]);
 			sView.createCourseDisplay(courseinfo, assignmentList);
-			sView.addCourseListeners(new ViewGradeForAssignment(), new UploadAssignment(), new SendEmailToProff(),
+			sView.addCourseListeners(new SelectAssignment(), new UploadAssignment(), new SendEmailToProff(),
 					new ReturnHome());
+			sView.goCoursePage();
 		}
 	}
 	
@@ -77,14 +78,14 @@ public class StudentControl {
 		}
 	}
 	
-	class ViewGradeForAssignment implements ListSelectionListener
+	class SelectAssignment implements ListSelectionListener
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			String[] assignInfo = sView.getAssignmentInfo();
 			int assignmentGrade=sModel.viewGradeForAssignment(assignInfo[1], 
 					Integer.parseInt(assignInfo[0]), sView.getStudentID());
-				sView.setGrade(assignmentGrade);
+			sView.setGrade(assignmentGrade);
 			}
 	}
 	
@@ -94,17 +95,6 @@ public class StudentControl {
 		public void actionPerformed(ActionEvent e) {
 			sView.goHome();
 		}
-	}
-	
-	class SelectedAssignment implements ListSelectionListener{
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			String[] assignInfo = sView.getAssignmentInfo();
-			//Where [1] is the assignment name
-			int grade = sModel.getAssignGrade(assignInfo);
-			sView.setGrade(grade);
-		}
-		
 	}
 	
 }

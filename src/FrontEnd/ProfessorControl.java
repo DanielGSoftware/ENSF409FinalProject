@@ -53,8 +53,8 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] a=pView.getSelectedList();
-			int courseid=Integer.parseInt(a[0]);
+			String[] courseInfo = pView.getCourseInfo();
+			int courseid = Integer.parseInt(courseInfo[0]);
 			String[] students=pModel.viewStudents(courseid);
 			pView.updateStudentListDisplay(students);
 			pView.viewStudentsPage();
@@ -120,6 +120,7 @@ public class ProfessorControl {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
+			pView.createCourseDisplay(pView.getCourseInfo());
 			pView.viewCoursesPage();
 			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
 					 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
@@ -134,8 +135,8 @@ public class ProfessorControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("courseactivestatus button hit in control class");
-			String[] course=pView.getSelectedList();
-			pModel.courseActive(course);
+			String[] courseInfo = pView.getCourseInfo();
+			pModel.courseActive(courseInfo);
 			pView.simpleMessage("Course Activation Status Sucessfully Changed. "
 								+ "Please hit browse courses to see changes");
 		}
@@ -177,8 +178,8 @@ public class ProfessorControl {
 			//add to search students button
 			System.out.println("Searching for McCree");
 			//some JOptionPane gives  student id and course id
-			String[] a=pView.getSelectedList();
-			int courseid=Integer.parseInt(a[0]);
+			String[] courseInfo = pView.getCourseInfo();
+			int courseid=Integer.parseInt(courseInfo[0]);
 			String string=null;
 			System.out.println(string);
 			System.out.println("This is the result in search parametter "+pView.getSearchParam().length());

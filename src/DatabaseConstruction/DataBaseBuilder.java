@@ -5,11 +5,8 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import com.mysql.jdbc.ServerPreparedStatement;
 
 public class DataBaseBuilder
 {
@@ -18,7 +15,7 @@ public class DataBaseBuilder
 	private String databaseName = "project";
 	private String connectionInfo = "jdbc:mysql://localhost:3306/project",  
 				  login          = "root",
-				  password       = "huzaifa147";
+				  password       = "Thisisaserver";
 	public int id=1000;
 	
 	public DataBaseBuilder()

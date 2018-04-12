@@ -12,6 +12,7 @@ import java.io.File;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -241,9 +242,12 @@ public class StudentView extends JFrame implements OurStyle{
 	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
 		//Where courseInfo[0] is the courseID
 		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
+		if(uploadAssign != null) {
+			container.remove(coursePanel);
+			initializeCourseDisplay();
+		}
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(assignInfo);
-		mainCards.show(container, "COURSE");
 	}
 	
 	/**	Sets the top panel of the course panel according to courseInfo
@@ -326,6 +330,14 @@ public class StudentView extends JFrame implements OurStyle{
 	public void goHome() {
 //		courseJList.clearSelection();
 		mainCards.show(container, "HOME");
+		container.setVisible(false);
+		container.setVisible(true);
+	}
+	
+	public void goCoursePage() {
+		mainCards.show(container, "COURSE");
+		container.setVisible(false);
+		container.setVisible(true);
 	}
 	
 	public String [] sendingMail() {
