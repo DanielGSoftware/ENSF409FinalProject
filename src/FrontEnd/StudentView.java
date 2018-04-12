@@ -313,6 +313,7 @@ public class StudentView extends JFrame implements OurStyle{
 	 */
 	public String[] getAssignmentInfo() {
 		String filename=assignJList.getSelectedValue();
+		System.out.println(filename);
 		String[] assignInfo = {""+currentCourseID, filename};
 		return assignInfo;
 	}

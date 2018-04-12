@@ -86,7 +86,7 @@ public class StudentControl {
 					Integer.parseInt(assignInfo[0]), sView.getStudentID());
 				sView.setGrade(assignmentGrade);
 			}
-		}
+	}
 	
 	class ReturnHome implements ActionListener 
 	{
