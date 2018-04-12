@@ -142,6 +142,10 @@ public class StudentModel extends MainModel {
 			flushAndReset(sendObject);
 			infoExchange=(InfoExchange) readObject.readObject();
 			assignmentList=infoExchange.getInfo();
+			if (assignmentList==null) {
+				assignmentList=new String[1];
+				assignmentList[0]="There are currently no active assignments";
+			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();

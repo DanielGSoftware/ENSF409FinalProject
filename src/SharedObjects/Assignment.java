@@ -85,8 +85,10 @@ public class Assignment implements Serializable {
 			statement.setString(2, filename);
 			assignment=statement.executeQuery();
 			if (assignment.next()) {
-				fileinfo[0]=assignment.getString("TITLE");
-				fileinfo[1]=assignment.getString("PATH");
+				if (assignment.getString("PATH").contains("sendToStudent")) {
+					fileinfo[0]=assignment.getString("TITLE");
+					fileinfo[1]=assignment.getString("PATH");
+				}
 			}
 		}
 		catch(SQLException e)
@@ -133,7 +135,9 @@ public class Assignment implements Serializable {
 			statement.setInt(1, courseid);
 			assignment=statement.executeQuery();
 			while (assignment.next()) {
-				assignmentList.add(assignment.getString("TITLE"));
+				if (assignment.getInt("ACTIVE")==1) {
+					assignmentList.add(assignment.getString("TITLE"));
+				}
 			}
 		}
 		catch(SQLException e)
@@ -141,10 +145,13 @@ public class Assignment implements Serializable {
 			e.printStackTrace();
 		}
 		
+		if (assignmentList.isEmpty()) {
+			return null;
+		}
+			
 		String[] temp=new String[assignmentList.size()];
 		for (int i=0; i<assignmentList.size(); i++) {
-			temp[i]=assignmentList.get(i);
-		}
+			temp[i]=assignmentList.get(i);			}
 		return temp;
 	}
 }

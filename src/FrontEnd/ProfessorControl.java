@@ -31,18 +31,11 @@ public class ProfessorControl {
 	
 	class EmailStudentListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			/**
-			 * emailinfo[0]=courseid
-			 * emailinfo[1]=subjectline
-			 * emailinfo[2]=emailmessage
-			 */
-			//!COURSE ACTIVATIONS STATUS MUST BE CHECKED SOMEHOW!
-			pModel.sendEmailToStudents();
+			String[] emailInfo=pView.sendingMail();
+			pModel.sendEmailToStudents(emailInfo);
 		}
-		
 	}
 	
 	class ViewAssignmentsListener implements ActionListener
@@ -51,7 +44,8 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Browsing all assingments in course");
 			String[] assignments=pModel.viewAssign(pView.getCourseID());
-			pView.viewAssignsPage(assignments);
+			pView.updateAssignListDisplay(assignments);
+			pView.viewAssignsPage();
 		}
 	}
 	
@@ -63,8 +57,8 @@ public class ProfessorControl {
 			int courseid=Integer.parseInt(a[0]);
 			String[] students=pModel.viewStudents(courseid);
 			pView.updateStudentListDisplay(students);
+			pView.viewStudentsPage();
 		}
-		
 	}
 	
 	class UploadAssignmentListener implements ActionListener
@@ -92,13 +86,11 @@ public class ProfessorControl {
 	
 	class ViewSubmissionsListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
-		
 	}
 	
 	class ReturnHomeListener implements ActionListener
@@ -111,8 +103,6 @@ public class ProfessorControl {
 		}
 		
 	}
-	
-	
 	
 	class ViewCourseListener implements ActionListener
 	{

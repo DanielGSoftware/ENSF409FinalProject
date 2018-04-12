@@ -124,22 +124,17 @@ public class DataBaseManager implements Runnable {
 					flushAndReset(writeobject);
 				}
 				
-//				else if (string.equals("View Assignment Proff"))
-//				{
-//					Assignment assignment= (Assignment) readobject.readObject();
-//					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
-//					infoExchange.setInfo(result);
-//					int numassignments=assignment.numberOfAssignmentsWithID(ASSIGNMENTTABLE, jdbc_connection, statement);
-//					
-//					for (int i=0; i<numassignments; i++) {
-//						String[] fileinfo=assignment.downloadAssignmentProff(ASSIGNMENTTABLE, jdbc_connection, statement);
-//						FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
-//						fileHandler.downloadAssignmentsToProff();
-//					}
-//					 
-//					writeobject.writeObject(infoExchange);
-//					flushAndReset(writeobject);
-//				}
+				else if (string.equals("View Assignment Proff"))
+				{
+					Assignment assignment= (Assignment) readobject.readObject();
+					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(result);
+					System.out.println(result[0]);
+					System.out.println(result[1]);
+					System.out.println(result[2]);
+					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
+				}
 				
 				else if (string.equals("Download All Assignments into Proff Folder"))
 				{
@@ -168,15 +163,6 @@ public class DataBaseManager implements Runnable {
 					FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
 					fileHandler.downloadAssignmentToStudent();
 				}
-				
-//				else if(string.equals("View Assignment Grade"))
-//				{
-//					System.out.println("Viewing assignment grade for student");
-//					
-//					//just get [0] be the grade
-//					String[] assignInfo = null;
-//					infoExchange.setInfo(assignInfo);
-//				}
 				
 				else if (string.equals("Get List of Courses Student"))
 				{
@@ -215,17 +201,15 @@ public class DataBaseManager implements Runnable {
 				
 				else if (string.equals("Send Email to all Students Enrolled in Course"))
 				{
-					StudentEnrollment studentEnrollment=new StudentEnrollment(-1, -1, 1070);
+					String[] emailInfo=infoExchange.getInfo();
+					StudentEnrollment studentEnrollment=new StudentEnrollment(-1, -1, Integer.parseInt(emailInfo[0]));
 					int[] studentids=studentEnrollment.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
-					//below 1030 is proffs (winstons) id
-					User user=new User(1030, null, null, null, null, "P");
+					User user=new User(Integer.parseInt(emailInfo[3]), null, null, null, null, "P");
 					String[] emailinfoproff=user.getEmailInfoProff(USERTABLE, jdbc_connection, statement);
 					for (int i=0; i<studentids.length; i++) {
 						user=new User(studentids[i], null, null, null, null, "S");
 						String[] emailofstudent=user.getEmailInfoStudent(USERTABLE, jdbc_connection, statement);
-						//below: first 2 are proff info, so emailinfoproff[0] and [1]
-						//last 3 are emailofstudent[0] and from infoExchange's string array
-						EmailHandler emailHandler=new EmailHandler("qazfugioshi@gmail.com", "DanielGee", "shehrozn1@gmail.com", "SubjectLine", "OOGA BOOGA");
+						EmailHandler emailHandler=new EmailHandler(emailinfoproff[0], emailinfoproff[1], emailofstudent[0], emailInfo[1], emailInfo[2]);
 						emailHandler.createEmail();
 					}
 				}

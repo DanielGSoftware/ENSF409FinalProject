@@ -237,6 +237,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	private void createCourseInnerPanel(String[] courseInfo) {
+		courseInnerCards = new CardLayout();
+		courseInnerPanel = new JPanel(courseInnerCards);
 		JPanel courseStudentPanel = new JPanel(new BorderLayout());
 		JPanel courseAssignPanel = new JPanel(new BorderLayout());
 		//where [0] is the course ID
@@ -245,6 +247,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		
 		courseInnerPanel.add(courseStudentPanel, "STUDENTS");
 		courseInnerPanel.add(courseAssignPanel, "ASSIGNMENTS");
+
 		courseAssignPanel.add(assignScrollPane, BorderLayout.CENTER);
 		courseStudentPanel.add(studentScrollPane, BorderLayout.CENTER);
 		
@@ -258,8 +261,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	public JScrollPane createStudentScrollPane(String id) {
-		courseInnerCards = new CardLayout();
-		courseInnerPanel = new JPanel(courseInnerCards);
 		studentListModel=new DefaultListModel<String>();
 		studentListModel.addElement(id);
 		studentJList=new JList<String>(studentListModel);
@@ -333,15 +334,17 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	public void viewStudentsPage() {
+		courseInnerPanel.setVisible(false);
 		courseInnerCards.show(courseInnerPanel, "STUDENTS");
+//		courseInnerPanel.setVisible(false);
+		courseInnerPanel.setVisible(true);
 	}
 	
-	public void viewAssignsPage(String[] assignments) {
-		//assignmentJModel.removeAllElements();
-		for (int i=0; i<assignments.length; i++) {
-			assignListModel.addElement(assignments[i]);
-		}
+	public void viewAssignsPage() {
+		courseInnerPanel.setVisible(false);
 		courseInnerCards.show(courseInnerPanel, "ASSIGNMENTS");
+//		courseInnerPanel.setVisible(false);
+		courseInnerPanel.setVisible(true);
 	}
 	
 	public void viewHomePage() {
@@ -379,6 +382,9 @@ public class ProfessorView extends JFrame implements OurStyle{
 	public void updateAssignListDisplay(String[] assigns) {
 		assignmentJList.setVisible(false);
 		assignListModel.removeAllElements();
+		System.out.println(assigns[0]);
+		System.out.println(assigns[1]);
+		System.out.println(assigns[2]);
 		for (int i=0; i<assigns.length; i++) {
 			assignListModel.addElement(assigns[i]);
 		}
@@ -405,22 +411,17 @@ public class ProfessorView extends JFrame implements OurStyle{
 //		return content;
 		return selectedFile;
 	}
-	
-//	public String[] EnrollStudentJOptionPane()					// commented out for errors
-//	{
-//		
-//	}
-	
+
 	/** Gives the user a pop-up where they can enter their email contents.
 	 * @return a String array which contains the professor ID, subject, and 
 	 * 		   email message.
 	 */
 	public String [] sendingMail() {
-		/*	[0] is the proffID
+		/*	[0] is the courseID
 		 * 	[1] is the subject line
 		 * 	[2] is the email message
 		 */	
-		String[] theMail = new String[3];
+		String[] theMail = new String[4];
 		JPanel emailPanel = new JPanel(new BorderLayout());
 		JTextField subject = new JTextField("Subject");
 		JTextArea messageA = new JTextArea("What do you want to say?");
@@ -435,9 +436,10 @@ public class ProfessorView extends JFrame implements OurStyle{
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, 
 				null, buttons, null);
 		if(result == JOptionPane.YES_OPTION) {
-			theMail[0] = ""+proffID;
+			theMail[0] = ""+currentCourseID;
 			theMail[1] = subject.getText();
 			theMail[2] = messageA.getText();
+			theMail[3]=""+proffID;
 		}
 		else {
 			JOptionPane.getRootFrame().dispose();

@@ -195,10 +195,11 @@ public class ProfessorModel extends MainModel {
 		return strings;
 	}
 	
-	public void sendEmailToStudents()
+	public void sendEmailToStudents(String[] emailInfo)
 	{
 		//infoexchange will 
 		InfoExchange infoExchange=new InfoExchange("Send Email to all Students Enrolled in Course");
+		infoExchange.setInfo(emailInfo);
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
