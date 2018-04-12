@@ -206,7 +206,6 @@ public class DataBaseManager implements Runnable {
 				
 				else if (string.equals("Send Email to all Students Enrolled in Course"))
 				{
-					System.out.println("Now sending some email");
 					StudentEnrollment studentEnrollment=new StudentEnrollment(-1, -1, 1070);
 					int[] studentids=studentEnrollment.viewStudents(STUDENTENROLLMENTTABLE, jdbc_connection, statement);
 					//below 1030 is proffs (winstons) id
@@ -233,6 +232,15 @@ public class DataBaseManager implements Runnable {
 					Grade grade=(Grade) readobject.readObject();
 					String[] assignmentGrade=grade.viewStudentGrade(GRADETABLE, jdbc_connection, statement);
 					infoExchange.setInfo(assignmentGrade);
+					writeobject.writeObject(infoExchange);
+					flushAndReset(writeobject);
+				}
+				
+				else if (string.equals("Get list of Assignments Student"))
+				{
+					Assignment assignment=(Assignment) readobject.readObject();
+					String[] assignmentList=assignment.getAssignmentList(ASSIGNMENTTABLE, jdbc_connection, statement);
+					infoExchange.setInfo(assignmentList);
 					writeobject.writeObject(infoExchange);
 					flushAndReset(writeobject);
 				}

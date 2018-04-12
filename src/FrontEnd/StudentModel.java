@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import SharedObjects.Assignment;
 import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
@@ -85,7 +87,7 @@ public class StudentModel extends MainModel {
 	
 	public int viewGradeForAssignment()
 	{
-		InfoExchange infoExchange=new InfoExchange("Getting Grade for Student");
+		InfoExchange infoExchange=new InfoExchange("View Grades-Student");
 		String filename="Assignment1.txt";
 		int courseid=1070;
 		int studentid=1000;
@@ -107,6 +109,28 @@ public class StudentModel extends MainModel {
 			e.printStackTrace();
 		}
 		return assignmentGrade;
+	}
+	
+	public String[] getAssignmentList(int courseid)
+	{
+		InfoExchange infoExchange=new InfoExchange("Get list of Assignments Student");
+		Assignment assignment=new Assignment(courseid, null, null);
+		String[] assignmentList=null;
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
+			flushAndReset(sendObject);
+			infoExchange=(InfoExchange) readObject.readObject();
+			assignmentList=infoExchange.getInfo();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return assignmentList;
 	}
 	
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {

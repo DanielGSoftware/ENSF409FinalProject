@@ -122,4 +122,30 @@ public class Assignment implements Serializable {
 		}
 		return temp;
 	}
+	
+	public String[] getAssignmentList(String table, Connection jdbc_connection, PreparedStatement statement)
+	{
+		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ?";
+		ArrayList<String> assignmentList = new ArrayList<String>();
+		ResultSet assignment;
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, courseid);
+			statement.setString(2, filename);
+			assignment=statement.executeQuery();
+			while (assignment.next()) {
+				assignmentList.add(assignment.getString("TITLE"));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		String[] temp=new String[assignmentList.size()];
+		for (int i=0; i<assignmentList.size(); i++) {
+			temp[i]=assignmentList.get(i);
+		}
+		return temp;
+	}
 }

@@ -18,14 +18,14 @@ public class StudentControl {
 		 sView.addHomeListeners(new courseListener(), new GetCourseList());
 		 sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff());
 		 sView.setVisible(true);
-		// sModel.downloadAssignment("TrialSendingToStudents.txt", 1070);
 	}
-	
+		
 	class courseListener implements ListSelectionListener
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			
+			String[] assignmentList=sModel.getAssignmentList(1070);
 		}
 	}
 	
