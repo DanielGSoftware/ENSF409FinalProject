@@ -29,7 +29,7 @@ public class StudentControl {
 			String[] assignmentList=sModel.getAssignmentList(courseid);
 			System.out.println(assignmentList[0]);
 			sView.createCourseDisplay(courseinfo, assignmentList);
-			sView.addCourseListeners(new SelectedAssignment(), new UploadAssignment(), new SendEmailToProff(),
+			sView.addCourseListeners(new ViewGradeForAssignment(), new UploadAssignment(), new SendEmailToProff(),
 					new ReturnHome());
 		}
 	}
