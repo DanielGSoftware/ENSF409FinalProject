@@ -190,6 +190,12 @@ public class StudentView extends JFrame implements OurStyle{
 		courseJList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				/*
+				 * getselectedvalue split ; 
+				 * setcourseid = split[0]
+				 * createcoursedisplay(split[1], )
+				 */
+//				createCourseDisplay(testCourseInfo, testAssignInfo);
 				mainCards.show(container, "COURSE");
 			}
 		});
