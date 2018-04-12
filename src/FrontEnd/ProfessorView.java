@@ -356,9 +356,18 @@ public class ProfessorView extends JFrame implements OurStyle{
 	public void viewCoursesPage() {
 		int index=courseJList.getSelectedIndex();
 		String string=courseListModel.get(index);
-		String[] courseInfo=string.split(";");
+		String deepCopyString = stringDeepCopy(string);
+		String[] courseInfo=deepCopyString.split(";");
 		createCourseDisplay(courseInfo);
 		mainCards.show(container, "COURSES");	
+	}
+	
+	private String stringDeepCopy(String original) {									////a///
+		String deepCopy = "";
+		for(int i=0; i<original.length(); i++) {
+			deepCopy += original.charAt(i);
+		}
+		return deepCopy;
 	}
 	
 	public String[] getSelectedList()
