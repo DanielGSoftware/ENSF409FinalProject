@@ -109,11 +109,9 @@ public class StudentModel extends MainModel {
 	public int viewGradeForAssignment(String filename, int courseid, int studentid)
 	{
 		InfoExchange infoExchange=new InfoExchange("View Grades-Student");
-//		String filename="Assignment1.txt";
-//		int courseid=1070;
-//		int studentid=1000;
+		System.out.println(filename);
 		int assignmentGrade=0;
-		Grade grade=new Grade(filename, courseid, studentid, -1);
+		Grade grade=new Grade(filename, studentid, courseid, -1);
 		try {
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);

@@ -258,6 +258,26 @@ public class DataBaseBuilder
 		}
 	}
 	
+	public void fillGradeTable()
+	{
+		String sql = "INSERT INTO Grade_Table" +
+				" VALUES ( ?, ?, ?, ?, ?)";
+		try{
+			statement = jdbc_connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.setString(2, "TrialSendingToStudents.txt");
+			statement.setInt(3, 1000);
+			statement.setInt(4, 1070);
+			statement.setInt(5, 80);
+			statement.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		id+=10;
+	}
+	
 	public void fillAssignmentTable(String filename)
 	{
 			try{
@@ -308,5 +328,7 @@ public class DataBaseBuilder
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
 		dataBaseBuilder.fillAssignmentTable("Assignment2.txt");
+		dataBaseBuilder.fillGradeTable();
+
 	}
 }

@@ -84,15 +84,9 @@ public class StudentControl {
 			String[] assignInfo = sView.getAssignmentInfo();
 			int assignmentGrade=sModel.viewGradeForAssignment(assignInfo[1], 
 					Integer.parseInt(assignInfo[0]), sView.getStudentID());
-			if (assignmentGrade==0) {
-				System.out.println("Error: when tryna get student grades, "
-						+ "database connection returned null");
-			}
-			else {
 				sView.setGrade(assignmentGrade);
 			}
 		}
-	}
 	
 	class ReturnHome implements ActionListener 
 	{

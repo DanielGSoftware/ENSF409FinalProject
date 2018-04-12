@@ -44,17 +44,20 @@ public class Grade implements Serializable {
 	
 	public String[] viewStudentGrade(String gradetable, Connection jdbc_connection, PreparedStatement statement)
 	{
-		String sql= "SELECT * FROM " +gradetable+ " WHERE ASSIGNMENT_NAME = ? AND STUDENT_ID = ? AND COURSE_ID = ?";
+		String sql= "SELECT * FROM " +gradetable+ " WHERE STUDENT_ID = ? AND COURSE_ID = ?";
 		ResultSet object=null;
 		String[] assignmentGrade=new String[1];
+		System.out.println("Tryna get student grades");
+		System.out.println(assignName);
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
-			statement.setString(1, assignName);
-			statement.setInt(2, studentId);
-			statement.setInt(3, courseId);
+			statement.setInt(1, studentId);
+			statement.setInt(2, courseId);
 			object=statement.executeQuery();
 			if (object.next()) {
+				System.out.println("resultset object for viewing students grades has picked something up");
 				assignmentGrade[0]=""+object.getInt("ASSIGNMENT_GRADE");
+				System.out.println(assignmentGrade[0]);
 			}
 		}
 		catch(SQLException e)
