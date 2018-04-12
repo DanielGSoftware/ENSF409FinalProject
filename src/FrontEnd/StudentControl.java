@@ -77,18 +77,19 @@ public class StudentControl {
 		}
 	}
 	
-	class ViewGradeForAssignment implements ActionListener
+	class ViewGradeForAssignment implements ListSelectionListener
 	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			//paramters should be filename, courseid, studentid
-			int assignmentGrade=sModel.viewGradeForAssignment();
+		public void valueChanged(ListSelectionEvent e) {
+			String[] assignInfo = sView.getAssignmentInfo();
+			int assignmentGrade=sModel.viewGradeForAssignment(assignInfo[1], 
+					Integer.parseInt(assignInfo[0]), sView.getStudentID());
 			if (assignmentGrade==0) {
 				System.out.println("Error: when tryna get student grades, "
 						+ "database connection returned null");
 			}
 			else {
-				//add it to studentview
+				sView.setGrade(assignmentGrade);
 			}
 		}
 	}

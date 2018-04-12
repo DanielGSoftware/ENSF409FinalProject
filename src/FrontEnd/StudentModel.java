@@ -106,12 +106,12 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
-	public int viewGradeForAssignment()
+	public int viewGradeForAssignment(String filename, int courseid, int studentid)
 	{
 		InfoExchange infoExchange=new InfoExchange("View Grades-Student");
-		String filename="Assignment1.txt";
-		int courseid=1070;
-		int studentid=1000;
+//		String filename="Assignment1.txt";
+//		int courseid=1070;
+//		int studentid=1000;
 		int assignmentGrade=0;
 		Grade grade=new Grade(filename, courseid, studentid, -1);
 		try {
