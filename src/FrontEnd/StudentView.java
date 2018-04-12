@@ -326,7 +326,7 @@ public class StudentView extends JFrame implements OurStyle{
 	}
 	
 	public void goHome() {
-		courseJList.clearSelection();
+//		courseJList.clearSelection();
 		mainCards.show(container, "HOME");
 	}
 	
