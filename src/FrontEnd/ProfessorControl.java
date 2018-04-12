@@ -120,6 +120,7 @@ public class ProfessorControl {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
+			pView.createCourseDisplay(pView.getCourseInfo());
 			pView.viewCoursesPage();
 			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
 					 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 

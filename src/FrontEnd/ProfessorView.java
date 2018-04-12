@@ -199,6 +199,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
+		
 	}
 	
 	public void createCourseDisplay(String [] courseInfo) {
@@ -349,23 +350,33 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public void viewHomePage() {
 		mainCards.show(container, "HOME");
-		studentJList.clearSelection();
-		courseJList.clearSelection();
+//		studentJList.clearSelection();
+//		courseJList.clearSelection();
+		studentJList.setSelectedIndex(0);
+		courseJList.setSelectedIndex(0);
 	}
 	
 	public void viewCoursesPage() {
-		int index=courseJList.getSelectedIndex();
-		String string=courseListModel.get(index);
-		String deepCopyString = stringDeepCopy(string);
-		String[] courseInfo=deepCopyString.split(";");
-		createCourseDisplay(courseInfo);
+//		int index=courseJList.getSelectedIndex();
+//		String string=courseListModel.get(index);
+//		String deepCopyString = stringDeepCopy(string);
+//		String[] courseInfo=deepCopyString.split(";");
+//		createCourseDisplay(courseInfo);
 		mainCards.show(container, "COURSES");	
 	}
 	
-	private String stringDeepCopy(String original) {									////a///
+	public String[] getCourseInfo() {
+		int index = courseJList.getSelectedIndex();
+		String courseInfoAsOneLine = stringDeepCopy(courseListModel.get(index));
+		String[] courseInfo = courseInfoAsOneLine.split(";");
+		return courseInfo;
+	}
+	
+	private String stringDeepCopy(String original) {									////a////
 		String deepCopy = "";
-		for(int i=0; i<original.length(); i++) {
-			deepCopy += original.charAt(i);
+		char[] deeperCopy = original.toCharArray();
+		for(int i=0; i<deeperCopy.length; i++) {
+			deepCopy += deeperCopy[i];
 		}
 		return deepCopy;
 	}

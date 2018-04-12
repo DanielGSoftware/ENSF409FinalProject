@@ -18,7 +18,7 @@ public class DataBaseBuilder
 	private String databaseName = "project";
 	private String connectionInfo = "jdbc:mysql://localhost:3306/project",  
 				  login          = "root",
-				  password       = "huzaifa147";
+				  password       = "Thisisaserver";
 	public int id=1000;
 	
 	public DataBaseBuilder()
