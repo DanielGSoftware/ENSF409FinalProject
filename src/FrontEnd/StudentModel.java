@@ -37,6 +37,27 @@ public class StudentModel extends MainModel {
 		return courselist;
 	}
 	
+	//DANIELS
+	public int getAssignGrade(String [] assignInfo) {
+		InfoExchange infoExchange = new InfoExchange("View Grades-Student");
+		// [0] is the course ID, [1] is the name, [2] would be path, it it is null
+		Assignment assignment = new Assignment(Integer.parseInt(assignInfo[0]), assignInfo[1], null);
+		try {
+			sendObject.writeObject(infoExchange);
+			flushAndReset(sendObject);
+			sendObject.writeObject(assignment);
+			flushAndReset(sendObject);
+//			infoExchange = (InfoExchange) readObject.readObject();
+			Grade grade = (Grade)readObject.readObject(); 
+		} catch (IOException e) {
+			System.out.println("Error: Could not find grade for assignemnt");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error: Could not create InfoExchange object");
+		}
+		//Where info[0] is the grade as a string
+		return Integer.parseInt(infoExchange.getInfo()[0]);
+	}
+	
 	public void sendEmailToProff(int courseid, String[] message)
 	{
 		InfoExchange infoExchange=new InfoExchange("Send an Email to the Proff");
@@ -73,7 +94,7 @@ public class StudentModel extends MainModel {
 	
 	public void uploadAssignment(int courseid, String filename, String path)
 	{
-		InfoExchange infoExchange=new InfoExchange("Upload Assignment");
+		InfoExchange infoExchange=new InfoExchange("Student Uploading");
 		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
 			sendObject.writeObject(infoExchange);

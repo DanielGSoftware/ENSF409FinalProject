@@ -27,7 +27,7 @@ public class DataBaseManager implements Runnable {
 	private Connection jdbc_connection;
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 						 LOGIN          = "root",
-						 PASSWORD       = "huzaifa147";
+						 PASSWORD       = "Thisisaserver";
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
@@ -168,6 +168,15 @@ public class DataBaseManager implements Runnable {
 					FileHandler fileHandler=new FileHandler(fileinfo[0], fileinfo[1]);
 					fileHandler.downloadAssignmentToStudent();
 				}
+				
+//				else if(string.equals("View Assignment Grade"))
+//				{
+//					System.out.println("Viewing assignment grade for student");
+//					
+//					//just get [0] be the grade
+//					String[] assignInfo = null;
+//					infoExchange.setInfo(assignInfo);
+//				}
 				
 				else if (string.equals("Get List of Courses Student"))
 				{

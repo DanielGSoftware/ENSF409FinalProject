@@ -92,8 +92,8 @@ public class StudentView extends JFrame implements OurStyle{
 		currentCourseID = courseID;
 	}
 	
-	public void setGrade(int theGrade) {
-		grade.setText(""+theGrade);
+	public void setGrade(int theGradeAsInt) {
+		grade.setText(""+theGradeAsInt);
 	}
 	
 	public int getCurrentCourseID() {
@@ -190,6 +190,12 @@ public class StudentView extends JFrame implements OurStyle{
 		courseJList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				/*
+				 * getselectedvalue split ; 
+				 * setcourseid = split[0]
+				 * createcoursedisplay(split[1], )
+				 */
+//				createCourseDisplay(testCourseInfo, testAssignInfo);
 				mainCards.show(container, "COURSE");
 			}
 		});
@@ -204,6 +210,10 @@ public class StudentView extends JFrame implements OurStyle{
 			courseListModel.addElement(courses[i]);
 		}
 		homePanel.setVisible(true);
+	}
+	
+	public void hideGetCourseButton() {
+		getCourses.setVisible(false);
 	}
 	
 	private void createHomeBotPanel() {
@@ -248,7 +258,7 @@ public class StudentView extends JFrame implements OurStyle{
 	 * @param courseInfo - the information of the course
 	 * @param assignInfo - the information of the assignments
 	 */
-	private void createCourseDisplay(String []courseInfo, String[] assignInfo) {
+	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
 		//Where courseInfo[1] is the courseID
 		setCurrentCourseID(Integer.parseInt(courseInfo[1]));
 		createCourseTopPanel(courseInfo);
@@ -300,15 +310,22 @@ public class StudentView extends JFrame implements OurStyle{
 	}
 	
 	
+	
 	/** Finds and returns information about the selected assignment
 	 * @return a String array of the current course ID and the assignment name
 	 */
 	public String[] getAssignmentInfo() {
 		if(assignJList.getSelectedValue()!=null) {
+			// [0] is the courseID, [1] is the assign name
 			String[] assignInfo = {""+currentCourseID, assignJList.getSelectedValue()};
 			return assignInfo;
 		}
 		return null;
+	}
+	
+	public String[] getCourseSelected() {
+		String[] courseInfo = courseJList.getSelectedValue().split(";");
+		return courseInfo;
 	}
 	
 	public String [] sendingMail() {
