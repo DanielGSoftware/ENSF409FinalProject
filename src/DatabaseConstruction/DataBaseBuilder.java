@@ -281,10 +281,6 @@ public class DataBaseBuilder
 	public void fillAssignmentTable(String filename)
 	{
 			try{
-				//Scanner sc = new Scanner(new FileReader(filename));
-				//while(sc.hasNext())
-				//{
-					//String string[] = sc.nextLine().split(";");
 					String sql = "INSERT INTO Assignment_Table" +
 							" VALUES ( ?, ?, ?, ?, ?, ?)";
 					try{
