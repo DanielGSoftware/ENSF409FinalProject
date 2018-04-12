@@ -131,7 +131,6 @@ public class Assignment implements Serializable {
 		try{
 			statement = jdbc_connection.prepareStatement(sql);
 			statement.setInt(1, courseid);
-			statement.setString(2, filename);
 			assignment=statement.executeQuery();
 			while (assignment.next()) {
 				assignmentList.add(assignment.getString("TITLE"));

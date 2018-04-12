@@ -24,8 +24,11 @@ public class StudentControl {
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			
-			String[] assignmentList=sModel.getAssignmentList(1070);
+			String[] courseinfo=sView.getCourseSelected();
+			int courseid=Integer.parseInt(courseinfo[0]);
+			String[] assignmentList=sModel.getAssignmentList(courseid);
+			System.out.println(assignmentList[0]);
+			sView.createCourseDisplay(courseinfo, assignmentList);
 		}
 	}
 	
@@ -88,18 +91,18 @@ public class StudentControl {
 		}
 	}
 	
-	class SelectedCourse implements ListSelectionListener
-	{
-
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			String[] courseInfo = sView.getCourseSelected();
-			//where [0] is the courseID as a string
-			String[] assignInfo = sModel.getAssignmentList(Integer.parseInt(courseInfo[0]));
-			sView.createCourseDisplay(courseInfo, assignInfo);
-		}
-		
-	}
+//	class SelectedCourse implements ListSelectionListener
+//	{
+//
+//		@Override
+//		public void valueChanged(ListSelectionEvent e) {
+//			String[] courseInfo = sView.getCourseSelected();
+//			//where [0] is the courseID as a string
+//			String[] assignInfo = sModel.getAssignmentList(Integer.parseInt(courseInfo[0]));
+//			sView.createCourseDisplay(courseInfo, assignInfo);
+//		}
+//		
+//	}
 	
 	class SelectedAssignment implements ListSelectionListener{
 		@Override

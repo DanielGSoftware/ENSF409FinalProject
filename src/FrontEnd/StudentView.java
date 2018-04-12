@@ -81,10 +81,10 @@ public class StudentView extends JFrame implements OurStyle{
 		initializeCourseDisplay();
 		
 		//Testing
-		String[] testCourseInfo = {"ENCM369", "1070"};
-		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
-								   "Assign 4", "Assign 5", "Assign 6"};
-		createCourseDisplay(testCourseInfo, testAssignInfo);
+//		String[] testCourseInfo = {"ENCM369", "1070"};
+//		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
+//								   "Assign 4", "Assign 5", "Assign 6"};
+//		createCourseDisplay(testCourseInfo, testAssignInfo);
 //		mainCards.show(container, "COURSE");
 	}
 	
@@ -187,18 +187,18 @@ public class StudentView extends JFrame implements OurStyle{
 		courseJList.setFont(SMALLFONT);
 		
 		//Testing
-		courseJList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				/*
-				 * getselectedvalue split ; 
-				 * setcourseid = split[0]
-				 * createcoursedisplay(split[1], )
-				 */
-//				createCourseDisplay(testCourseInfo, testAssignInfo);
-				mainCards.show(container, "COURSE");
-			}
-		});
+//		courseJList.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				/*
+//				 * getselectedvalue split ; 
+//				 * setcourseid = split[0]
+//				 * createcoursedisplay(split[1], )
+//				 */
+////				createCourseDisplay(testCourseInfo, testAssignInfo);
+//				mainCards.show(container, "COURSE");
+//			}
+//		});
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
@@ -259,10 +259,11 @@ public class StudentView extends JFrame implements OurStyle{
 	 * @param assignInfo - the information of the assignments
 	 */
 	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
-		//Where courseInfo[1] is the courseID
-		setCurrentCourseID(Integer.parseInt(courseInfo[1]));
+		//Where courseInfo[0] is the courseID
+		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		createCourseTopPanel(courseInfo);
 		createCourseInnerPanel(assignInfo);
+		mainCards.show(container, "COURSE");
 	}
 	
 	/**	Sets the top panel of the course panel according to courseInfo
