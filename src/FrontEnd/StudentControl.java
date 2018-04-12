@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.Action;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -28,7 +29,7 @@ public class StudentControl {
 			String[] assignmentList=sModel.getAssignmentList(courseid);
 			System.out.println(assignmentList[0]);
 			sView.createCourseDisplay(courseinfo, assignmentList);
-			sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff());
+			sView.addCourseListeners(new courseListener(), new UploadAssignment(), new SendEmailToProff(), new ReturnHome());
 		}
 	}
 	
@@ -88,6 +89,14 @@ public class StudentControl {
 			else {
 				//add it to studentview
 			}
+		}
+	}
+	
+	class ReturnHome implements ActionListener 
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			sView.goHome();
 		}
 	}
 	

@@ -325,6 +325,10 @@ public class StudentView extends JFrame implements OurStyle{
 		return courseInfo;
 	}
 	
+	public void goHome() {
+		mainCards.show(container, "HOME");
+	}
+	
 	public String [] sendingMail() {
 		/*	[0] is the studentID
 		 * 	[1] is the subject line
@@ -390,10 +394,12 @@ public class StudentView extends JFrame implements OurStyle{
 	 * @param sendEmailToProff - the sendEmailToProff listener
 	 */
 	public void addCourseListeners(ListSelectionListener assignJList, 
-			ActionListener uploadAssign, ActionListener sendEmailToProff) {
+			ActionListener uploadAssign, ActionListener sendEmailToProff,
+			ActionListener returnHome) {
 		this.assignJList.addListSelectionListener(assignJList);
 		this.uploadAssign.addActionListener(uploadAssign);
 		this.sendEmailToProff.addActionListener(sendEmailToProff);
+		this.returnHome.addActionListener(returnHome);
 	}
 	
 	/**	Sets the default closing option of the overall JFrame
