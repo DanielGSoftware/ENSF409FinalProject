@@ -8,16 +8,35 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * Builds a database
+ * @author Huzaifa Amar and Daniel Guieb
+ *
+ */
 public class DataBaseBuilder
 {
+	/**
+	 * the connection to the database
+	 */
 	private Connection jdbc_connection;
+	/**
+	 * statment to allow operations with the database
+	 */
 	private PreparedStatement statement;
-	private String databaseName = "project";
+	/**
+	 * strings of information
+	 */
 	private String connectionInfo = "jdbc:mysql://localhost:3306/project",  
 				  login          = "root",
 				  password       = "huzaifa147";
+	/**
+	 * an id which allows for unique id's for all tables
+	 */
 	public int id=1000;
 	
+	/**
+	 * establishes connection to pree-existing database
+	 */
 	public DataBaseBuilder()
 	{
 		try{
@@ -30,6 +49,10 @@ public class DataBaseBuilder
 		catch(Exception e) { e.printStackTrace(); }
 	}
 	
+	/**
+	 * Create User Table
+	 * @param tablename name of table
+	 */
 	public void createUserTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
@@ -51,6 +74,10 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Fill User Table with info from textfile
+	 * @param filename to read info from
+	 */
 	public void fillUserTable(String filename)
 	{
 		try{
@@ -89,7 +116,10 @@ public class DataBaseBuilder
 		}
 	}
 	
-		
+	/**
+	 * Create Course Table
+	 * @param tablename name of table
+	 */	
 	public void createCourseTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
@@ -108,6 +138,10 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Fill Course Table with info from textfile
+	 * @param filename to read info from
+	 */
 	public void fillCourseTable(String filename)
 	{
 		try{
@@ -143,6 +177,10 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Create Student Enrollment Table
+	 * @param tablename name of table
+	 */
 	public void createStudentEnrollmentTable(String tablename)
 	{		
 		String sql = "CREATE TABLE " + tablename + "(" +
@@ -160,6 +198,10 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Fill Student_Enrollment Table with info from textfile
+	 * @param filename to read info from
+	 */
 	public void fillStudentEnrollmentTable(String filename)
 	{
 		try{
@@ -194,6 +236,10 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Create Assignment Table
+	 * @param tablename name of table
+	 */
 	public void createAssignmentTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
@@ -214,28 +260,10 @@ public class DataBaseBuilder
 		}
 	}
 	
-	public void createSubmissionTable(String tablename)
-	{
-		String sql = "CREATE TABLE " + tablename + "(" +
-			     "SUBMISSION_ID INT(8) NOT NULL, " +
-			     "ASSIGNMENT_ID INT(8) NOT NULL, " +  
-			     "STUDENT_ID INT(8) NOT NULL, "+
-			     "PATH VARCHAR(100) NOT NULL, "+
-			     "TITLE VARCHAR(50) NOT NULL, "+
-			     "SUBMISSION_GRADE INT(3) NOT NULL, "+
-			     "COMMENTS VARCHAR(140) NOT NULL, "+
-			     "TIMESTAMP CHAR(16) NOT NULL,"+
-			     "PRIMARY KEY ( submission_id ))";
-		try {
-			statement = jdbc_connection.prepareStatement(sql);
-			statement.executeUpdate();
-			System.out.println("Created Table " + tablename);
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
+	/**
+	 * Create Grade Table
+	 * @param tablename name of table
+	 */
 	public void createGradeTable(String tablename)
 	{
 		String sql = "CREATE TABLE " + tablename + "(" +
@@ -255,6 +283,9 @@ public class DataBaseBuilder
 		}
 	}
 	
+	/**
+	 * Fill Grade table with info
+	 */
 	public void fillGradeTable()
 	{
 		String sql = "INSERT INTO Grade_Table" +
@@ -275,39 +306,6 @@ public class DataBaseBuilder
 		id+=10;
 	}
 	
-	public void fillAssignmentTable(String filename)
-	{
-			try{
-					String sql = "INSERT INTO Assignment_Table" +
-							" VALUES ( ?, ?, ?, ?, ?, ?)";
-					try{
-						statement = jdbc_connection.prepareStatement(sql);
-						statement.setInt(1, ++id);
-						statement.setInt(2, 1070);
-						statement.setString(3, "TrialSendingToStudents.txt");
-						statement.setString(4, "C:\\Users\\muham\\OneDrive\\Documents\\ENSF409StudentFiles\\recievedFromProff\\TrialSendingToStudents.txt");
-						statement.setInt(5, 1);
-						statement.setString(6, "March 6, 2020");
-						statement.executeUpdate();
-					}
-					catch(SQLException e)
-					{
-						e.printStackTrace();
-					}
-					id+=10;
-				//}
-				//sc.close();
-			}
-//			catch(FileNotFoundException e)
-//			{
-//				System.err.println("File " + filename + " Not Found!");
-//			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-	}
-	
 	public static void main(String[] args) throws SQLException
 	{
 		DataBaseBuilder dataBaseBuilder=new DataBaseBuilder();
@@ -315,12 +313,10 @@ public class DataBaseBuilder
 		dataBaseBuilder.createCourseTable("Courses");
 		dataBaseBuilder.createStudentEnrollmentTable("Student_Enrollment");
 		dataBaseBuilder.createAssignmentTable("Assignment_Table");
-		dataBaseBuilder.createSubmissionTable("Submission_Table");
 		dataBaseBuilder.createGradeTable("Grade_Table");
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
-		//dataBaseBuilder.fillAssignmentTable("Assignment2.txt");
 		dataBaseBuilder.fillGradeTable();
 
 	}

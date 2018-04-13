@@ -11,16 +11,52 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * Contains information to deal with email requests
+ * @author Huzaifa Amar	and Daniel Guieb
+ */
 public class EmailHandler {
+	/**
+	 * properties object
+	 */
 	private Properties properties;
+	/**
+	 * To establish an email connection
+	 */
 	private Session session;
+	/**
+	 * email message
+	 */
 	private Message message;
+	/**
+	 * email account of sender
+	 */
 	private String senderemail;
+	/**
+	 * senders password
+	 */
 	private String senderpassword;
+	/**
+	 * email address of reciever
+	 */
 	private InternetAddress recieveremails;
+	/**
+	 * subject line of email
+	 */
 	private String subjectline;
+	/**
+	 * message line of proff
+	 */
 	private String emailmessage;
 	
+	/**
+	 * Creats an object of Email Handler with passed parameters
+	 * @param senderemail email of sender
+	 * @param senderpassword password of sender
+	 * @param recieveremail reciever's email
+	 * @param subjectline the subject
+	 * @param emailmessage the actual email
+	 */
 	public EmailHandler (String senderemail, String senderpassword, String recieveremail, String subjectline, String emailmessage)
 	{
 		this.senderemail=senderemail;
@@ -35,6 +71,9 @@ public class EmailHandler {
 		this.emailmessage=emailmessage;
 	}
 	
+	/**
+	 * create email
+	 */
 	public void createEmail()
 	{
 		createProperties();
@@ -42,6 +81,9 @@ public class EmailHandler {
 		sendEmail();
 	}
 
+	/**
+	 * create properties object
+	 */
 	private void createProperties()
 	{
 		properties = new Properties();
@@ -51,6 +93,9 @@ public class EmailHandler {
 		properties.put("mail.smtp.port", "587"); 
 	}
 	
+	/**
+	 * create session object
+	 */
 	private void createSession()
 	{
 		session = Session.getInstance(properties,
@@ -61,6 +106,9 @@ public class EmailHandler {
 				});
 	}
 	
+	/**
+	 * send email to required destination
+	 */
 	private void sendEmail()
 	{
 		try {
