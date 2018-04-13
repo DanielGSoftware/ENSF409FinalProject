@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.PasswordAuthentication;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -37,7 +39,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 	/**
 	 * A text field to input a user's password
 	 */
-	private JTextField passT;
+	private JPasswordField passT;
 	
 	/**
 	 * A button to send the text field information to the server
@@ -63,7 +65,11 @@ public class LoginGUI extends JFrame implements OurStyle{
 	}
 	
 	public String getPass() {
-		return passT.getText();
+		String pass = "";
+		for(int i=0; i<passT.getPassword().length; i++) {
+			pass += passT.getPassword()[i];
+		}
+		return pass;
 	}
 	
 	/**
@@ -102,7 +108,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 		JLabel userL = new JLabel("Username");
 		userL.setFont(SMALLFONT);
 		userT = new JTextField();
-//		userT.setBorder(BORDER);
+		userT.setBorder(BORDER);
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
@@ -111,8 +117,9 @@ public class LoginGUI extends JFrame implements OurStyle{
 		setOurStyle(passPanel);
 		JLabel passL = new JLabel("Password");
 		passL.setFont(SMALLFONT);
-		passT = new JTextField();
-//		passT.setBorder(BORDER);
+		passT = new JPasswordField();
+		passT.setEchoChar('\u2022');
+		passT.setBorder(BORDER);
 		passT.setColumns(15);
 		passPanel.add(passL);
 		passPanel.add(passT);	
