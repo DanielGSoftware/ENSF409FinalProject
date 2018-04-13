@@ -135,7 +135,7 @@ public class Assignment implements Serializable {
 			statement.setInt(1, courseid);
 			assignment=statement.executeQuery();
 			while (assignment.next()) {
-				if (assignment.getInt("ACTIVE")==1) {
+				if (assignment.getInt("ACTIVE")==1 && assignment.getString("PATH").contains("recievedFromProff")) {
 					assignmentList.add(assignment.getString("TITLE"));
 				}
 			}
