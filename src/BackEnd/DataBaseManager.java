@@ -17,6 +17,11 @@ import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
 
+/**
+ * This class 
+ * @author Huzaifa Amar and Daniel Guieb
+ *
+ */
 public class DataBaseManager implements Runnable {
 	private ObjectOutputStream writeobject;
 	private ObjectInputStream readobject;
@@ -59,7 +64,8 @@ public class DataBaseManager implements Runnable {
 					flushAndReset(writeobject);
 				}
 				
-				else if (string.equals("View Courses Proff")){
+				else if (string.equals("View Courses Proff"))
+				{
 					Course course=(Course)readobject.readObject();
 					System.out.println("course object read");
 					//infoExchange=new InfoExchange(course.browseCourses(COURSETABLE, jdbc_connection, statement));

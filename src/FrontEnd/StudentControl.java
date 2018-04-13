@@ -62,7 +62,7 @@ public class StudentControl {
 		public void actionPerformed(ActionEvent e) {
 			//file's name should be picked up and sent 
 			//perhaps file path as well?
-			sModel.downloadAssignment("Assignment1.txt", 1070);
+			sModel.downloadAssignment(sView.getAssignmentInfo(), sView.getCurrentCourseID());
 		}
 	}
 	

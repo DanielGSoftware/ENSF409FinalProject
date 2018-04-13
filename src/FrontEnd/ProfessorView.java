@@ -404,18 +404,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 		JFileChooser fileBrowser=new JFileChooser();
 		if(fileBrowser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			selectedFile = fileBrowser.getSelectedFile();
-//		long length=selectedFile.length();
-//		byte[] content=new byte [(int) length];
-//		try {
-//			FileInputStream fis = new FileInputStream(selectedFile);
-//			BufferedInputStream bos = new BufferedInputStream(fis);
-//			bos.read(content, 0, (int)length);
-//			} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//			} catch(IOException e){
-//			e.printStackTrace();
-//			}
-//		return content;
 		return selectedFile;
 	}
 

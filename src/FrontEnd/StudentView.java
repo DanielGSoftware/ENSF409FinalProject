@@ -116,7 +116,7 @@ public class StudentView extends JFrame implements OurStyle{
 		return studentID;
 	}
 	
-	
+
 	/** Creates a JOptionPane which displays the message to the user.
 	 * @param message - the message to be displayed
 	 */
@@ -317,7 +317,7 @@ public class StudentView extends JFrame implements OurStyle{
 	 */
 	public String[] getAssignmentInfo() {
 		String filename=assignJList.getSelectedValue();
-		System.out.println(filename);
+		System.out.println(filename+" what is file name?");
 		String[] assignInfo = {""+currentCourseID, filename};
 		return assignInfo;
 	}
