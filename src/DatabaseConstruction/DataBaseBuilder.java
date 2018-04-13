@@ -317,7 +317,7 @@ public class DataBaseBuilder
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
-		dataBaseBuilder.fillGradeTable();
+		//dataBaseBuilder.fillGradeTable();
 
 	}
 }
