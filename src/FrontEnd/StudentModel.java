@@ -9,12 +9,30 @@ import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 
+/**
+ * Provides methods to handle reading and writing objects to the database manager.
+ * Extends the main model.
+ * @authors Daniel Guieb, Huzaifa Amar
+ * @version 1.0
+ * @since April 13, 2018
+ *
+ */
 public class StudentModel extends MainModel {
 
+	/**
+	 * Constructor which calls the super constructor
+	 * @param sendObject - the ObjectOutputStream to write from
+	 * @param readObject - the ObjectInputStream to read from
+	 */
 	public StudentModel(ObjectOutputStream sendObject, ObjectInputStream readObject) {
 		super(readObject, sendObject);
 	}
 	
+	/**
+	 * Gets the courses that a student is enrolled in from the database
+	 * @param studentid - the student's ID
+	 * @return the courses as a String array
+	 */
 	public String[] getCourseList(int studentid)
 	{
 		InfoExchange infoExchange=new InfoExchange("Get List of Courses Student");
@@ -35,6 +53,11 @@ public class StudentModel extends MainModel {
 		return courselist;
 	}
 	
+	/**
+	 * Sends an email to the professor 
+	 * @param courseid - the course ID of the professor's course
+	 * @param message - information of the message to send
+	 */
 	public void sendEmailToProff(int courseid, String[] message)
 	{
 		InfoExchange infoExchange=new InfoExchange("Send an Email to the Proff");
@@ -53,10 +76,13 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Downloads an assignment 
+	 * @param filename - the name of the file
+	 * @param courseid - the course ID of the course that the assignment is in
+	 */
 	public void downloadAssignment(String filename, int courseid)
 	{
-		System.out.println("Downloading assignment");
-		System.out.println(filename + " SEIG HIEL");
 		InfoExchange infoExchange=new InfoExchange("Student Downloading Assignment");
 		Assignment assignment=new Assignment(courseid, filename, null);
 		try {
@@ -70,9 +96,14 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Uploads an assignment
+	 * @param courseid - the course ID of the course to upload in to
+	 * @param filename - the name of the file
+	 * @param path - the path where the file is 
+	 */
 	public void uploadAssignment(int courseid, String filename, String path)
 	{	
-		System.out.println(filename + " in uploadAssignment in sModel");
 		InfoExchange infoExchange=new InfoExchange("Upload Assignment");
 		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
@@ -85,10 +116,16 @@ public class StudentModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Gets the grade of an assignment
+	 * @param filename - the name of the assignment
+	 * @param courseid - the course ID of the course which the assignment is in
+	 * @param studentid - the ID of the student submitting the assignment
+	 * @return the grade 
+	 */
 	public int viewGradeForAssignment(String filename, int courseid, int studentid)
 	{
 		InfoExchange infoExchange=new InfoExchange("View Grades-Student");
-		System.out.println(filename + "in viewGradeForAssignment in sModel");
 		int assignmentGrade=0;
 		Grade grade=new Grade(filename, studentid, courseid, -1);
 		try {
@@ -109,6 +146,11 @@ public class StudentModel extends MainModel {
 		return assignmentGrade;
 	}
 	
+	/**
+	 * Gets the list of assignments in a course
+	 * @param courseid - the ID of the course
+	 * @return the assignments as a String array
+	 */
 	public String[] getAssignmentList(int courseid)
 	{
 		InfoExchange infoExchange=new InfoExchange("Get list of Assignments Student");
@@ -135,6 +177,11 @@ public class StudentModel extends MainModel {
 		return assignmentList;
 	}
 	
+	/**
+	 * Flushes and resets the send object
+	 * @param sendObject - the ObjectOutputStream
+	 * @throws IOException
+	 */
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
 		sendObject.flush();
 		sendObject.reset();
