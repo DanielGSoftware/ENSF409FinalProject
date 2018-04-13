@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import SharedObjects.Assignment;
 import SharedObjects.Grade;
 import SharedObjects.InfoExchange;
@@ -35,27 +33,6 @@ public class StudentModel extends MainModel {
 			System.out.println("Error: browse course in student model wont work");
 		}
 		return courselist;
-	}
-	
-	//DANIELS
-	public int getAssignGrade(String [] assignInfo) {
-		InfoExchange infoExchange = new InfoExchange("View Grades-Student");
-		// [0] is the course ID, [1] is the name, [2] would be path, it it is null
-		Assignment assignment = new Assignment(Integer.parseInt(assignInfo[0]), assignInfo[1], null);
-		try {
-			sendObject.writeObject(infoExchange);
-			flushAndReset(sendObject);
-			sendObject.writeObject(assignment);
-			flushAndReset(sendObject);
-//			infoExchange = (InfoExchange) readObject.readObject();
-			Grade grade = (Grade)readObject.readObject(); 
-		} catch (IOException e) {
-			System.out.println("Error: Could not find grade for assignemnt");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error: Could not create InfoExchange object");
-		}
-		//Where info[0] is the grade as a string
-		return Integer.parseInt(infoExchange.getInfo()[0]);
 	}
 	
 	public void sendEmailToProff(int courseid, String[] message)

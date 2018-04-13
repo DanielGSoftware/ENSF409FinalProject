@@ -177,11 +177,19 @@ public class StudentView extends JFrame implements OurStyle{
 		return studentID;
 	}
 	
+	/**
+	 * Important for using the selected assignment name
+	 * @return the currently selected assignment name
+	 */
 	public String getAssignmentName() {
 		String fileName = assignJList.getSelectedValue();
 		return fileName;
 	}
 	
+	/**
+	 * Important for getting the course selected
+	 * @return the course info as a String array
+	 */
 	public String[] getCourseSelected() {
 		String[] courseInfo = courseJList.getSelectedValue().split(";");
 		return courseInfo;
