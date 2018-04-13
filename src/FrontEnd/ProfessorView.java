@@ -13,43 +13,173 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * Provides the data fields and methods to create a GUI for a professor.
+ * @authors Daniel Guieb, Huzaifa Amar
+ * @version 1.0
+ * @since April 11, 2018
+ *
+ */
 public class ProfessorView extends JFrame implements OurStyle{
+	/**
+	 * The professor's first name
+	 */
 	private String proffFirstName;
+	
+	/**
+	 * The professor's last name
+	 */
 	private String proffLastName;
+	
+	/**
+	 * The professor's ID
+	 */
 	private int proffID;
+	
+	/**
+	 * The ID of the current working course
+	 */
 	private int currentCourseID;
 	
+	/**
+	 * A card layout for the Home and Course pages
+	 */
 	private CardLayout mainCards;
+	
+	/**
+	 * A container which holds all GUI components
+	 */
 	private Container container;
 	
+	/**
+	 * A panel which holds all components related to the Home page
+	 */
 	private JPanel homePanel;
+	
+	/**
+	 * A Home page button to create a course
+	 */
 	private JButton createCourses;
+	
+	/**
+	 * A Home page button to view courses
+	 */
 	private JButton viewCourses;
+	
+	/**
+	 * A Home page scroll pane to hold the course list
+	 */
+	private JScrollPane courseScrollPane;
+	
+	/**
+	 * A Home page list model for courses which is held by a list
+	 */
 	private DefaultListModel<String> courseListModel;
+	
+	/**
+	 * A Home page list for courses which holds a list model
+	 */
 	private JList<String> courseJList;
 	
+	/**
+	 * A panel which holds all components related to the Course page
+	 */
 	private JPanel coursePanel;
+	
+	/**
+	 * A Course page button which toggles the course between active and
+	 * inactive
+	 */
 	private JButton setCourseactive;
+	
+	/**
+	 * A Course page button to view students enrolled in the course
+	 */
 	private JButton viewStudents;
+	
+	/**
+	 * A Course page button to view course assignments
+	 */
 	private JButton viewAssigns;
+	
+	/**
+	 * A Course page button to return to the Home page
+	 */
 	private JButton returnHome;
+	
+	/**
+	 * A Course page inner panel which holds the Students and Assignments 
+	 * inner pages
+	 */
 	private JPanel courseInnerPanel;
+	
+	/**
+	 * A Course page card layout for the Students and Assignments pages
+	 */
 	private CardLayout courseInnerCards;
-	private JScrollPane courseScrollPane;
-	private DefaultListModel<String> studentListModel = new DefaultListModel<String>();
-	private JList<String> studentJList = new JList<String>();	
-	private DefaultListModel<String> assignListModel;
-	private JList<String> assignmentJList;
+	
+	/**
+	 * A Course page, Student page list model for the students which is held by a 
+	 * list 
+	 */
+	private DefaultListModel<String> studentListModel;
+	
+	/**
+	 * A Course page, Student page list for the students which holds a list model
+	 */
+	private JList<String> studentJList;
+	
+	/**
+	 * A Course page, Student page button to mass email students
+	 */
 	private JButton emailStudents;
+	
+	/**
+	 * A Course page, Student page button to search for a student by name
+	 */
 	private JButton searchStudents;
+	
+	/**
+	 * A Course page, Student page button to change the enrollment status of a student
+	 */
 	private JButton enrollment;
-	private JTextField findStudents;
+	
+	/**
+	 * A course page, Student page text field to enter the parameter of search
+	 */
+	private JTextField studentSearchParam;
+	
+	/**
+	 * A Course page, Assignment page list model for the assignments which is held 
+	 * by a list
+	 */
+	private DefaultListModel<String> assignListModel;
+	
+	/**
+	 * A Course page, Assignment page list for the assignments which holds a list 
+	 * model
+	 */
+	private JList<String> assignmentJList;
+	
+	/**
+	 * A Course page, Assignment page button to upload an assignment
+	 */
 	private JButton uploadAssign;
+	
+	/**
+	 * A Course page, Assignment page button to change the active status of an assignment
+	 */
 	private JButton setAssignActive;
+	
+	/**
+	 * A Course page, Assignment page button to view submissions for an assignment
+	 */
 	private JButton viewSubmissions;
 	
 	
-	/**	A constructor which requires a professor's ID, first name, and last name.
+	/**	A constructor which sets the professor's ID, first name, and last name.
+	 * Also creates and sets restrictions on the container as well as the Home and 
+	 * Course pages.
 	 * @param proffID - the professor's ID
 	 * @param proffFirstName - the professor's first name 
 	 * @param proffLastName - the professor's last name
@@ -62,13 +192,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		container=getContentPane();
 		mainCards = new CardLayout();
 		container.setLayout(mainCards);
-//		String[] info= {"1", "hello", "wow"};
 		setSize(700, 500);
-//		setResizable(false);
+		setResizable(false);
 		makeWindowListener();
 		createHomeDisplay();
 		intitializeCourseDisplay();
-//		createCourseDisplay(info);
 	}
 	
 	public void setCurrentCourseID(int courseID) {
@@ -84,10 +212,14 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return proffID;
 	}
 	
+	public DefaultListModel<String> getListModel()
+	{
+		return studentListModel;
+	}
+	
 	public String getSearchParam()
 	{
-		System.out.println(findStudents.getSelectedText());
-		return findStudents.getSelectedText();
+		return studentSearchParam.getSelectedText();
 	}
 	
 	public int getCourseID()
@@ -97,9 +229,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return Integer.parseInt(strings[0]);
 	}
 	
-	public DefaultListModel<String> getListModel()
-	{
-		return studentListModel;
+	public String[] getCourseInfo() {
+		int index = courseJList.getSelectedIndex();
+		String courseInfoAsOneLine = new String(courseListModel.get(index));
+		String[] courseInfo = courseInfoAsOneLine.split(";");
+		return courseInfo;
 	}
 	
 	/** Creates a JOptionPane which displays the message to the user.
@@ -117,8 +251,9 @@ public class ProfessorView extends JFrame implements OurStyle{
 									  JOptionPane.ERROR_MESSAGE);
 	}
 	
-	/** Creates the home panel and adds it as the first card to the 
-	 * container's cardLayout
+	/** 
+	 * Creates the Home panel and adds it as the first card to the 
+	 * container's card layout
 	 */
 	public void createHomeDisplay() {
 		homePanel = new JPanel(new BorderLayout());
@@ -127,7 +262,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		createHomeCenterPanel();
 	}
 	
-	/** Creates the top panel of the home panel
+	/** 
+	 * Creates the content in the North panel of the Home panel
 	 */
 	private void createHomeTopPanel()
 	{	
@@ -163,7 +299,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	
-	/** Creates the center panel of the home page
+	/** Creates the content in the center panel of the Home panel
 	 */
 	private void createHomeCenterPanel()
 	{
@@ -187,24 +323,22 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 
-	/*
-	 * NOT COMMENTED BECAUSE GOING TO CREATE A METHOD CALLED
-	 * 			initializeCourseDisplay();
-	 * WHICH WILL DO THE INITIALIZING AND THEN 
-	 * 			createCourseDisplay(String[] info)
-	 * WILL ACTUALLY PUT THE CONTENTS INTO IT
-	 * 
+	/**
+	 * Initializes the Course panel and adds it to the container's card layout
 	 */
-	
 	private void intitializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
 		container.add(coursePanel, "COURSES");
 		
 	}
 	
+	/**
+	 * Creates the content in the Course Panel based on incoming course info. If
+	 * a button has already been instantiated, will remove the Course panel and 
+	 * create a new one
+	 * @param courseInfo - the course information 
+	 */
 	public void createCourseDisplay(String [] courseInfo) {
-//		coursePanel = new JPanel(new BorderLayout());
-//		container.add(coursePanel, "COURSES");
 		if(viewStudents != null) {
 			container.remove(coursePanel);
 			intitializeCourseDisplay();
@@ -213,6 +347,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		createCourseInnerPanel(courseInfo);
 	}
 	
+	/**
+	 * Creates the content in the North panel of the course panel according the the incoming
+	 * course information
+	 * @param courseInfo - the course information
+	 */
 	private void createCourseTopPanel(String[] courseInfo) {
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));
 		JPanel bannerPanel = new JPanel();
@@ -240,6 +379,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
+	/**
+	 * Creates the content in the center panel of the course panel according to the incoming
+	 * course information
+	 * @param courseInfo - the course information
+	 */
 	private void createCourseInnerPanel(String[] courseInfo) {
 		courseInnerCards = new CardLayout();
 		courseInnerPanel = new JPanel(courseInnerCards);
@@ -264,6 +408,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 		coursePanel.add(courseInnerPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Creates the student scroll pane
+	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @returns the built student scroll pane
+	 */
 	public JScrollPane createStudentScrollPane(String id) {
 		studentListModel=new DefaultListModel<String>();
 		studentListModel.addElement(id);
@@ -271,13 +420,17 @@ public class ProfessorView extends JFrame implements OurStyle{
 		studentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		studentJList.setVisibleRowCount(15);
 		studentJList.setFont(SMALLFONT);
-		
 		JScrollPane studentScrollPane = new JScrollPane(studentJList);
 		studentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		studentScrollPane.setPreferredSize(new Dimension(500,300));
 		return studentScrollPane;
 	}
 	
+	/**
+	 * Creates the assignment scroll pane
+	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @returns the built assignment scroll pane
+	 */
 	public JScrollPane createAssignScrollPane(String id) {
 		assignListModel=new DefaultListModel<String>();
 		assignListModel.addElement(id);
@@ -291,7 +444,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return assignScrollPane;
 	}
 	
-	/** Initializes buttons and adds them onto the buttonPanel
+	/** Initializes buttons and adds them onto the student button panel
 	 * @param buttonsPanel - the student button panel
 	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
@@ -301,16 +454,16 @@ public class ProfessorView extends JFrame implements OurStyle{
 		setButtonStyle(enrollment);
 		setButtonStyle(emailStudents);
 		setButtonStyle(searchStudents);
-		findStudents = new JTextField();
-		findStudents.setColumns(15);
-		findStudents.setBorder(BORDER);
+		studentSearchParam = new JTextField();
+		studentSearchParam.setColumns(15);
+		studentSearchParam.setBorder(BORDER);
 		buttonsPanel.add(enrollment);
 		buttonsPanel.add(emailStudents);
 		buttonsPanel.add(searchStudents);
-		buttonsPanel.add(findStudents);
+		buttonsPanel.add(studentSearchParam);
 	}
 	
-	/** Initializes buttons and adds them onto the buttonPanel
+	/** Initializes buttons and adds them onto the assignment button panel
 	 * @param buttonsPanel - the assignment button panel
 	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
@@ -337,63 +490,61 @@ public class ProfessorView extends JFrame implements OurStyle{
 		}
 	}
 	
+	/**
+	 * Changes the current course inner panel to the Student page
+	 */
 	public void viewStudentsPage() {
-		courseInnerPanel.setVisible(false);
 		courseInnerCards.show(courseInnerPanel, "STUDENTS");
-//		courseInnerPanel.setVisible(false);
-		courseInnerPanel.setVisible(true);
 	}
 	
+	/**
+	 * Changes the current course inner panel to the Assignment page
+	 */
 	public void viewAssignsPage() {
-		courseInnerPanel.setVisible(false);
 		courseInnerCards.show(courseInnerPanel, "ASSIGNMENTS");
-//		courseInnerPanel.setVisible(false);
-		courseInnerPanel.setVisible(true);
 	}
 	
+	/**
+	 * Changes the current container to the Home page
+	 */
 	public void viewHomePage() {
 		mainCards.show(container, "HOME");
-//		studentJList.clearSelection();
-//		courseJList.clearSelection();
-//		studentJList.setSelectedIndex(0);
-//		courseJList.setSelectedIndex(0);
 	}
 	
+	/**
+	 * Changes the current container to the Course page
+	 */
 	public void viewCoursesPage() {
-//		int index=courseJList.getSelectedIndex();
-//		String string=courseListModel.get(index);
-//		String deepCopyString = stringDeepCopy(string);
-//		String[] courseInfo=deepCopyString.split(";");
-//		createCourseDisplay(courseInfo);
 		mainCards.show(container, "COURSES");	
 	}
 	
-	public String[] getCourseInfo() {
-		int index = courseJList.getSelectedIndex();
-		String courseInfoAsOneLine = new String(courseListModel.get(index));
-		String[] courseInfo = courseInfoAsOneLine.split(";");
-		return courseInfo;
-	}
-	
+	/**
+	 * Removes old elements of the student list model and adds new ones
+	 * @param students - the list of updated students
+	 */
 	public void updateStudentListDisplay(String[] students)
 	{	
 		studentListModel.removeAllElements();
 		for (int i=0; i<students.length; i++) {
 			studentListModel.addElement(students[i]);
 		}
-		courseInnerPanel.setVisible(false);
-		courseInnerPanel.setVisible(true);
 	}
 	
+	/**
+	 * Removes old elements of the assignment list model and adds new ones
+	 * @param assigns - the list of updated assignments
+	 */
 	public void updateAssignListDisplay(String[] assigns) {
 		assignListModel.removeAllElements();
 		for (int i=0; i<assigns.length; i++) {
 			assignListModel.addElement(assigns[i]);
 		}
-		assignmentJList.setVisible(false);
-		assignmentJList.setVisible(true);
 	}
 	
+	/**
+	 * Creates a file from a file browser
+	 * @return
+	 */
 	public File chooseFile()
 	{
 		File selectedFile=null;
@@ -403,7 +554,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return selectedFile;
 	}
 
-	/** Gives the user a pop-up where they can enter their email contents.
+	/** Gives the professor a pop-up where they can enter their email contents.
 	 * @return a String array which contains the professor ID, subject, and 
 	 * 		   email message.
 	 */
@@ -439,7 +590,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return theMail;
 	}
 
-	/** Gives the user a pop-up where they can create a course.
+	/** Gives the professor a pop-up where they can create a course.
 	 * @return a String array which contains the name of the course and its active bit
 	 */
 	public String[] createCourse()
@@ -474,12 +625,20 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return null;
 	}
 	
+	/**
+	 * Sets a button's foreground, background, and font to a specified style
+	 * @param theButton - the button to restyle
+	 */
 	private void setButtonStyle(JButton theButton) {
 		theButton.setForeground(BUTTONTEXT);
 		theButton.setBackground(FOREGROUND);
 		theButton.setFont(BUTTONFONT);
 	}
 	
+	/**
+	 * Sets a component's foreground and background to a specified style
+	 * @param theComponent
+	 */
 	private void setOurStyle(JComponent theComponent) {
 		theComponent.setForeground(FOREGROUND);
 		theComponent.setBackground(BACKGROUND);
@@ -510,9 +669,11 @@ public class ProfessorView extends JFrame implements OurStyle{
 	 * @param setAssignActive - the setAssignActive listener
 	 * @param viewSubmissions - the viewSubmissions listener
 	 */
-	public void addCourseListeners(ActionListener setCourseActive, ActionListener viewStudents, ActionListener viewAssigns, 
-			   ActionListener returnHome, ActionListener emailStudents, ActionListener searchStudents, 
-			   ActionListener enrollment, ActionListener uploadAssign, ActionListener setAssignActive, 
+	public void addCourseListeners(ActionListener setCourseActive, 
+			   ActionListener viewStudents, ActionListener viewAssigns, 
+			   ActionListener returnHome, ActionListener emailStudents, 
+			   ActionListener searchStudents, ActionListener enrollment, 
+			   ActionListener uploadAssign, ActionListener setAssignActive, 
 			   ActionListener viewSubmissions) {
 		this.setCourseactive.addActionListener(setCourseActive);
 		this.viewStudents.addActionListener(viewStudents);
@@ -532,7 +693,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	{
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				int result = JOptionPane.showConfirmDialog((JFrame) e.getSource(), "Are you sure you want to exit the application?",
+				int result = JOptionPane.showConfirmDialog((JFrame) e.getSource(), 
+						"Are you sure you want to exit the application?",
 						"Exit Application", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -543,62 +705,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 			
 		});
 	}
-
-	
-//	public void updateDisplay(String[] list)
-//	{
-//		System.out.println("updating display");
-//
-//		listmodel.removeAllElements();
-//
-//		while (!studentListModel.isEmpty())
-//		{
-//			studentListModel.removeElementAt(0);
-//		}
-//
-//		
-//		for (int i=0; i<list.length; i++) {
-//			studentListModel.addElement(list[i]);
-//		}
-//		listmodel.addElement("\n\n");
-//	}
-
-	
-//	public void setCoursePage()
-//	{
-//		System.out.println("SET COURSE PAGE TEST");
-//		ArrayList<String> strings=getSelectedList();
-//		System.out.println("LMAO");
-//		updateDisplay(strings);
-//	}
-	
-
-		//studentJList.addListSelectionListener(a);
-
-
-//	public ArrayList<String> getSelectedList()
-//	{
-//		System.out.println("In selected list method");
-//		System.out.println(studentJList.getSelectedValue());
-//		System.out.println(studentJList.getModel().getElementAt(0));
-//		//String string=displaylist.getSelectedValue();
-////		int index=0;
-//		String string=new String(studentJList.getSelectedValue());
-//		System.out.println(string);
-//		//String[] strings=string.split(";");
-//		ArrayList<String> strings=new ArrayList<String>();
-//		strings.add(string);
-//		return strings;
-//	}
-	
-	
-	//Replaced with simpleMessage() method
-//	public void displayCourseActiveUpdateMessage()
-//	{
-//		JOptionPane.showMessageDialog(null, "Course Activation Status Sucessfully Changed. Please hit browse courses to "
-//				+ "see changes","Success",JOptionPane.PLAIN_MESSAGE);
-//	}
-//	
 
 	public static void main(String[] args) {
 		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
