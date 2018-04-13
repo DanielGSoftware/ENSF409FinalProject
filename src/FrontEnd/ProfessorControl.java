@@ -38,6 +38,17 @@ public class ProfessorControl {
 		}
 	}
 	
+	class ViewStudentsListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Browsing all students in course");
+			String[] students=pModel.viewStudents(pView.getCourseID());
+			pView.updateStudentListDisplay(students);
+			pView.viewStudentsPage();
+		}
+	}
+	
 	class ViewAssignmentsListener implements ActionListener
 	{
 		@Override
@@ -46,18 +57,6 @@ public class ProfessorControl {
 			String[] assignments=pModel.viewAssign(pView.getCourseID());
 			pView.updateAssignListDisplay(assignments);
 			pView.viewAssignsPage();
-		}
-	}
-	
-	class ViewStudentsListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String[] courseInfo = pView.getCourseInfo();
-			int courseid = Integer.parseInt(courseInfo[0]);
-			String[] students=pModel.viewStudents(courseid);
-			pView.updateStudentListDisplay(students);
-			pView.viewStudentsPage();
 		}
 	}
 	

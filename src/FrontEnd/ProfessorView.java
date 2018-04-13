@@ -388,10 +388,10 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public void updateAssignListDisplay(String[] assigns) {
 		assignmentJList.setVisible(false);
-		assignListModel.removeAllElements();
 		System.out.println(assigns[0]);
 		System.out.println(assigns[1]);
 		System.out.println(assigns[2]);
+		assignListModel.removeAllElements();
 		for (int i=0; i<assigns.length; i++) {
 			assignListModel.addElement(assigns[i]);
 		}
