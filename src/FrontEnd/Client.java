@@ -26,7 +26,7 @@ public class Client {
 	
 	public void makeLoginGUI()
 	{
-		loginView = new LoginGUI(readObject, sendObject);
+		loginView = new LoginGUI();
 		loginView.addSignInActionListener(new SignInListener());
 		loginModel=new LoginModel(readObject, sendObject);
 		loginView.setVisible(true); 
@@ -77,7 +77,7 @@ public class Client {
 				}
 			}
 			else {
-				loginView.sendError("Incorrect Login Information: User does not exist in database");
+				loginView.simpleError("Incorrect Login Information: User does not exist in database");
 			}
 		}
 	}

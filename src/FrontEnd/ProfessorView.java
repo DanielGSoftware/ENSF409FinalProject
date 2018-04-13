@@ -542,8 +542,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	/**
-	 * Creates a file from a file browser
-	 * @return
+	 * Creates a file from a file browser to upload
+	 * @return the file to upload
 	 */
 	public File chooseFile()
 	{
@@ -554,7 +554,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return selectedFile;
 	}
 
-	/** Gives the professor a pop-up where they can enter their email contents.
+	/** 
+	 * Creates a JOptionPane where a professor can enter their email contents.
 	 * @return a String array which contains the professor ID, subject, and 
 	 * 		   email message.
 	 */
@@ -590,7 +591,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return theMail;
 	}
 
-	/** Gives the professor a pop-up where they can create a course.
+	/** Creates a JOptionPane where a professor can create a course.
 	 * @return a String array which contains the name of the course and its active bit
 	 */
 	public String[] createCourse()

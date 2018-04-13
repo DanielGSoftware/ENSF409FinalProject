@@ -17,20 +17,42 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Proivdes the data fields and methods to create a login GUI for a user
+ * @authors Daniel Guieb, Huzaifa Amar
+ * @version 1.0
+ * @since April 12, 2018
+ */
 public class LoginGUI extends JFrame implements OurStyle{
-	private JTextField userT;
-	private JTextField passT;
-	private JButton signInB;
+	/**
+	 * A container which holds all GUI components
+	 */
 	private Container container;
 	
-	public LoginGUI(ObjectInputStream readObject, ObjectOutputStream sendObject) {
+	/**
+	 * A text field to input a user's user information
+	 */
+	private JTextField userT;
+	
+	/**
+	 * A text field to input a user's password
+	 */
+	private JTextField passT;
+	
+	/**
+	 * A button to send the text field information to the server
+	 */
+	private JButton signInB;
+	
+	/**
+	 * A constructor which creates and sets restrictions on the container
+	 */
+	public LoginGUI() {
 		super("Login");
-		new LoginModel(readObject, sendObject);
 		container = getContentPane();
 		setLayout(new BorderLayout());
 		setSize(500, 160);
 		setResizable(false);
-		
 		createLoginBanner();
 		createMainPanel();
 		makeWindowListener();
@@ -44,17 +66,31 @@ public class LoginGUI extends JFrame implements OurStyle{
 		return passT.getText();
 	}
 	
+	/**
+	 * Creates a JOptionPane which displays the error to the user
+	 * @param errorMessage
+	 */
+	public void simpleError(String errorMessage) {
+		JOptionPane.showMessageDialog(null, errorMessage, "An error has occured", 
+				JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
+	 * Creates the "banner" of the page which is a message
+	 */
 	private void createLoginBanner() {
 		JPanel bannerPanel =  new JPanel();
 		JLabel banner = new JLabel("Login To Your Home Page");
-		banner.setFont(new Font("Times New Roman", Font.BOLD,20));
-		banner.setForeground(LABEL);
+		banner.setFont(SMALLFONT);
 		bannerPanel.setOpaque(true);
 		setOurStyle(bannerPanel);
 		bannerPanel.add(banner, JLabel.CENTER);
 		container.add(bannerPanel, BorderLayout.NORTH);
 	}
 	
+	/**
+	 * Creates the main panel and adds it to the container
+	 */
 	private void createMainPanel() {
 		JPanel grandPanel = new JPanel(new BorderLayout());
 		setOurStyle(grandPanel);
@@ -66,6 +102,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 		JLabel userL = new JLabel("Username");
 		userL.setFont(SMALLFONT);
 		userT = new JTextField();
+//		userT.setBorder(BORDER);
 		userT.setColumns(15);
 		userPanel.add(userL);
 		userPanel.add(userT);
@@ -75,6 +112,7 @@ public class LoginGUI extends JFrame implements OurStyle{
 		JLabel passL = new JLabel("Password");
 		passL.setFont(SMALLFONT);
 		passT = new JTextField();
+//		passT.setBorder(BORDER);
 		passT.setColumns(15);
 		passPanel.add(passL);
 		passPanel.add(passT);	
@@ -84,26 +122,6 @@ public class LoginGUI extends JFrame implements OurStyle{
 		signInB = new JButton("Sign In");
 		setButtonStyle(signInB);
 		signInPanel.add(signInB);
-//		signInB.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				System.out.println("STUFF SHOULD SEND");
-//				System.out.println(userT.getText());
-//				System.out.println(passT.getText());
-//				validLogin = theModel.loginAttempt(userT.getText(), passT.getText());
-//				if(validLogin) {
-//					// make a student or proff?
-//					System.out.println("CLOSING");
-//					close();
-//				}
-//				else {
-//					sendError("Check user info and try again please");
-//				}
-//			}
-//		});
-		
-		
 		fieldPanel.add(userPanel, BorderLayout.NORTH);
 		fieldPanel.add(passPanel, BorderLayout.CENTER);
 		fieldPanel.add(signInPanel, BorderLayout.SOUTH);
@@ -112,21 +130,36 @@ public class LoginGUI extends JFrame implements OurStyle{
 		container.add(grandPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Sets a button's foreground, background, and font to a specified style
+	 * @param theButton - the button to style
+	 */
 	private void setButtonStyle(JButton theButton) {
 		theButton.setForeground(BUTTONTEXT);
 		theButton.setBackground(FOREGROUND);
 		theButton.setFont(BUTTONFONT);
 	}
 	
+	/**
+	 * Sets a componnet's foreground and background to a specified style
+	 * @param theComponent - the component to style
+	 */
 	private void setOurStyle(JComponent theComponent) {
 		theComponent.setForeground(FOREGROUND);
 		theComponent.setBackground(BACKGROUND);
 	}
 	
+	/**
+	 * Adds an action listener to the sign in button
+	 * @param aListener - the sign in button's action listener
+	 */
 	public void addSignInActionListener(ActionListener aListener) {
 		signInB.addActionListener(aListener);
 	}
 	
+	/**
+	 * Sets the default closing option of the overall JFrame
+	 */
 	private void makeWindowListener()
 	{
 		addWindowListener(new WindowAdapter() {
@@ -140,10 +173,5 @@ public class LoginGUI extends JFrame implements OurStyle{
 					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			}
 		});
-	}
-	
-	public void sendError(String s) {
-		JOptionPane.showMessageDialog(null, s,
-				"Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
