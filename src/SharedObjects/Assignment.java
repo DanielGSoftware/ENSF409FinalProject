@@ -26,12 +26,12 @@ public class Assignment implements Serializable {
 		date="March 16, 2020";
 	}
 
-	public String[] searchAssignment(String table, Connection jdbc_connection, PreparedStatement statement)
+	public String[] searchAssignmentProff(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("in find assignment");
 		String sql= "SELECT * FROM " +table+ " WHERE COURSE_ID = ?";
 		String[] temp=null;
-		ResultSet object;
+		ResultSet object=null;
 		try {
 			statement=jdbc_connection.prepareStatement(sql);
 			statement.setInt(1, courseid);
@@ -50,6 +50,9 @@ public class Assignment implements Serializable {
 		{
 			e.printStackTrace();
 		}		
+		if (object==null) {
+			return null;
+		}
 		return temp;
 	}
 	
@@ -85,7 +88,7 @@ public class Assignment implements Serializable {
 			statement.setString(2, filename);
 			assignment=statement.executeQuery();
 			if (assignment.next()) {
-				if (assignment.getString("PATH").contains("sendToStudent")) {
+				if (assignment.getString("PATH").contains("sendToStudents")) {
 					fileinfo[0]=assignment.getString("TITLE");
 					fileinfo[1]=assignment.getString("PATH");
 				}
@@ -135,7 +138,7 @@ public class Assignment implements Serializable {
 			statement.setInt(1, courseid);
 			assignment=statement.executeQuery();
 			while (assignment.next()) {
-				if (assignment.getInt("ACTIVE")==1 && assignment.getString("PATH").contains("recievedFromProff")) {
+				if (assignment.getInt("ACTIVE")==1 && assignment.getString("PATH").contains("sendToStudents")) {
 					assignmentList.add(assignment.getString("TITLE"));
 				}
 			}

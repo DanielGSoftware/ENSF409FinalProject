@@ -162,7 +162,7 @@ public class DataBaseManager implements Runnable {
 				else if (string.equals("View Assignment Proff"))
 				{
 					Assignment assignment= (Assignment) readobject.readObject();
-					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
+					String[] result=assignment.searchAssignmentProff(ASSIGNMENTTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(result);
 					writeobject.writeObject(infoExchange);
 					flushAndReset(writeobject);

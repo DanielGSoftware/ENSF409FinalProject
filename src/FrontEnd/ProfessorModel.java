@@ -177,6 +177,7 @@ public class ProfessorModel extends MainModel {
 	public String[] viewAssign(int courseid)
 	{
 		System.out.println("In view assignments");
+		
 		InfoExchange infoExchange=new InfoExchange("View Assignment Proff");
 		Assignment assignment=new Assignment(courseid, null, null);
 		String[] strings=null;
@@ -191,6 +192,11 @@ public class ProfessorModel extends MainModel {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		}
+		if (strings==null) {
+			strings=new String[1];
+			strings[0]="No student has submitted an assignment";
+			return strings;
 		}
 		return strings;
 	}
