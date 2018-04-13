@@ -89,8 +89,7 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			pModel.downloadAllAssignments(pView.getCourseID());
 		}
 	}
 	

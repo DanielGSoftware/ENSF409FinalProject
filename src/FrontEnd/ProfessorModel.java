@@ -78,24 +78,6 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
-//	public String[] SearchStudents(int studentid)
-//	{
-//		StudentEnrollment se=new StudentEnrollment(0, studentid, 0);
-//		InfoExchange infoExchange=new InfoExchange("Search Students Proff");
-//		try {
-//			sendObject.writeObject(infoExchange);
-//			flushAndReset(sendObject);
-//			sendObject.writeObject(se);
-//			flushAndReset(sendObject);
-//			infoExchange= (InfoExchange) readObject.readObject();
-//		} catch (IOException e) {
-//			System.out.print("Error: search enn in proff model wont work");
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return infoExchange.getInfo();
-//	}
 	
 	public String[] viewStudents(int courseid)
 	{
