@@ -28,8 +28,9 @@ public class StudentControl {
 			int courseid=Integer.parseInt(courseinfo[0]);
 			String[] assignmentList=sModel.getAssignmentList(courseid);
 			System.out.println(assignmentList[0]);
+			sView.setCurrentCourseID(Integer.parseInt(courseinfo[0]));
 			sView.createCourseDisplay(courseinfo, assignmentList);
-			sView.addCourseListeners(new SelectAssignment(), new UploadAssignment(), new SendEmailToProff(),
+			sView.addCourseListeners(new SelectAssignment(), new DownLoadAssignment(), new UploadAssignment(), new SendEmailToProff(),
 					new ReturnHome());
 			sView.goCoursePage();
 		}
@@ -62,7 +63,7 @@ public class StudentControl {
 		public void actionPerformed(ActionEvent e) {
 			//file's name should be picked up and sent 
 			//perhaps file path as well?
-			sModel.downloadAssignment(sView.getAssignmentInfo(), sView.getCurrentCourseID());
+			sModel.downloadAssignment(sView.getAssignmentName(), sView.getCurrentCourseID());
 		}
 	}
 	
@@ -82,9 +83,9 @@ public class StudentControl {
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			String[] assignInfo = sView.getAssignmentInfo();
-			int assignmentGrade=sModel.viewGradeForAssignment(assignInfo[1], 
-					Integer.parseInt(assignInfo[0]), sView.getStudentID());
+			String assignName = sView.getAssignmentName();
+			int assignmentGrade=sModel.viewGradeForAssignment(assignName, 
+					sView.getCurrentCourseID(), sView.getStudentID());
 			sView.setGrade(assignmentGrade);
 			}
 	}

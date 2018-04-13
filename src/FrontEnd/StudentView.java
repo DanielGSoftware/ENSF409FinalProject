@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -241,7 +242,6 @@ public class StudentView extends JFrame implements OurStyle{
 	 */
 	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
 		//Where courseInfo[0] is the courseID
-		setCurrentCourseID(Integer.parseInt(courseInfo[0]));
 		if(uploadAssign != null) {
 			container.remove(coursePanel);
 			initializeCourseDisplay();
@@ -315,11 +315,11 @@ public class StudentView extends JFrame implements OurStyle{
 	/** Finds and returns information about the selected assignment
 	 * @return a String array of the current course ID and the assignment name
 	 */
-	public String[] getAssignmentInfo() {
-		String filename=assignJList.getSelectedValue();
-		System.out.println(filename+" what is file name?");
-		String[] assignInfo = {""+currentCourseID, filename};
-		return assignInfo;
+	public String getAssignmentName() {
+		String fileName = assignJList.getSelectedValue();
+		System.out.println(assignJList.getSelectedValue() + " in getAssignmentName in sView");
+//		String[] assignInfo = {""+currentCourseID, filename};
+		return fileName;
 	}
 	
 	public String[] getCourseSelected() {
@@ -404,10 +404,11 @@ public class StudentView extends JFrame implements OurStyle{
 	 * @param uploadAssign - the uploadAssign listener
 	 * @param sendEmailToProff - the sendEmailToProff listener
 	 */
-	public void addCourseListeners(ListSelectionListener assignJList, 
-			ActionListener uploadAssign, ActionListener sendEmailToProff,
-			ActionListener returnHome) {
+	public void addCourseListeners(ListSelectionListener assignJList,
+			ActionListener downloadAssign,ActionListener uploadAssign, 
+			ActionListener sendEmailToProff, ActionListener returnHome) {
 		this.assignJList.addListSelectionListener(assignJList);
+		this.downloadAssign.addActionListener(downloadAssign);
 		this.uploadAssign.addActionListener(uploadAssign);
 		this.sendEmailToProff.addActionListener(sendEmailToProff);
 		this.returnHome.addActionListener(returnHome);

@@ -205,7 +205,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	public void createCourseDisplay(String [] courseInfo) {
 //		coursePanel = new JPanel(new BorderLayout());
 //		container.add(coursePanel, "COURSES");
-		currentCourseID = Integer.parseInt(courseInfo[0]);
 		if(viewStudents != null) {
 			container.remove(coursePanel);
 			intitializeCourseDisplay();

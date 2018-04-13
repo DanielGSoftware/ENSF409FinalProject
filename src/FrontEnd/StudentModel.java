@@ -79,6 +79,7 @@ public class StudentModel extends MainModel {
 	public void downloadAssignment(String filename, int courseid)
 	{
 		System.out.println("Downloading assignment");
+		System.out.println(filename + " SEIG HIEL");
 		InfoExchange infoExchange=new InfoExchange("Student Downloading Assignment");
 		Assignment assignment=new Assignment(courseid, filename, null);
 		try {
@@ -93,7 +94,8 @@ public class StudentModel extends MainModel {
 	}
 	
 	public void uploadAssignment(int courseid, String filename, String path)
-	{
+	{	
+		System.out.println(filename + " in uploadAssignment in sModel");
 		InfoExchange infoExchange=new InfoExchange("Student Uploading");
 		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
@@ -109,7 +111,7 @@ public class StudentModel extends MainModel {
 	public int viewGradeForAssignment(String filename, int courseid, int studentid)
 	{
 		InfoExchange infoExchange=new InfoExchange("View Grades-Student");
-		System.out.println(filename);
+		System.out.println(filename + "in viewGradeForAssignment in sModel");
 		int assignmentGrade=0;
 		Grade grade=new Grade(filename, studentid, courseid, -1);
 		try {

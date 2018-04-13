@@ -119,6 +119,7 @@ public class ProfessorControl {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
+			pView.setCurrentCourseID(Integer.parseInt(pView.getCourseInfo()[0]));
 			pView.createCourseDisplay(pView.getCourseInfo());
 			pView.viewCoursesPage();
 			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
