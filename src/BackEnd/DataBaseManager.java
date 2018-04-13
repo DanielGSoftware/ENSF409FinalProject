@@ -1,12 +1,9 @@
 package BackEnd;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.nio.channels.NonWritableChannelException;
-import java.security.spec.ECPrivateKeySpec;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
