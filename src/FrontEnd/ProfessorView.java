@@ -706,9 +706,4 @@ public class ProfessorView extends JFrame implements OurStyle{
 			
 		});
 	}
-
-	public static void main(String[] args) {
-		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
-		pView.setVisible(true);
-	}
 }

@@ -505,11 +505,4 @@ public class StudentView extends JFrame implements OurStyle{
 			
 		});
 	}
-	
-	public static void main(String[] args) {
-		String[] courses = {"ENCM369, 1070", "ENGG233, 3030", "ENSF409, 2080"};
-		StudentView sv = new StudentView(69240, "Daniel", "Guieb");
-		sv.addCourses(courses);
-		sv.setVisible(true);
-	}
 }
