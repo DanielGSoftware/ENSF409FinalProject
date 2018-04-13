@@ -48,9 +48,9 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] strings=pView.createCourse();
-			if (strings!=null) {
-				pModel.createCourse(pView.getProffID(), strings);
+			String[] courseInfo=pView.createCourse();
+			if (courseInfo!=null) {
+				pModel.createCourse(pView.getProffID(), courseInfo);
 			}
 		}
 	}

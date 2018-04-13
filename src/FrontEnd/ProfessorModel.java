@@ -10,39 +10,60 @@ import SharedObjects.InfoExchange;
 import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
 
+
+/**
+ * Provides methods to handle reading and writing objects to the database manager.
+ * Extends the main model.
+ * @authors Daniel Guieb, Huzaifa Amar
+ * @version 1.0
+ * @since April 13, 2018
+ *
+ */
 public class ProfessorModel extends MainModel {
 	
+	/**
+	 * Constructor which calls the super constructor
+	 * @param sendObject - the ObjectOutputStream to write from
+	 * @param readObject - the ObjectInputStream to read from
+	 */
 	public ProfessorModel(ObjectOutputStream sendObject, ObjectInputStream readObject)
 	{
 		super(readObject, sendObject);
 	}
 	
+	/**
+	 * Gets the list of courses the professor has from the database
+	 * @param proffid - the ID of the professor
+	 * @return the list of courses as a String array
+	 */
 	public String[] viewCourse(int proffid) 
 	{
 		Course course=new Course(proffid, null, -1, -1);
 		String[] courselist=null;
 		InfoExchange infoExchange=new InfoExchange("View Courses Proff");
 		try {
-			System.out.println("writing info exchange to database");
 			sendObject.writeObject(infoExchange);
 			flushAndReset(sendObject);
-			System.out.println("writing  coursse to database");
 			sendObject.writeObject(course);
 			flushAndReset(sendObject);
 			infoExchange=(InfoExchange) readObject.readObject();
-			System.out.println("object of infoExchange recieved");
 			courselist=infoExchange.getInfo();
 		} catch (IOException e) {
-			System.out.println("Error: gdgdfgdfgdfgbroswe course in proff model wont work");
+			System.out.println("Error: browse course in proff model wont work");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error: broswe course in proff model wont work");
+			System.out.println("Error: browse course in proff model wont work");
 		}
 		return courselist;
 	}
 	
-	public void createCourse(int proffid, String[] strings)
+	/**
+	 * Creates a course to the database
+	 * @param proffid - the ID of the professor
+	 * @param courseInfo - the course information
+	 */
+	public void createCourse(int proffid, String[] courseInfo)
 	{
-		Course course=new Course(proffid, strings[0], Integer.parseInt(strings[1]), -1);
+		Course course=new Course(proffid, courseInfo[0], Integer.parseInt(courseInfo[1]), -1);
 		InfoExchange infoExchange=new InfoExchange("Create Course Proff");
 		try {
 			sendObject.writeObject(infoExchange);
@@ -54,6 +75,10 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Changes the active status of a course in the database
+	 * @param course - the course information
+	 */
 	public void courseActive(String[] course) 
 	{
 		String coursename=course[1];
@@ -79,6 +104,11 @@ public class ProfessorModel extends MainModel {
 	}
 	
 	
+	/**
+	 * Gets a list of students in a course from the database
+	 * @param courseid - the ID of the course
+	 * @return the list of students in a String array
+	 */
 	public String[] viewStudents(int courseid)
 	{
 		StudentEnrollment sEnrollment=new StudentEnrollment(0, 0, courseid);
@@ -91,7 +121,6 @@ public class ProfessorModel extends MainModel {
 			flushAndReset(sendObject);
 			infoExchange= (InfoExchange) readObject.readObject();
 			result=infoExchange.getInfo();
-			//result[4]=StudentEnrollment(Integer.parseInt(result[3]), courseid);
 		}
 		catch (IOException e) {
 			System.out.print("Error: search students in proff model wont work");
@@ -101,6 +130,12 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
+	/**
+	 * Searches for a student in a database and returns that student info
+	 * @param lastname - the last name of the student
+	 * @param courseid - the ID of the course to search from
+	 * @return
+	 */
 	public String[] searchStudents(String lastname, int courseid)
 	{
 		User user=new User(0, null, null, null, lastname, "S");
@@ -114,7 +149,6 @@ public class ProfessorModel extends MainModel {
 			infoExchange= (InfoExchange) readObject.readObject();
 			result=infoExchange.getInfo();
 			result[4]=studentEnrollment(Integer.parseInt(result[3]), courseid);
-			System.out.print("here");
 		}
 		catch (IOException e) {
 			System.out.print("Error: search students in proff model wont work");
@@ -124,6 +158,12 @@ public class ProfessorModel extends MainModel {
 		return result;
 	}
 	
+	/**
+	 * Changes the enrollment status of a student in a course in the database
+	 * @param studentid - the ID of the student
+ 	 * @param courseid - the ID of the course 
+	 * @return The student enrollment status
+	 */
 	public String studentEnrollment(int studentid, int courseid)
 	{
 		StudentEnrollment se=new StudentEnrollment(0, studentid, courseid);
@@ -142,6 +182,12 @@ public class ProfessorModel extends MainModel {
 		return string;
 	}
 	
+	/**
+	 * Adds an assignment to a course
+	 * @param courseid - the course ID
+	 * @param filename - the name of the file
+	 * @param path - the path of the file
+	 */
 	public void addAssignment(int courseid, String filename, String path)
 	{
 		InfoExchange infoExchange=new InfoExchange("Upload Assignment");
@@ -156,10 +202,13 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Gets the assignments of a course from the database manager
+	 * @param courseid - the course ID
+	 * @return the list of assignments as a String array
+	 */
 	public String[] viewAssign(int courseid)
 	{
-		System.out.println("In view assignments");
-		
 		InfoExchange infoExchange=new InfoExchange("View Assignment Proff");
 		Assignment assignment=new Assignment(courseid, null, null);
 		String[] strings=null;
@@ -183,9 +232,12 @@ public class ProfessorModel extends MainModel {
 		return strings;
 	}
 	
+	/** 
+	 * Sends a mass email to students
+	 * @param emailInfo - the email details
+	 */
 	public void sendEmailToStudents(String[] emailInfo)
 	{
-		//infoexchange will 
 		InfoExchange infoExchange=new InfoExchange("Send Email to all Students Enrolled in Course");
 		infoExchange.setInfo(emailInfo);
 		try {
@@ -197,6 +249,10 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Downloads all assignments from a course
+	 * @param courseid - the course ID
+	 */
 	public void downloadAllAssignments(int courseid)
 	{
 		InfoExchange infoExchange=new InfoExchange("Download All Assignments into Proff Folder");
@@ -212,6 +268,13 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Sets the grade of an assignment
+	 * @param filename - the name of the assignment
+	 * @param courseid - the course ID
+	 * @param studentid - the student ID
+	 * @param grade	- the grade to give
+	 */
 	public void setGradesForAssignment(String filename, int courseid, int studentid, int grade)
 	{
 		InfoExchange infoExchange=new InfoExchange("Mark Assignment-Proff");
@@ -227,6 +290,11 @@ public class ProfessorModel extends MainModel {
 		}
 	}
 	
+	/**
+	 * Flushes and resets the send object
+	 * @param sendObject
+	 * @throws IOException
+	 */
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
 		sendObject.flush();
 		sendObject.reset();
