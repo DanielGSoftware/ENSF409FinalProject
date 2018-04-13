@@ -10,10 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,44 +24,113 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * Provides the data fields and methods to create a GUI for a student.
+ * @authors Daniel Guieb, Huzaifa Amar
+ * @version 1.0
+ * @since April 11, 2018
+ */
 public class StudentView extends JFrame implements OurStyle{
+	/**
+	 * The student's first name
+	 */
 	private String studentFirstName;
+	
+	/**
+	 * The student's last name
+	 */
 	private String studentLastName;
+	
+	/**
+	 * The student's ID
+	 */
 	private int studentID;
+	
+	/**
+	 * The ID of the current working course
+	 */
 	private int currentCourseID;
 	
+	/**
+	 * A card layout for the Home and Course pages
+	 */
 	private CardLayout mainCards;
+	
+	/**
+	 * A container which holds all GUI components
+	 */
 	private Container container;
 	
-	/*
-	 * Home panel displays the Student's courses and the student can
-	 * click on them to view that course page
+	/**
+	 * A panel which holds all components related to the Home page
 	 */
 	private JPanel homePanel;
+	
+	/**
+	 * A Home page list model for courses which is held by a list
+	 */
 	private DefaultListModel<String> courseListModel;
+	
+	/**
+	 * A Home page list for courses which holds a list model
+	 */
 	private JList<String> courseJList;
+	
+	/**
+	 * A Home page button which fills the course list model with courses
+	 */
 	private JButton getCourses;
 	
-	/*
-	 * Course panel displays the student's assignments where they can click on
-	 * them to view that assignment's grade, or upload an assignment. Students
-	 * can also send their course's professor an email.
+	/**
+	 * A panel which holds all components related to the Course page
 	 */
 	private JPanel coursePanel;
-	private DefaultListModel<String> assignListModel;
-	private JList<String> assignJList;
-	private JTextArea grade;
+	
+	/**
+	 * A Course page scroll pane to hold the assignment list
+	 */
 	private JScrollPane assignScrollPane;
+	
+	/**
+	 * A Course page list model for assignments which is held by a list
+	 */
+	private DefaultListModel<String> assignListModel;
+	
+	/**
+	 * A Course page list for assignments which holds a list model
+	 */
+	private JList<String> assignJList;
+	
+	/**
+	 * A Course page text area which holds the grade of the selected assignment
+	 */
+	private JTextArea grade;
+	
+	/**
+	 * A Course page button to download the selected assignment
+	 */
 	private JButton downloadAssign;
+	
+	/**
+	 * A Course page button to upload an assignment to a drop-box
+	 */
 	private JButton uploadAssign;
+	
+	/**
+	 * A Course page button to send an email to the course's professor
+	 */
 	private JButton sendEmailToProff;
+	
+	/**
+	 * A Course page button to return to the Home page
+	 */
 	private JButton returnHome;
 	
 
-	/** A constructor which requires the student's ID, first name, and last name.
+	/** A constructor which requires the student's ID, first name, and last name. Also
+	 * creates and sets restrictions on the container as well as the Home and Course pages.
 	 * @param studentID - the student ID
 	 * @param studentFirstName - the student first name
 	 * @param studentLastName - the student last name
@@ -81,13 +148,6 @@ public class StudentView extends JFrame implements OurStyle{
 		makeWindowListener();
 		createHomeDisplay();
 		initializeCourseDisplay();
-		
-		//Testing
-//		String[] testCourseInfo = {"ENCM369", "1070"};
-//		String[] testAssignInfo = {"Assign 1", "Assign 2", "Assign 3",
-//								   "Assign 4", "Assign 5", "Assign 6"};
-//		createCourseDisplay(testCourseInfo, testAssignInfo);
-//		mainCards.show(container, "COURSE");
 	}
 	
 	public void setCurrentCourseID(int courseID) {
@@ -134,8 +194,8 @@ public class StudentView extends JFrame implements OurStyle{
 									  JOptionPane.ERROR_MESSAGE);
 	}
 	
-	/** Creates the home panel and adds it as the first card to the 
-	 * container's cardLayout
+	/** Creates the Home panel and adds it as the first card to the 
+	 * container's card layout
 	 */
 	public void createHomeDisplay() {
 		homePanel = new JPanel(new BorderLayout());
@@ -145,7 +205,7 @@ public class StudentView extends JFrame implements OurStyle{
 		createHomeBotPanel();
 	}
 	
-	/**	Creates the top panel of the home panel
+	/**	Creates the content in the North panel of the Home panel
 	 */
 	private void createHomeTopPanel() {
 		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
@@ -176,7 +236,7 @@ public class StudentView extends JFrame implements OurStyle{
 		setOurStyle(bannerPanel);
 	}
 	
-	/** Creates the center panel of the home page
+	/** Creates the content in the center panel of the Home page
 	 */
 	private void createHomeCenterPanel() {
 		JPanel grandPanel = new JPanel();
@@ -187,37 +247,31 @@ public class StudentView extends JFrame implements OurStyle{
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		courseScrollPane.setPreferredSize(new Dimension(600, 350));
 		courseJList.setFont(SMALLFONT);
-		
-		//Testing
-//		courseJList.addListSelectionListener(new ListSelectionListener() {
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				/*
-//				 * getselectedvalue split ; 
-//				 * setcourseid = split[0]
-//				 * createcoursedisplay(split[1], )
-//				 */
-////				createCourseDisplay(testCourseInfo, testAssignInfo);
-//				mainCards.show(container, "COURSE");
-//			}
-//		});
 		grandPanel.add(courseScrollPane);
 		homePanel.add(grandPanel, BorderLayout.CENTER);
 		
 	}
 	
+	/** 
+	 * Adds a list of courses onto the course list model
+	 * @param courses - the list of courses
+	 */
 	public void addCourses(String[] courses) {
-		homePanel.setVisible(false);
 		for(int i=0; i<courses.length; i++) {
 			courseListModel.addElement(courses[i]);
 		}
-		homePanel.setVisible(true);
 	}
 	
+	/**
+	 * Hides the get course button
+	 */
 	public void hideGetCourseButton() {
 		getCourses.setVisible(false);
 	}
 	
+	/**
+	 * Creates the content in the South panel of the Home page
+	 */
 	private void createHomeBotPanel() {
 		JPanel grandPanel = new JPanel();
 		setOurStyle(grandPanel);
@@ -226,8 +280,8 @@ public class StudentView extends JFrame implements OurStyle{
 		homePanel.add(grandPanel, BorderLayout.SOUTH);
 	}
 	
-	/** Initializes the components to be used in the course panel when a user
-	 * clicks on the button that pulls up their course
+	/**
+	 * Initializes the Course panel and adds it to the container's card layout
 	 */
 	private void initializeCourseDisplay() {
 		coursePanel = new JPanel(new BorderLayout());
@@ -236,9 +290,10 @@ public class StudentView extends JFrame implements OurStyle{
 
 	
 	
-	/** Creates the course display from the courseInfo and assignInfo
-	 * @param courseInfo - the information of the course
-	 * @param assignInfo - the information of the assignments
+	/** Creates the course display from the incoming course info and assignment info. If a
+	 * button is already instantiated, will remove the Course panel and create a new one
+	 * @param courseInfo - the course information
+	 * @param assignInfo - the assignments information
 	 */
 	public void createCourseDisplay(String []courseInfo, String[] assignInfo) {
 		//Where courseInfo[0] is the courseID
@@ -250,8 +305,10 @@ public class StudentView extends JFrame implements OurStyle{
 		createCourseInnerPanel(assignInfo);
 	}
 	
-	/**	Sets the top panel of the course panel according to courseInfo
-	 * @param courseInfo - the information of the course that was clicked
+	/**	
+	 * Creates the content in the North panel of the course panel according to the 
+	 * incoming course information
+	 * @param courseInfo - the course information
 	 */
 	private void createCourseTopPanel(String [] courseInfo) {
 		JPanel grandPanel = new JPanel(new GridLayout(2, 1));

@@ -627,7 +627,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Sets a button's foreground, background, and font to a specified style
-	 * @param theButton - the button to restyle
+	 * @param theButton - the button to style
 	 */
 	private void setButtonStyle(JButton theButton) {
 		theButton.setForeground(BUTTONTEXT);
@@ -637,7 +637,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Sets a component's foreground and background to a specified style
-	 * @param theComponent
+	 * @param theComponent - the component to style
 	 */
 	private void setOurStyle(JComponent theComponent) {
 		theComponent.setForeground(FOREGROUND);
