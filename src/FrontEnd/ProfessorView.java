@@ -410,7 +410,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Creates the student scroll pane
-	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @param id - the current course id
 	 * @returns the built student scroll pane
 	 */
 	public JScrollPane createStudentScrollPane(String id) {
@@ -428,7 +428,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Creates the assignment scroll pane
-	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @param id - the current course id
 	 * @returns the built assignment scroll pane
 	 */
 	public JScrollPane createAssignScrollPane(String id) {
@@ -542,6 +542,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * See's what assignment you wish to grades, allows you to grade it, and returns value to proff control
 	 * @return strings with file name and grade
 	 */
@@ -571,6 +572,10 @@ public class ProfessorView extends JFrame implements OurStyle{
 	/**
 	 * Creates a file from a file browser
 	 * @return
+=======
+	 * Creates a file from a file browser to upload
+	 * @return the file to upload
+>>>>>>> 7783ac8629053c65625cc262792b8e555b197a62
 	 */
 	public File chooseFile()
 	{
@@ -581,7 +586,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return selectedFile;
 	}
 
-	/** Gives the professor a pop-up where they can enter their email contents.
+	/** 
+	 * Creates a JOptionPane where a professor can enter their email contents.
 	 * @return a String array which contains the professor ID, subject, and 
 	 * 		   email message.
 	 */
@@ -617,7 +623,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return theMail;
 	}
 
-	/** Gives the professor a pop-up where they can create a course.
+	/** Creates a JOptionPane where a professor can create a course.
 	 * @return a String array which contains the name of the course and its active bit
 	 */
 	public String[] createCourse()

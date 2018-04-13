@@ -12,15 +12,57 @@ import javax.swing.table.TableModel;
 
 import BackEnd.EmailHandler;
 
+/**
+ * The class that connects to and performs operations involving the user table in databases
+ * @author Huzaifa Amar and Daniel Guieb
+ *
+ */
 public class User implements Serializable {
+	
+	/**
+	 * user id
+	 */
 	private int id;
+	
+	/**
+	 * user password
+	 */
 	private String password;
+	
+	/**
+	 * user email
+	 */
 	private String email;
+	
+	/**
+	 * first name of the user
+	 */
 	private String firstName;
+	
+	/**
+	 * last name of the user
+	 */
 	private String lastName;
+	
+	/**
+	 * whether its a student or a proff
+	 */
 	private String type;
+	
+	/**
+	 * serializable id of the User Class
+	 */
 	private static final long serialVersionUID = 7;
 	
+	/**
+	 * takes paramters of the User object we are performing operations on
+	 * @param id of user
+	 * @param password of user
+	 * @param email of user
+	 * @param firstName of user
+	 * @param lastName of user
+	 * @param type of user
+	 */
 	public User(int id, String password, String email, String firstName, String lastName, String type) 
 	{
 		this.id = id;
@@ -31,6 +73,13 @@ public class User implements Serializable {
 		this.type=type;
 	}
 	
+	/**
+	 * finding a User by their name
+	 * @param table the user table of the database 
+	 * @param jdbc_connection connection to the database
+	 * @param statement to execute operations with the user table of the database 
+	 * @return
+	 */
 	public String[] findUser(String table, Connection jdbc_connection, PreparedStatement statement)
 	{ 
 		System.out.println("in browse users");
@@ -61,7 +110,13 @@ public class User implements Serializable {
 		return temp;
 	}
 	
-	
+	/**
+	 * searching a student by last name and type
+	 * @param table the user table of the database 
+	 * @param jdbc_connection connection to the database
+	 * @param statement to execute operations with the user table of the database 
+	 * @return
+	 */
 	public String[] searchStudents(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE LASTNAME = ? AND TYPE = ?";
@@ -87,11 +142,16 @@ public class User implements Serializable {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		System.out.println(temp[0]);
-//		System.out.println(temp[1]);
 		return temp;
 	}
 	
+	/**
+	 * searching students by userid and type
+	 * @param table the user table of the database 
+	 * @param jdbc_connection connection to the database
+	 * @param statement to execute operations with the user table of the database 
+	 * @return
+	 */
 	public String[] searchStudentsUserId(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
@@ -106,22 +166,25 @@ public class User implements Serializable {
 				temp=new String[5];
 				int userid=object.getInt("USER_ID");
 				temp[0]="Students user id is: "+userid;
-				//temp[1]=object.getString("PASSWORD");
 				temp[1]="Students email is: "+object.getString("EMAIL");
 				temp[2]="Students name is: "+object.getString("FIRSTNAME")+" "+object.getString("LASTNAME");
 				temp[3]= ""+userid; 
 				temp[4]="";
-				//temp[4]=object.getString("LASTNAME");
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		System.out.println(temp[0]);
-//		System.out.println(temp[1]);
 		return temp;
 	}
 	
+	/**
+	 * getting email info of a student
+	 * @param table the user table of the database 
+	 * @param jdbc_connection connection to the database
+	 * @param statement to execute operations with the user table of the database 
+	 * @return
+	 */
 	public String[] getEmailInfoStudent(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";
@@ -143,6 +206,13 @@ public class User implements Serializable {
 		return emailinfo;
 	}
 	
+	/**
+	 * getting email info of a proff
+	 * @param table the user table of the database 
+	 * @param jdbc_connection connection to the database
+	 * @param statement to execute operations with the user table of the database 
+	 * @return
+	 */
 	public String[] getEmailInfoProff(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +table+ " WHERE USER_ID = ? AND TYPE = ?";

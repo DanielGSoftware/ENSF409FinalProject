@@ -1,7 +1,4 @@
 package SharedObjects;
-/**
- * Huzaifa Amar and Daniel Guieb
- */
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 
+/**
+ * Contains information to interect with studentent enrollment table in database
+ * @author Huzaifa Amar and Daniel Guieb
+ *
+ */
 public class StudentEnrollment implements Serializable{
+	
+	/**
+	 * student id in table
+	 */
 	private int studentid;
+	/**
+	 * 
+	 */
 	private int courseid;
+	/**
+	 * 
+	 */
 	private int enrollmentid;
+	/**
+	 * serializable id to allow transfer over socket
+	 */
 	private static final long serialVersionUID = 5;
 
 	public StudentEnrollment(int enrollmentid, int studentid, int courseid) {

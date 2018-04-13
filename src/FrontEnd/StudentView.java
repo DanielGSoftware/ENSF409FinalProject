@@ -177,6 +177,15 @@ public class StudentView extends JFrame implements OurStyle{
 		return studentID;
 	}
 	
+	public String getAssignmentName() {
+		String fileName = assignJList.getSelectedValue();
+		return fileName;
+	}
+	
+	public String[] getCourseSelected() {
+		String[] courseInfo = courseJList.getSelectedValue().split(";");
+		return courseInfo;
+	}
 
 	/** Creates a JOptionPane which displays the message to the user.
 	 * @param message - the message to be displayed
@@ -186,7 +195,8 @@ public class StudentView extends JFrame implements OurStyle{
 									  JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	/** Creates a JOptionPane which displays the error to the user.
+	/** 
+	 * Creates a JOptionPane which displays the error to the user.
 	 * @param errorMessage - the specific error message
 	 */
 	public void simpleError(String errorMessage) {
@@ -194,7 +204,8 @@ public class StudentView extends JFrame implements OurStyle{
 									  JOptionPane.ERROR_MESSAGE);
 	}
 	
-	/** Creates the Home panel and adds it as the first card to the 
+	/** 
+	 * Creates the Home panel and adds it as the first card to the 
 	 * container's card layout
 	 */
 	public void createHomeDisplay() {
@@ -205,7 +216,8 @@ public class StudentView extends JFrame implements OurStyle{
 		createHomeBotPanel();
 	}
 	
-	/**	Creates the content in the North panel of the Home panel
+	/**	
+	 * Creates the content in the North panel of the Home panel
 	 */
 	private void createHomeTopPanel() {
 		JPanel grandPanel=new JPanel(new GridLayout(2, 1));
@@ -222,7 +234,8 @@ public class StudentView extends JFrame implements OurStyle{
 		homePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
-	/**	Creates the "banner" of a page, which includes a ribbon and a message.
+	/**	
+	 * Creates the "banner" of a page, which includes a ribbon and a message.
 	 * @param bannerPanel - the JPanel which will be the banner panel
 	 * @param topMessage - the display message
 	 */
@@ -236,7 +249,8 @@ public class StudentView extends JFrame implements OurStyle{
 		setOurStyle(bannerPanel);
 	}
 	
-	/** Creates the content in the center panel of the Home page
+	/** 
+	 * Creates the content in the center panel of the Home page
 	 */
 	private void createHomeCenterPanel() {
 		JPanel grandPanel = new JPanel();
@@ -335,8 +349,9 @@ public class StudentView extends JFrame implements OurStyle{
 		coursePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
-	/**	Sets the inner panel of the course panel according to courseInfo
-	 * @param courseInfo- the information of the course that was clicked
+	/**	Creates the content in the center panel of the course panel according to the incoming
+	 * assignment information
+	 * @param courseInfo- the assignment information
 	 */
 	private void createCourseInnerPanel(String[] assignInfo) {
 		JPanel grandPanel = new JPanel(new BorderLayout());
@@ -365,38 +380,27 @@ public class StudentView extends JFrame implements OurStyle{
 		grandPanel.add(assignScrollPane, BorderLayout.CENTER);
 		grandPanel.add(bottomPanel, BorderLayout.SOUTH);
 		coursePanel.add(grandPanel, BorderLayout.CENTER);
-	}
+	}	
 	
-	
-	
-	/** Finds and returns information about the selected assignment
-	 * @return a String array of the current course ID and the assignment name
+	/**
+	 * Changes the container's card to the Home page
 	 */
-	public String getAssignmentName() {
-		String fileName = assignJList.getSelectedValue();
-		System.out.println(assignJList.getSelectedValue() + " in getAssignmentName in sView");
-//		String[] assignInfo = {""+currentCourseID, filename};
-		return fileName;
-	}
-	
-	public String[] getCourseSelected() {
-		String[] courseInfo = courseJList.getSelectedValue().split(";");
-		return courseInfo;
-	}
-	
 	public void goHome() {
-//		courseJList.clearSelection();
 		mainCards.show(container, "HOME");
-		container.setVisible(false);
-		container.setVisible(true);
 	}
 	
+	/**
+	 * Changes the contaner's card to the Course page
+	 */
 	public void goCoursePage() {
 		mainCards.show(container, "COURSE");
-		container.setVisible(false);
-		container.setVisible(true);
 	}
 	
+	/** 
+	 * Creates a JOptionPane where a student can enter their email content
+	 * @return a String array which contains the student ID, subject, and 
+	 * email message
+	 */
 	public String [] sendingMail() {
 		/*	[0] is the studentID
 		 * 	[1] is the subject line
@@ -428,17 +432,10 @@ public class StudentView extends JFrame implements OurStyle{
 		return theMail;
 	}
 	
-	private void setButtonStyle(JButton theButton) {
-		theButton.setForeground(BUTTONTEXT);
-		theButton.setBackground(FOREGROUND);
-		theButton.setFont(BUTTONFONT);
-	}
-	
-	private void setOurStyle(JComponent theComponent) {
-		theComponent.setForeground(FOREGROUND);
-		theComponent.setBackground(BACKGROUND);
-	}
-	
+	/**
+	 * Creates a file form a file browser to upload
+	 * @return - the file to upload
+	 */
 	public File chooseFile()
 	{
 		File selectedFile=null;
@@ -446,6 +443,25 @@ public class StudentView extends JFrame implements OurStyle{
 		if(fileBrowser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			selectedFile = fileBrowser.getSelectedFile();
 		return selectedFile;
+	}
+	
+	/**
+	 * Sets a button's foreground, background, and font to a specified style
+	 * @param theButton - the button to style
+	 */
+	private void setButtonStyle(JButton theButton) {
+		theButton.setForeground(BUTTONTEXT);
+		theButton.setBackground(FOREGROUND);
+		theButton.setFont(BUTTONFONT);
+	}
+	
+	/**
+	 * Sets a component's foreground and background to a specified style
+	 * @param theComponent - the component to style
+	 */
+	private void setOurStyle(JComponent theComponent) {
+		theComponent.setForeground(FOREGROUND);
+		theComponent.setBackground(BACKGROUND);
 	}
 	
 	/** Adds a list selection listener to the course JList

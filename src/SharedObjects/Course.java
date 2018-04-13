@@ -5,13 +5,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
 
+/**
+* The class that connects to and performs operations involving the course table in databases
+* @author Huzaifa Amar and Daniel Guieb
+*
+*/
 public class Course implements Serializable{
+	/**
+	 * proff if of the course object
+	 */
 	private int proffid;
+	/**
+	 * name of the course object
+	 */
 	private String name;
+	/**
+	 * if course is active or not
+	 */
 	private int active;
+	/**
+	 * courseid of the course object
+	 */
 	private int courseid;
+	/**
+	 * serializable id of the course class
+	 */
 	private static final long serialVersionUID = 2;
 
+	/**
+	 * creates a course object with the given parameters
+	 * @param proffid of course
+	 * @param name of course
+	 * @param active if course is visible to students or not
+	 * @param courseid of the course
+	 */
 	public Course(int proffid, String name, int active, int courseid)
 	{
 		this.proffid=proffid;
@@ -20,6 +47,13 @@ public class Course implements Serializable{
 		this.courseid=courseid;
 	}
 	
+	/**
+	 * Search for courses by proff id
+	 * @param table Course table to connect to
+	 * @param jdbc_connection java connection that links to the database
+	 * @param statement execute commands within database
+	 * @return string array of info
+	 */
 	public String[] browseCourses(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("in browse courses");
@@ -55,6 +89,12 @@ public class Course implements Serializable{
 		return temp;
 	}
 	
+	/**
+	 * create a new course, either active or inactive
+	 * @param table Course table to connect to
+	 * @param jdbc_connection java connection that links to the database
+	 * @param statement execute commands within database
+	 */
 	public void createCourse(String coursetable, Connection jdbc_connection, PreparedStatement statement, int id)
 	{
 		String sql = "INSERT INTO " + coursetable +
@@ -74,6 +114,12 @@ public class Course implements Serializable{
 		}	
 	}
 	
+	/**
+	 * change course activation status of a specific course
+	 * @param table Course table to connect to
+	 * @param jdbc_connection java connection that links to the database
+	 * @param statement execute commands within database
+	 */
 	public void courseActivationStatus(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("CHanging course active status");
@@ -90,6 +136,13 @@ public class Course implements Serializable{
 		}
 	}
 	
+	/**
+	 * getting a students courses
+	 * @param table Course table to connect to
+	 * @param jdbc_connection java connection that links to the database
+	 * @param statement execute commands within database
+	 * @return the course if its active, null otherwise
+	 */
 	public String courseofStudent(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE_ID = ?";
@@ -112,6 +165,13 @@ public class Course implements Serializable{
 		return course;
 	}
 	
+	/**
+	 * getting the proff id of a specific course
+	 * @param table Course table to connect to
+	 * @param jdbc_connection java connection that links to the database
+	 * @param statement execute commands within database
+	 * @return the proffs id 
+	 */
 	public int getProffID(String coursetable, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql= "SELECT * FROM " +coursetable+ " WHERE COURSE_ID = ? AND ACTIVE = ?";

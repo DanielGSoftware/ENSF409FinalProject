@@ -14,11 +14,31 @@ import java.io.PrintWriter;
  */
 public class FileHandler {
 
+	/**
+	 * the path to the profffolder
+	 */
 	private String profffolder;
+	
+	/**
+	 * path to the student folder
+	 */
 	private String studentfolder;
+	
+	/**
+	 * the name of the file were performation operations on
+	 */
 	private String fileToDownloadName;
+	
+	/**
+	 * the path of the file were performing operations on
+	 */
 	private String fileToDownloadPath;
 	
+	/**
+	 * takes name and path of the file to download
+	 * @param name of file in question
+	 * @param filepath of the file in question
+	 */
 	public FileHandler(String name, String filepath)
 	{
 		profffolder="C:\\Users\\muham\\OneDrive\\Documents\\ENSF409ProffFiles\\recievedFromStudents";
@@ -27,6 +47,9 @@ public class FileHandler {
 		fileToDownloadPath=filepath;
 	}
 	
+	/**
+	 * downloads a file to the student folder
+	 */
 	public void downloadAssignmentToStudent()
 	{
 		try {
@@ -50,6 +73,9 @@ public class FileHandler {
 		}		
 	}
 	
+	/**
+	 * downloads an assignment to the proff's folder
+	 */
 	public void downloadAssignmentsToProff()
 	{
 		try {
