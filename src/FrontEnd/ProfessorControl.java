@@ -20,7 +20,7 @@ public class ProfessorControl {
 	private ProfessorModel pModel;
 	
 	/**
-	 * The professor GUi which handles what the professor sees
+	 * The professor GUI which handles what the professor sees
 	 */
 	private ProfessorView pView;
 	
@@ -82,7 +82,7 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] students=pModel.viewStudents(pView.getCourseID());
 			pView.updateStudentListDisplay(students);
-			pView.viewStudentsPage();
+			pView.goStudentsPage();
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class ProfessorControl {
 		public void actionPerformed(ActionEvent e) {
 			String[] assignments=pModel.viewAssign(pView.getCourseID());
 			pView.updateAssignListDisplay(assignments);
-			pView.viewAssignsPage();
+			pView.goAssignmentsPage();
 		}
 	}
 	
@@ -110,25 +110,20 @@ public class ProfessorControl {
 	 */
 	class UploadAssignmentListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			File file=pView.chooseFile();
 			System.out.println(file.getPath());
 			pModel.addAssignment(pView.getCourseID(), file.getName(), file.getPath());
-		}
-		
+		}	
 	}
 	
 	class AssignmentActiveStatusListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
 		}
-		
 	}
 	
 	/**
@@ -153,14 +148,14 @@ public class ProfessorControl {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pView.viewHomePage();
+			pView.goHomePage();
 			
 		}
 		
 	}
 	
 	/**
-	 * An action listener for the view courses buttin in the professor GUi.
+	 * An action listener for the view courses button in the professor GUi.
 	 * When pressed, will fill the course list in Home page in the view
 	 *
 	 */
@@ -190,15 +185,9 @@ public class ProfessorControl {
 					new ViewAssignmentsListener(), new ReturnHomeListener(), 
 					new EmailStudentListener(), new SearchStudentsListener(), 
 					new StudentEnrollmentListener(), new UploadAssignmentListener(), 
-					new AssignmentActiveStatusListener(), new ViewSubmissionsListener());
-			pView.viewCoursesPage();
-<<<<<<< HEAD
-			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
-					 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
-					 new StudentEnrollmentListener(), new UploadAssignmentListener(), new AssignmentActiveStatusListener(), 
-					 new ViewSubmissionsListener(), new SetGradesForAssignment());
-=======
->>>>>>> 058dc1fa241b3e2de7caf9c0ff6f14d9483daa0f
+					new AssignmentActiveStatusListener(), new ViewSubmissionsListener(), 
+					new SetGradesForAssignment());
+			pView.goCoursePage();
 		}
 		
 	}
@@ -219,7 +208,6 @@ public class ProfessorControl {
 								+ "Please hit browse courses to see changes");
 		}
 	}
-<<<<<<< HEAD
 	
 	
 	class ListListener implements ListSelectionListener
@@ -227,12 +215,9 @@ public class ProfessorControl {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			System.out.println("in list acton listener");
-//			pView.setCoursePage();
 		}
 	}
 
-	
-=======
 
 	/**
 	 * An action listener for the search student button in the professor GUI.
@@ -241,7 +226,6 @@ public class ProfessorControl {
 	 * Course page
 	 *
 	 */
->>>>>>> 058dc1fa241b3e2de7caf9c0ff6f14d9483daa0f
 	class SearchStudentsListener implements ActionListener
 	{
 		@Override
@@ -253,6 +237,12 @@ public class ProfessorControl {
 		}
 	}
 	
+	/**
+	 * An action listener for the student enrollment button in the professor GUI.
+	 * When pressed, the model will currently enroll a hard-coded student and the 
+	 * view will update the student list
+	 *
+	 */
 	class StudentEnrollmentListener implements ActionListener
 	{
 		@Override
@@ -263,12 +253,18 @@ public class ProfessorControl {
 		}
 	}
 	
+	/**
+	 * A list selection listener for the assignment list in the professor GUI.
+	 * When pressed, the view will get the grade info and the model will set the 
+	 * grade
+	 */
 	class SetGradesForAssignment implements ListSelectionListener 
 	{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			String[] gradeInfo=pView.markAssignment();
-			pModel.setGradesForAssignment(gradeInfo[0], pView.getCurrentCourseID(), 1000, Integer.parseInt(gradeInfo[1]));
+			pModel.setGradesForAssignment(gradeInfo[0], pView.getCurrentCourseID(), 
+					1000, Integer.parseInt(gradeInfo[1]));
 		}
 	}
 }

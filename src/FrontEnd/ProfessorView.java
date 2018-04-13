@@ -248,14 +248,16 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return courseInfo;
 	}
 	
-	/** Creates a JOptionPane which displays the message to the user.
+	/** 
+	 * Creates a JOptionPane which displays the message to the user.
 	 * @param message - the message to be displayed
 	 */
 	public void simpleMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, null, JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	/** Creates a JOptionPane which displays the error to the user.
+	/** 
+	 * Creates a JOptionPane which displays the error to the user.
 	 * @param errorMessage - the specific error message
 	 */
 	public void simpleError(String errorMessage) {
@@ -296,7 +298,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		homePanel.add(grandPanel, BorderLayout.NORTH);
 	}
 	
-	/** Creates the "banner" of a page, which includes a ribbon and a message.
+	/** 
+	 * Creates the "banner" of a page, which includes a ribbon and a message.
 	 * @param bannerPanel - the JPanel which will be the banner panel
 	 * @param topMessage - the display message
 	 */
@@ -311,7 +314,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	
-	/** Creates the content in the center panel of the Home panel
+	/** 
+	 * Creates the content in the center panel of the Home panel
 	 */
 	private void createHomeCenterPanel()
 	{
@@ -456,7 +460,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return assignScrollPane;
 	}
 	
-	/** Initializes buttons and adds them onto the student button panel
+	/** 
+	 * Initializes buttons and adds them onto the student button panel
 	 * @param buttonsPanel - the student button panel
 	 */
 	private void addStudentButtons(JPanel buttonsPanel) {
@@ -475,7 +480,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		buttonsPanel.add(studentSearchParam);
 	}
 	
-	/** Initializes buttons and adds them onto the assignment button panel
+	/** 
+	 * Initializes buttons and adds them onto the assignment button panel
 	 * @param buttonsPanel - the assignment button panel
 	 */
 	private void addAssignButtons(JPanel buttonsPanel) {
@@ -490,7 +496,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 		buttonsPanel.add(viewSubmissions);
 	}
 	
-	/** Adds the elements of courseList to the courseListModel
+	/** 
+	 * Adds the elements of courseList to the courseListModel
 	 * @param courseList - the courses to be on the courseListModel
 	 */
 	public void createCourseJList(String[] courseList)
@@ -505,28 +512,28 @@ public class ProfessorView extends JFrame implements OurStyle{
 	/**
 	 * Changes the current course inner panel to the Student page
 	 */
-	public void viewStudentsPage() {
+	public void goStudentsPage() {
 		courseInnerCards.show(courseInnerPanel, "STUDENTS");
 	}
 	
 	/**
 	 * Changes the current course inner panel to the Assignment page
 	 */
-	public void viewAssignsPage() {
+	public void goAssignmentsPage() {
 		courseInnerCards.show(courseInnerPanel, "ASSIGNMENTS");
 	}
 	
 	/**
 	 * Changes the current container to the Home page
 	 */
-	public void viewHomePage() {
+	public void goHomePage() {
 		mainCards.show(container, "HOME");
 	}
 	
 	/**
 	 * Changes the current container to the Course page
 	 */
-	public void viewCoursesPage() {
+	public void goCoursePage() {
 		mainCards.show(container, "COURSES");	
 	}
 	
@@ -554,7 +561,6 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * See's what assignment you wish to grades, allows you to grade it, and returns value to proff control
 	 * @return strings with file name and grade
 	 */
@@ -582,12 +588,8 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	/**
-	 * Creates a file from a file browser
-	 * @return
-=======
 	 * Creates a file from a file browser to upload
 	 * @return the file to upload
->>>>>>> 7783ac8629053c65625cc262792b8e555b197a62
 	 */
 	public File chooseFile()
 	{

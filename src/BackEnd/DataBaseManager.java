@@ -50,7 +50,7 @@ public class DataBaseManager implements Runnable {
 	 */
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 						 LOGIN          = "root",
-						 PASSWORD       = "huzaifa147";
+						 PASSWORD       = "Thisisaserver";
 	
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";

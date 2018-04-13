@@ -393,7 +393,7 @@ public class StudentView extends JFrame implements OurStyle{
 	/**
 	 * Changes the container's card to the Home page
 	 */
-	public void goHome() {
+	public void goHomePage() {
 		mainCards.show(container, "HOME");
 	}
 	
