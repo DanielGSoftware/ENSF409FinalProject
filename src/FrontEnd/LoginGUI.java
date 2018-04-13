@@ -20,7 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
- * Proivdes the data fields and methods to create a login GUI for a user
+ * Provides the data fields and methods to create a login GUI for a user
  * @authors Daniel Guieb, Huzaifa Amar
  * @version 1.0
  * @since April 12, 2018

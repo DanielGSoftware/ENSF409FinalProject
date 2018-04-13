@@ -217,11 +217,19 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return studentListModel;
 	}
 	
+	/**
+	 * Important for using the search parameter
+	 * @return the student search parameter
+	 */
 	public String getSearchParam()
 	{
 		return studentSearchParam.getSelectedText();
 	}
 	
+	/**
+	 * Important for first time creation of GUI
+	 * @return the course ID
+	 */
 	public int getCourseID()
 	{
 		String string=courseJList.getSelectedValue();
@@ -229,6 +237,10 @@ public class ProfessorView extends JFrame implements OurStyle{
 		return Integer.parseInt(strings[0]);
 	}
 	
+	/**
+	 * Important to create a Course page
+ 	 * @return the course information as an String array split by ';'
+	 */
 	public String[] getCourseInfo() {
 		int index = courseJList.getSelectedIndex();
 		String courseInfoAsOneLine = new String(courseListModel.get(index));
