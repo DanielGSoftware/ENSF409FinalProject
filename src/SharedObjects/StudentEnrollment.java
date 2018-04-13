@@ -19,11 +19,11 @@ public class StudentEnrollment implements Serializable{
 	 */
 	private int studentid;
 	/**
-	 * 
+	 * course id in table
 	 */
 	private int courseid;
 	/**
-	 * 
+	 * enrollment id in table
 	 */
 	private int enrollmentid;
 	/**
@@ -31,6 +31,12 @@ public class StudentEnrollment implements Serializable{
 	 */
 	private static final long serialVersionUID = 5;
 
+	/**
+	 * Construct student enrollment object with passed parameters
+	 * @param enrollmentid of course
+	 * @param studentid of student
+	 * @param courseid of course 
+	 */
 	public StudentEnrollment(int enrollmentid, int studentid, int courseid) {
 		this.enrollmentid=enrollmentid;
 		this.studentid=studentid;
@@ -42,6 +48,13 @@ public class StudentEnrollment implements Serializable{
 		return studentid;
 	}
 	
+	/**
+	 * view all students enrollent in a course
+	 * @param table Student_Enrollment Table
+	 * @param jdbc_connection connection to student_enrollment table
+	 * @param statement to execute operations
+	 * @return all students in a course
+	 */
 	public String[] viewStudentsEnrolled(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		System.out.println("in browse enrolled stuendts");
@@ -66,6 +79,12 @@ public class StudentEnrollment implements Serializable{
 		return strings;
 	}
 	
+	/**
+	 * delete a student from a course
+	 * @param table Student_Enrollment Table
+	 * @param jdbc_connection connection to student_enrollment table
+	 * @param statement to execute operations
+	 */
 	public void deleteEnrollment(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql = "DELETE FROM " +table + " WHERE STUDENT_ID=? AND COURSE_ID=?";
@@ -82,6 +101,13 @@ public class StudentEnrollment implements Serializable{
 		}
 	}
 	
+	/**
+	 * get students id's of those enrollent in a specific course
+	 * @param table
+	 * @param jdbc_connection
+	 * @param statement
+	 * @return all student id's in a course
+	 */
 	public int[] viewStudents(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql = "SELECT * FROM " +table + " WHERE COURSE_ID=?";
@@ -108,6 +134,13 @@ public class StudentEnrollment implements Serializable{
 		return temp;
 	}
 	
+	/**
+	 * get course id's of those enrollent in a specific course
+	 * @param table
+	 * @param jdbc_connection
+	 * @param statement
+	 * @return all course id's for a student
+	 */
 	public int[] viewCoursesForStudent(String table, Connection jdbc_connection, PreparedStatement statement)
 	{
 		String sql = "SELECT * FROM " +table + " WHERE STUDENT_ID = ?";
