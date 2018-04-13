@@ -6,6 +6,8 @@ import java.io.File;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.mysql.fabric.hibernate.FabricMultiTenantConnectionProvider;
+
 public class ProfessorControl {
 	private ProfessorModel pModel;
 	private ProfessorView pView;

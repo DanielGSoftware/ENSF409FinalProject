@@ -132,9 +132,6 @@ public class DataBaseManager implements Runnable {
 					Assignment assignment= (Assignment) readobject.readObject();
 					String[] result=assignment.searchAssignment(ASSIGNMENTTABLE, jdbc_connection, statement);
 					infoExchange.setInfo(result);
-					System.out.println(result[0]);
-					System.out.println(result[1]);
-					System.out.println(result[2]);
 					writeobject.writeObject(infoExchange);
 					flushAndReset(writeobject);
 				}
