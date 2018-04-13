@@ -320,7 +320,7 @@ public class DataBaseBuilder
 		dataBaseBuilder.fillUserTable("Users.txt");
 		dataBaseBuilder.fillCourseTable("Courses.txt");
 		dataBaseBuilder.fillStudentEnrollmentTable("StudentEnrollment.txt");
-		dataBaseBuilder.fillAssignmentTable("Assignment2.txt");
+		//dataBaseBuilder.fillAssignmentTable("Assignment2.txt");
 		dataBaseBuilder.fillGradeTable();
 
 	}
