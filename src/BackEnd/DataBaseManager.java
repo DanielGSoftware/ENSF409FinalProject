@@ -18,18 +18,40 @@ import SharedObjects.StudentEnrollment;
 import SharedObjects.User;
 
 /**
- * This class 
+ * This class contains the necessary information to access the database 
+ * Takes in an object of InfoExchange and decides what operaion to perform
  * @author Huzaifa Amar and Daniel Guieb
  *
  */
 public class DataBaseManager implements Runnable {
+	
+	/**
+	 * to write out objects
+	 */
 	private ObjectOutputStream writeobject;
+	
+	/**
+	 * to read in objects
+	 */
 	private ObjectInputStream readobject;
+	
+	/**
+	 * SQL syntax to perform operaions in database
+	 */
 	private PreparedStatement statement;
+	
+	/**
+	 * SQL syntax to connect to database
+	 */
 	private Connection jdbc_connection;
+	
+	/**
+	 * information to establish a connection to database
+	 */
 	public static String CONNECTIONINFO = "jdbc:mysql://localhost:3306/project",  
 						 LOGIN          = "root",
 						 PASSWORD       = "Thisisaserver";
+	
 	public static String COURSETABLE = "Courses";
 	public static String USERTABLE = "Users";
 	public static String STUDENTENROLLMENTTABLE = "Student_Enrollment";
@@ -37,6 +59,13 @@ public class DataBaseManager implements Runnable {
 	public static String GRADETABLE = "Grade_Table";
 	private int id;
 	
+	/**
+	 * 
+	 * @param socket allows communication between server and socket
+	 * @throws IOException throws error if there is an socket-related issue
+	 * @throws SQLException throws error if database cannot be connected to
+	 * @throws ClassNotFoundException throws error if class it is trying to connect to doesnt exist
+	 */
 	public DataBaseManager(Socket socket) throws IOException, SQLException, ClassNotFoundException {
 		writeobject=new ObjectOutputStream(socket.getOutputStream());
 		readobject=new ObjectInputStream(socket.getInputStream());
@@ -45,6 +74,9 @@ public class DataBaseManager implements Runnable {
 		id=3000;
 	}
 	
+	/**
+	 * continously runs; reads an InfoExchange object, then performs corresponding action
+	 */
 	@Override
 	public void run() {
 		while (true) {
@@ -250,6 +282,11 @@ public class DataBaseManager implements Runnable {
 		}
 	}
 	
+	/**
+	 * flushes and resets object output stream
+	 * @param sendObject the object that needs to be cleared
+	 * @throws IOException if stream has an issue
+	 */
 	private void flushAndReset(ObjectOutputStream sendObject) throws IOException {
 		sendObject.flush();
 		sendObject.reset();

@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Dealing with file download and upload. Contains information to connect to 2 specific folders
+ * @author Huzaifa Amar and Daniel Guieb
+ *
+ */
 public class FileHandler {
 
 	private String profffolder;

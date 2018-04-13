@@ -96,7 +96,7 @@ public class StudentModel extends MainModel {
 	public void uploadAssignment(int courseid, String filename, String path)
 	{	
 		System.out.println(filename + " in uploadAssignment in sModel");
-		InfoExchange infoExchange=new InfoExchange("Student Uploading");
+		InfoExchange infoExchange=new InfoExchange("Upload Assignment");
 		Assignment assignment=new Assignment(courseid, filename, path);
 		try {
 			sendObject.writeObject(infoExchange);

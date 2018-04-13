@@ -51,9 +51,6 @@ public class StudentControl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			sModel.sendEmailToProff(sView.getCurrentCourseID(), sView.sendingMail());
-			//make sure to open up a JOptionPane where we type in message.
-			//email message should also have students id
-			//read email message returns an array of strings
 		}
 	}
 	
