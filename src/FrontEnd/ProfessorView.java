@@ -410,7 +410,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Creates the student scroll pane
-	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @param id - the current course id
 	 * @returns the built student scroll pane
 	 */
 	public JScrollPane createStudentScrollPane(String id) {
@@ -428,7 +428,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	/**
 	 * Creates the assignment scroll pane
-	 * @param id - ASLKDJALKDJALDJLASJDLKAJSDLKJASDLKJASDLKJASDLJASDLJASDLKJASDLJASDLJASDLJASDLJASDLKJ
+	 * @param id - the current course id
 	 * @returns the built assignment scroll pane
 	 */
 	public JScrollPane createAssignScrollPane(String id) {
