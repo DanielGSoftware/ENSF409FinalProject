@@ -281,7 +281,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 	public JScrollPane createAssignScrollPane(String id) {
 		assignListModel=new DefaultListModel<String>();
 		assignListModel.addElement(id);
-		assignmentJList=new JList<String>(studentListModel);
+		assignmentJList=new JList<String>(assignListModel);
 		assignmentJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignmentJList.setVisibleRowCount(15);
 		assignmentJList.setFont(SMALLFONT);
@@ -377,23 +377,20 @@ public class ProfessorView extends JFrame implements OurStyle{
 	
 	public void updateStudentListDisplay(String[] students)
 	{	
-		courseInnerPanel.setVisible(false);
 		studentListModel.removeAllElements();
 		for (int i=0; i<students.length; i++) {
 			studentListModel.addElement(students[i]);
 		}
+		courseInnerPanel.setVisible(false);
 		courseInnerPanel.setVisible(true);
 	}
 	
 	public void updateAssignListDisplay(String[] assigns) {
-		assignmentJList.setVisible(false);
-		System.out.println(assigns[0]);
-		System.out.println(assigns[1]);
-		System.out.println(assigns[2]);
 		assignListModel.removeAllElements();
 		for (int i=0; i<assigns.length; i++) {
 			assignListModel.addElement(assigns[i]);
 		}
+		assignmentJList.setVisible(false);
 		assignmentJList.setVisible(true);
 	}
 	
