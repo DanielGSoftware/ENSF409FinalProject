@@ -542,6 +542,33 @@ public class ProfessorView extends JFrame implements OurStyle{
 	}
 	
 	/**
+	 * See's what assignment you wish to grades, allows you to grade it, and returns value to proff control
+	 * @return strings with file name and grade
+	 */
+	public String[] markAssignment()
+	{
+		Object[] objects={ "ENTER MARK",  "CANCEL"};
+		JPanel panel=new JPanel();
+		JTextField grade=new JTextField("Enter Grade");
+		panel.add(grade);
+		int result = JOptionPane.showOptionDialog(null, panel, 
+				"Grading",JOptionPane.YES_NO_OPTION, 
+				JOptionPane.PLAIN_MESSAGE, null, objects, null);
+		
+		if (result==JOptionPane.YES_OPTION){
+				String[] strings= {assignmentJList.getSelectedValue(), grade.getText()};
+				JOptionPane.showMessageDialog(null, "Grade succesfully entered",
+						"Success",JOptionPane.PLAIN_MESSAGE);
+				return strings;
+		}	
+			
+		if (result==JOptionPane.NO_OPTION){
+			JOptionPane.getRootFrame().dispose();
+		}
+		return null;
+	}
+	
+	/**
 	 * Creates a file from a file browser
 	 * @return
 	 */
@@ -674,7 +701,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 			   ActionListener returnHome, ActionListener emailStudents, 
 			   ActionListener searchStudents, ActionListener enrollment, 
 			   ActionListener uploadAssign, ActionListener setAssignActive, 
-			   ActionListener viewSubmissions) {
+			   ActionListener viewSubmissions, ListSelectionListener gradeAssignments) {
 		this.setCourseactive.addActionListener(setCourseActive);
 		this.viewStudents.addActionListener(viewStudents);
 		this.viewAssigns.addActionListener(viewAssigns);
@@ -685,6 +712,7 @@ public class ProfessorView extends JFrame implements OurStyle{
 		this.uploadAssign.addActionListener(uploadAssign);
 		this.setAssignActive.addActionListener(setAssignActive);
 		this.viewSubmissions.addActionListener(viewSubmissions);
+		assignmentJList.addListSelectionListener(gradeAssignments);
 	}
 	
 	/**	Sets the default closing option of the overall JFrame
@@ -704,10 +732,5 @@ public class ProfessorView extends JFrame implements OurStyle{
 			}
 			
 		});
-	}
-
-	public static void main(String[] args) {
-		ProfessorView pView = new ProfessorView(69420, "Daniel", "Guieb");
-		pView.setVisible(true);
 	}
 }

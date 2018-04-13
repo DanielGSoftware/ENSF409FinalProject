@@ -124,7 +124,7 @@ public class ProfessorControl {
 			pView.addCourseListeners(new CourseActiveStatus(), new ViewStudentsListener(),new ViewAssignmentsListener(), 
 					 new ReturnHomeListener(), new EmailStudentListener(), new SearchStudentsListener(), 
 					 new StudentEnrollmentListener(), new UploadAssignmentListener(), new AssignmentActiveStatusListener(), 
-					 new ViewSubmissionsListener());
+					 new ViewSubmissionsListener(), new SetGradesForAssignment());
 		}
 		
 	}
@@ -141,24 +141,6 @@ public class ProfessorControl {
 		}
 	}
 	
-//	class ListListener implements ListSelectionListener
-//	{
-//		@Override
-//		public void valueChanged(ListSelectionEvent e) {
-//			System.out.println("in list acton listener");
-//			pView.setCoursePage();
-//		}
-
-//	class CourseActiveStatus implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			System.out.println("courseactivestatus button hit in control class");
-////			String[] course=pView.getSelectedList();
-////			pModel.courseActive(course);
-////			pView.displayCourseActiveUpdateMessage();
-//		}
-//	}
 	
 	class ListListener implements ListSelectionListener
 	{
@@ -201,13 +183,12 @@ public class ProfessorControl {
 		}
 	}
 	
-	class SetGradesForAssignment implements ActionListener
+	class SetGradesForAssignment implements ListSelectionListener 
 	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			//get assignment name from view
-			//parameter should be file name, course id, studentid, and the grade
-			pModel.setGradesForAssignment("Assignment1.txt", 1070, 1000, 87);
+		public void valueChanged(ListSelectionEvent e) {
+			String[] gradeInfo=pView.markAssignment();
+			pModel.setGradesForAssignment(gradeInfo[0], pView.getCurrentCourseID(), 1000, Integer.parseInt(gradeInfo[1]));
 		}
 	}
 }
